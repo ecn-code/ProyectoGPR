@@ -16,7 +16,7 @@ public class IncidenciaDAO {
 	
 	public IncidenciaDAO() throws DAOExcepcion {
 		try{
-		connManager= new ConnectionManager("practica4");
+		connManager= new ConnectionManager("practicaGPR");
 		}catch (ClassNotFoundException e){
 			throw new DAOExcepcion("DB_CONNECT_ERROR");
 		}
@@ -49,54 +49,6 @@ public class IncidenciaDAO {
 				throw e;
 			}
 	}
-	
-	@Override
-	public ArrayList<Revista> encontrarRevistas() throws DAOExcepcion {
-		// TODO Auto-generated method stub
-		ArrayList<Revista> revistas = new ArrayList<Revista>();
-		try{
-			connManager.connect();
-			ResultSet rs=connManager.queryDB("select NOMREVISTA from REVISTA");
-			connManager.close();
-			
-			
-			try {
-				
-				while (rs.next()){
-					Revista revista = encontrarRevistaPorNombre(rs.getString("NOMREVISTA"));
-					revistas.add(revista);
-					//System.out.print(revista.getNombre());
-					//revista.setArea(areaDAO.encontrarAreasPorRevista(nombre));
-				}
-				}catch (SQLException e){
-					throw new DAOExcepcion("DB_READ_ERROR");
-				}
-			
-			}catch (DAOExcepcion e){
-				throw e;
-			}
-			return revistas;
-	}
 
-	@Override
-	public void crearRevista(Revista r) throws DAOExcepcion {
-		// TODO Auto-generated method stub
-		try{
-		connManager.connect();
-		connManager.updateDB("insert into REVISTA (NOMREVISTA) values ('"+r.getNombre()+"')");
-		connManager.close();
-		IAreaDAO areaDAO = new AreaDAOImp();
-		ArrayList<Area> areas= r.getArea();
-		System.out.println(areas.size());
-		for(int i=0;i<areas.size();i++){
-			System.out.println("i="+i+" Area="+areas.get(i).getNombre());
-			areaDAO.crearArea(areas.get(i));
-			
-		}
-		
-		}catch (DAOExcepcion e){
-			throw e;
-		}
-	}
 }
 
