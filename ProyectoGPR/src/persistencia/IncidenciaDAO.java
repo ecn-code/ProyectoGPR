@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import logica.Area;
-import logica.IIncidencia;
 import logica.Incidencia;
 import excepciones.DAOExcepcion;
 
@@ -22,7 +21,7 @@ public class IncidenciaDAO {
 		}
 	}
 
-	public Collection<IIncidencia> getIncidencias() throws DAOExcepcion {
+	public ArrayList<Incidencia> getIncidencias() throws DAOExcepcion {
 		// TODO Auto-generated method stub
 		try{
 			connManager.connect();
@@ -33,9 +32,9 @@ public class IncidenciaDAO {
 		
 			
 			try {
-				ArrayList<IIncidencia> incidencias = new ArrayList<IIncidencia>();
+				ArrayList<Incidencia> incidencias = new ArrayList<Incidencia>();
 				while(rs.next()){
-					IIncidencia incidencia = new Incidencia(rs.getString("ID"),rs.getString("NOMBRE")
+					Incidencia incidencia = new Incidencia(rs.getString("ID"),rs.getString("NOMBRE")
 							,rs.getString("DESCRIPCION"),rs.getDate("FECHA_ENTRADA"));
 					
 					incidencias.add(incidencia);
@@ -48,6 +47,17 @@ public class IncidenciaDAO {
 			}catch (DAOExcepcion e){
 				throw e;
 			}
+	}
+
+	public void crearIncidencia(Incidencia incidencia) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void clasificarIncidencia(Incidencia incidencia, Area area,
+			String prioridad) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -11,7 +11,7 @@ import excepciones.*;
 
 public class DAL {
 	private static DAL dal;
-	IIncidenciaDAO inDAO;
+	IncidenciaDAO inDAO;
 	IAreaDAO arDAO;
 	IOrdenTrabajoDAO orDAO;
 	IPersonaDAO peDAO;
@@ -32,7 +32,7 @@ public static DAL dameDAL() throws DAOExcepcion {
 public void crearIncidencia(Incidencia incidencia) throws DAOExcepcion {
 	inDAO.crearIncidencia(incidencia);
 }
-public ArrayList<Incidencia> encontrarIncidencias() throws DAOExcepcion {
+public ArrayList<Incidencia> getIncidencias() throws DAOExcepcion {
 	return inDAO.getIncidencias();
 }
 public void clasificarIncidencia(Incidencia incidencia, Area area, String prioridad)throws DAOExcepcion {

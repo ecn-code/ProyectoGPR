@@ -2,7 +2,7 @@ package logica;
 
 import java.sql.Date;
 
-public class Incidencia implements IIncidencia{
+public class Incidencia{
 	
 	private String iD;
 	private String nombre;
@@ -17,19 +17,18 @@ public class Incidencia implements IIncidencia{
 		fechaEntrada = _fechaEntrada;
 	}
 	
-	@Override
 	public Date fechaEntrada() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+
 	public String getDescripcion() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	
 	public String getNombre() {
 		// TODO Auto-generated method stub
 		return null;
