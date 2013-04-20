@@ -8,7 +8,7 @@ import logica.Incidencia;
 public interface IIncidenciaDAO {
 	void crearIncidencia(Incidencia in) throws DAOExcepcion; 
 	void clasificarIncidencia(Incidencia in,Area area,String prioridad) throws DAOExcepcion; 
-	ArrayList<Area> getIncidencias() throws DAOExcepcion; 
+	ArrayList<Incidencia> getIncidencias() throws DAOExcepcion; 
 }
 
 
