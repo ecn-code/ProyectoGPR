@@ -9,7 +9,7 @@ import logica.Area;
 import logica.Incidencia;
 import excepciones.DAOExcepcion;
 
-public class IncidenciaDAO {
+public class IncidenciaDAO implements IIncidenciaDAO{
 
 	private ConnectionManager connManager;
 	
@@ -35,7 +35,7 @@ public class IncidenciaDAO {
 				ArrayList<Incidencia> incidencias = new ArrayList<Incidencia>();
 				while(rs.next()){
 					Incidencia incidencia = new Incidencia(rs.getString("ID"),rs.getString("NOMBRE")
-							,rs.getString("DESCRIPCION"),rs.getDate("FECHA_ENTRADA"));
+							,rs.getString("DESCRIPCION"),rs.getDate("FECHADEENTRADA"));
 					
 					incidencias.add(incidencia);
 				}
@@ -50,13 +50,28 @@ public class IncidenciaDAO {
 	}
 
 	public void crearIncidencia(Incidencia incidencia) {
-		// TODO Auto-generated method stub
+try {
+			
+			connManager.connect();
+			connManager.updateDB("insert into ARTICULO (ID,NOMBRE,DESCRIPCION,FECHADEENTRADA) values ('"
+							+ null
+							+ "', '"
+							+ incidencia.getNombre()
+							+ "', '"
+							+ incidencia.getDescripcion()
+							+ "', '"
+							+incidencia.getFechaEntrada()
+							+"')");
+			connManager.close();
+
+		} catch (DAOExcepcion e) {
+
+		}
 		
 	}
 
 	public void clasificarIncidencia(Incidencia incidencia, Area area,
 			String prioridad) {
-		// TODO Auto-generated method stub
 		
 	}
 

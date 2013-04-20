@@ -17,21 +17,21 @@ public class Incidencia{
 		fechaEntrada = _fechaEntrada;
 	}
 	
-	public Date fechaEntrada() {
+	public Date getFechaEntrada() {
 		// TODO Auto-generated method stub
-		return null;
+		return fechaEntrada;
 	}
 
 
 	public String getDescripcion() {
 		// TODO Auto-generated method stub
-		return null;
+		return descripcion;
 	}
 
 	
 	public String getNombre() {
 		// TODO Auto-generated method stub
-		return null;
+		return nombre;
 	}
 
 }
