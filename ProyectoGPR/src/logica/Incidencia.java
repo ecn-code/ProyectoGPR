@@ -34,4 +34,8 @@ public class Incidencia{
 		return nombre;
 	}
 
+	public String getID() {
+		return iD;
+	}
+
 }

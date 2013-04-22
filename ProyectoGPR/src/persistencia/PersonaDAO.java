@@ -6,7 +6,7 @@ import excepciones.DAOExcepcion;
 public class PersonaDAO implements IPersonaDAO {
 
 	@Override
-	public Operario getOperario(int id) throws DAOExcepcion {
+	public Operario getOperario(String dni) throws DAOExcepcion {
 		// TODO Auto-generated method stub
 		return null;
 	}

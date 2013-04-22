@@ -4,11 +4,15 @@ import java.sql.Date;
 
 public class OrdenTrabajo extends Incidencia {
 	private String prioridad,estado;
+	Operario operario;
+	Area area;
 	public OrdenTrabajo(String _iD,String _nombre
-			,String _descripcion, Date _fechaEntrada,String _prioridad,String _estado ){
+			,String _descripcion, Date _fechaEntrada,String _prioridad,String _estado, Operario _operario, Area _area ){
 		super(_iD,_nombre,_descripcion,_fechaEntrada);
 		prioridad=_prioridad;
 		estado=_estado;
+		operario=_operario;
+		area=_area;
 	}
 	public String getPrioridad() {
 		return prioridad;

@@ -55,8 +55,8 @@ public void modificarOrdenTrabajo(OrdenTrabajo orden)throws DAOExcepcion{
 public int loguear(String nombre, String pass) throws DAOExcepcion {
 	return peDAO.loguear(nombre, pass);
 }
-public Operario comprobarOperario(int iD)throws DAOExcepcion{
-	return peDAO.getOperario(iD);
+public Operario comprobarOperario(String dni)throws DAOExcepcion{
+	return peDAO.getOperario(dni);
 }
 //metodos de Area
 public ArrayList<Area> encontrarAreas() throws DAOExcepcion{

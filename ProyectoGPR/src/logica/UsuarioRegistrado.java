@@ -1,9 +1,9 @@
 package logica;
 
 public class UsuarioRegistrado {
-private String iD,usuario,pass;
-public UsuarioRegistrado(String _iD,String _usuario,String _pass){
-	iD=_iD;
+private String dni,usuario,pass;
+public UsuarioRegistrado(String _dni,String _usuario,String _pass){
+	dni=_dni;
 	usuario=_usuario;
 	pass=_pass;
 }
@@ -19,8 +19,8 @@ public String getPass() {
 public void setPass(String _pass) {
 	pass = _pass;
 }
-public String getID() {
-	return iD;
+public String getDNI() {
+	return dni;
 }
 
 }
