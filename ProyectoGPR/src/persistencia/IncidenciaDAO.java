@@ -25,7 +25,9 @@ public class IncidenciaDAO implements IIncidenciaDAO{
 		// TODO Auto-generated method stub
 		try{
 			connManager.connect();
-			ResultSet rs=connManager.queryDB("select * from INCIDENCIA");
+			ResultSet rs=connManager.queryDB("select * from INCIDENCIA WHERE " +
+					"NOT EXIST(SELECT * FROM INCIDENCIA inci ,ORDENDETRABAJO orden WHERE " +
+					"inci.ID=orden.ID)");
 			connManager.close();
 			
 			
