@@ -26,5 +26,17 @@ public class OrdenTrabajo extends Incidencia {
 	public void setEstado(String _estado) {
 		estado = _estado;
 	}
+	public Operario getOperario() {
+		return operario;
+	}
+	public void setOperario(Operario operario) {
+		this.operario = operario;
+	}
+	public Area getArea() {
+		return area;
+	}
+	public void setArea(Area area) {
+		this.area = area;
+	}
 	
 }

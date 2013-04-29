@@ -134,9 +134,27 @@ public class OrdenTrabajoDAO implements IOrdenTrabajoDAO {
 			
 	}
 	@Override
-	public void crearOrdenTrabajo(Incidencia incidencia, Area area,
-			String prioridad) {
+	public void crearOrdenTrabajo(OrdenTrabajo orden) {
 		// TODO Auto-generated method stub
+try {
+			
+			connManager.connect();
+			connManager.updateDB("insert into ORDENDETRABAJO (ID,PRIORIDAD,ESTADO,DNI,NOMBRE_AREA) values ('"
+							+ orden.getID()
+							+ "', '"
+							+ orden.getPrioridad()
+							+ "', '"
+							+ orden.getEstado()
+							+ "', '"
+							+orden.getOperario().getDNI()
+							+ "', '"
+							+orden.getArea().getNombre()
+							+"')");
+			connManager.close();
+
+		} catch (DAOExcepcion e) {
+
+		}
 		
 	}
 

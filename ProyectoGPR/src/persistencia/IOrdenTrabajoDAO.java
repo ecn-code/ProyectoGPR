@@ -13,6 +13,5 @@ public interface IOrdenTrabajoDAO {
 	ArrayList<OrdenTrabajo> getOrdenTrabajo(Operario operario) throws DAOExcepcion; 
 	ArrayList<OrdenTrabajo> getOrdenTrabajo(Date fecha1,Date fecha2) throws DAOExcepcion;
 	void modificar(OrdenTrabajo orden) throws DAOExcepcion;
-	public void crearOrdenTrabajo(Incidencia incidencia, Area area,
-			String prioridad);
+	public void crearOrdenTrabajo(OrdenTrabajo orden);
 }

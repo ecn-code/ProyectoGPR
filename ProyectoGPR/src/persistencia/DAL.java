@@ -54,9 +54,7 @@ public void modificarOrdenTrabajo(OrdenTrabajo orden)throws DAOExcepcion{
 	orDAO.modificar(orden);
 }
 //metodos de persona
-public int loguear(String nombre, String pass) throws DAOExcepcion {
-	return peDAO.loguear(nombre, pass);
-}
+
 public Operario comprobarOperario(String dni)throws DAOExcepcion{
 	return peDAO.getOperario(dni);
 }
