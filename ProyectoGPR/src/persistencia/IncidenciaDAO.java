@@ -7,6 +7,8 @@ import java.util.Collection;
 
 import logica.Area;
 import logica.Incidencia;
+
+
 import excepciones.DAOExcepcion;
 
 public class IncidenciaDAO implements IIncidenciaDAO{

@@ -7,6 +7,8 @@ import logica.Area;
 import logica.Incidencia;
 import logica.Operario;
 import logica.OrdenTrabajo;
+
+
 import excepciones.*;
 
 public class DAL {

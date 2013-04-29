@@ -1,9 +1,11 @@
 package persistencia;
 import java.util.ArrayList;
 
-import excepciones.*;
 import logica.Area;
 import logica.Incidencia;
+
+
+import excepciones.*;
 
 public interface IIncidenciaDAO {
 	void crearIncidencia(Incidencia in) throws DAOExcepcion; 

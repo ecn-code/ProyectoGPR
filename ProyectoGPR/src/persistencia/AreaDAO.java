@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import logica.Area;
 import logica.Incidencia;
+
+
 import excepciones.DAOExcepcion;
 
 public class AreaDAO implements IAreaDAO{
