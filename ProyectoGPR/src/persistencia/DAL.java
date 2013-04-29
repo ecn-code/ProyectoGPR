@@ -14,14 +14,14 @@ public class DAL {
 	IncidenciaDAO inDAO;
 	IAreaDAO arDAO;
 	IOrdenTrabajoDAO orDAO;
-	IPersonaDAO peDAO;
+	IOperarioDAO peDAO;
 	
 private DAL() throws DAOExcepcion{
 	// Objectos para comunicarse con la capa de acceso a datos
 	inDAO=new IncidenciaDAO();
 	arDAO=new AreaDAO();
 	orDAO=new OrdenTrabajoDAO();
-	peDAO=new PersonaDAO();
+	peDAO=new OperarioDAO();
 }
 public static DAL dameDAL() throws DAOExcepcion {
 	if(dal==null)

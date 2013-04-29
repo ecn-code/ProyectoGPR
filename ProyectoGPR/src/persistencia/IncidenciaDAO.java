@@ -55,7 +55,7 @@ public class IncidenciaDAO implements IIncidenciaDAO{
 try {
 			
 			connManager.connect();
-			connManager.updateDB("insert into ARTICULO (ID,NOMBRE,DESCRIPCION,FECHADEENTRADA) values ('"
+			connManager.updateDB("insert into INCIDENCIA (ID,NOMBRE,DESCRIPCION,FECHADEENTRADA) values ('"
 							+ null
 							+ "', '"
 							+ incidencia.getNombre()
@@ -74,6 +74,15 @@ try {
 
 	public void clasificarIncidencia(Incidencia incidencia, Area area,
 			String prioridad) {
+		IOrdenTrabajoDAO ordenDAO;
+		try {
+			ordenDAO = new OrdenTrabajoDAO();
+			ordenDAO.crearOrdenTrabajo(incidencia,area,prioridad);
+		} catch (DAOExcepcion e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 	}
 

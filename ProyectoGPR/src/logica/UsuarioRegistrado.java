@@ -1,7 +1,7 @@
 package logica;
 
-public class UsuarioRegistrado {
-private String dni,usuario,pass;
+public abstract class UsuarioRegistrado {
+protected String dni,usuario,pass;
 public UsuarioRegistrado(String _dni,String _usuario,String _pass){
 	dni=_dni;
 	usuario=_usuario;

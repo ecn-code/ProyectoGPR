@@ -33,7 +33,7 @@ public class OrdenTrabajoDAO implements IOrdenTrabajoDAO {
 				
 				try {
 					ArrayList<OrdenTrabajo> ordenesTrabajo = new ArrayList<OrdenTrabajo>();
-					IPersonaDAO persona=new PersonaDAO();
+					IOperarioDAO persona=new OperarioDAO();
 					IAreaDAO areaDao=new AreaDAO();
 					while(rs.next()){
 						
@@ -95,7 +95,7 @@ public class OrdenTrabajoDAO implements IOrdenTrabajoDAO {
 			
 			try {
 				ArrayList<OrdenTrabajo> ordenesTrabajo = new ArrayList<OrdenTrabajo>();
-				IPersonaDAO persona=new PersonaDAO();
+				IOperarioDAO persona=new OperarioDAO();
 				IAreaDAO areaDao=new AreaDAO();
 				while(rs.next()){
 					
@@ -130,6 +130,12 @@ public class OrdenTrabajoDAO implements IOrdenTrabajoDAO {
 			}
 	
 			
+	}
+	@Override
+	public void crearOrdenTrabajo(Incidencia incidencia, Area area,
+			String prioridad) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

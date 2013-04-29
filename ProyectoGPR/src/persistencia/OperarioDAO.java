@@ -3,7 +3,7 @@ package persistencia;
 import logica.Operario;
 import excepciones.DAOExcepcion;
 
-public class PersonaDAO implements IPersonaDAO {
+public class OperarioDAO implements IOperarioDAO {
 
 	@Override
 	public Operario getOperario(String dni) throws DAOExcepcion {
