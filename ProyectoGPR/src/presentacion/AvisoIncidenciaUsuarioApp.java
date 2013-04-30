@@ -35,7 +35,7 @@ import logica.UsuarioRegistrado;
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
 public class AvisoIncidenciaUsuarioApp extends javax.swing.JFrame {
-	Controlador control;
+	private Controlador control;
 	private JMenuItem helpMenuItem;
 	private JMenu jMenu5;
 	private JLabel jLabelNombreUsuario;
@@ -254,6 +254,7 @@ public class AvisoIncidenciaUsuarioApp extends javax.swing.JFrame {
 	private void jButtonEnviarActionPerformed(ActionEvent evt) {
 		//System.out.println("jButtonEnviar.actionPerformed, event="+evt);
 		//TODO add your code for jButtonEnviar.actionPerformed
+<<<<<<< HEAD
 		Date fechaActual = new Date();
 
 		Incidencia incidencia = new Incidencia("",
@@ -265,6 +266,16 @@ public class AvisoIncidenciaUsuarioApp extends javax.swing.JFrame {
 				   control = Controlador.dameControlador(); 
 				   control.enviarIncidencia(incidencia);
 				   JOptionPane.showMessageDialog(this,"Inciencia enviada al Jefe de Servicio");
+=======
+		
+		Incidencia incidencia = new Incidencia("",
+				this.jTextFieldNombreIncidencia.getText(),
+				this.jTextPaneDescripcion.getText());
+		try{ 	   
+			control = Controlador.dameControlador(); 
+			control.enviarIncidencia(incidencia);
+			JOptionPane.showMessageDialog(this, "Inciencia enviada al Jefe de Servicio");
+>>>>>>> asd
 			   
 			  }catch (Exception e){ 
 			   JOptionPane.showMessageDialog( 

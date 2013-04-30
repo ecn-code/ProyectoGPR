@@ -3,7 +3,7 @@ package logica;
 import java.sql.Date;
 
 public class OrdenTrabajo extends Incidencia {
-	private String prioridad,estado;
+	private String prioridad, estado;
 	Operario operario;
 	Area area;
 	public OrdenTrabajo(String _iD,String _nombre

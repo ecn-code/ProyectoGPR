@@ -9,6 +9,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
+import logica.Controlador;
+
 /**
 * This code was edited or generated using CloudGarden's Jigloo
 * SWT/Swing GUI Builder, which is free for non-commercial
@@ -23,6 +25,7 @@ import javax.swing.table.TableModel;
 */
 public class GestionIncidenciasJefeApp extends javax.swing.JFrame {
 
+	private Controlador control;
 	private JMenuItem helpMenuItem;
 	private JLabel jLabeiListadoAvisos;
 	private JButton jButtonFiltrar;
@@ -60,6 +63,19 @@ public class GestionIncidenciasJefeApp extends javax.swing.JFrame {
 	
 	private void initGUI() {
 		try {
+			
+			try{ 	   
+				this.control = Controlador.dameControlador(); 
+				
+				JOptionPane.showMessageDialog(this, "Inciencia enviada al Jefe de Servicio");
+				   
+			}catch (Exception e){ 
+				JOptionPane.showMessageDialog( 
+				this,e.getMessage(),"ERROR",JOptionPane.ERROR_MESSAGE); 
+			}
+			
+			
+			String filas[];
 			getContentPane().setLayout(null);
 			this.setTitle("Gestión de incidencias - Jefe Servicio Mantenimiento");
 			this.setResizable(false);
@@ -67,7 +83,7 @@ public class GestionIncidenciasJefeApp extends javax.swing.JFrame {
 				TableModel jTableAvisosIncidenciaModel = 
 					new DefaultTableModel(
 							new String[][] {{}, {}, {}},
-							new String[] { "ID", "FechaEntrada", "Descripcion" });
+							new String[] { "ID", "NOMBRE", "FECHAENTRADA", "DESCRIPCION" });
 				jTableAvisosIncidencia = new JTable();
 				getContentPane().add(jTableAvisosIncidencia);
 				jTableAvisosIncidencia.setModel(jTableAvisosIncidenciaModel);
@@ -176,7 +192,8 @@ public class GestionIncidenciasJefeApp extends javax.swing.JFrame {
 	private void jButtonClasificarActionPerformed(ActionEvent evt) {
 		//System.out.println("jButtonClasificar.actionPerformed, event="+evt);
 		//TODO add your code for jButtonClasificar.actionPerformed
-		ClasificarIncidenciaJefejDialog dialogoClasificar = new ClasificarIncidenciaJefejDialog(this);
+		ClasificarIncidenciaJefejDialog dialogoClasificar = new ClasificarIncidenciaJefejDialog
+			(this);
 		dialogoClasificar.setModal(true);
 		dialogoClasificar.setVisible(true);
 

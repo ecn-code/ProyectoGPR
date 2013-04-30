@@ -2,8 +2,10 @@ package persistencia;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import logica.Area;
 import logica.Incidencia;
@@ -28,19 +30,16 @@ public class IncidenciaDAO implements IIncidenciaDAO{
 		// TODO Auto-generated method stub
 		try{
 			connManager.connect();
-			ResultSet rs=connManager.queryDB("select * from INCIDENCIA " +
-					"WHERE NOT ID=(SELECT ID FROM INCIDENCIA inci , ORDENDETRABAJO " +
-					"orden WHERE inci.ID=orden.ID)");
+			ResultSet rs = connManager.queryDB("select * from INCIDENCIA WHERE " +
+					"NOT EXIST(SELECT * FROM INCIDENCIA inci ,ORDENTRABAJO orden WHERE " +
+					"inci.ID = orden.ID)");
 			connManager.close();
-			
-			
-		
-			
+
 			try {
 				ArrayList<Incidencia> incidencias = new ArrayList<Incidencia>();
 				while(rs.next()){
 					Incidencia incidencia = new Incidencia(rs.getString("ID"),rs.getString("NOMBRE")
-							,rs.getString("DESCRIPCION"),rs.getDate("FECHADEENTRADA"));
+							,rs.getString("DESCRIPCION"), rs.getString("FECHADEENTRADA"));
 					
 					incidencias.add(incidencia);
 				}
@@ -55,22 +54,18 @@ public class IncidenciaDAO implements IIncidenciaDAO{
 	}
 
 	public void crearIncidencia(Incidencia incidencia) {
-try {
-			
-			connManager.connect();
-			connManager.updateDB("insert into INCIDENCIA (ID,NOMBRE,DESCRIPCION,FECHADEENTRADA) values ('"
-							+ null
-							+ "', '"
-							+ incidencia.getNombre()
-							+ "', '"
-							+ incidencia.getDescripcion()
-							+ "', '"
-							+incidencia.getFechaEntrada()
-							+"')");
-			connManager.close();
+		
+		try {
+			this.connManager.connect();
+			this.connManager.updateDB("insert into INCIDENCIA (ID, NOMBRE, DESCRIPCION, " +
+					"FECHADEENTRADA) values (" 
+					+ null + ", '" + incidencia.getNombre() + "', '" + 
+					incidencia.getDescripcion() + "', '" + 
+					incidencia.getFechaEntrada() + "')" );
+			this.connManager.close();
 
 		} catch (DAOExcepcion e) {
-
+			e.printStackTrace();
 		}
 		
 	}

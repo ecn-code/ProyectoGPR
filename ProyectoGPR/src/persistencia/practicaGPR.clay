@@ -34,7 +34,7 @@
 <column auto-increment="false" column-size="15" decimal-digits="0" default-value="" id="1333dce:13e238b2e3a:-7fb8" mandatory="false" name="ESTADO">
 <data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
 </column>
-<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="19ea5f2:13e27754743:-7e64" mandatory="true" name="DNI">
+<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="19ea5f2:13e27754743:-7e64" mandatory="false" name="DNI">
 <data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
 </column>
 <column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="19ea5f2:13e27754743:-7e48" mandatory="true" name="NOMBRE_AREA">

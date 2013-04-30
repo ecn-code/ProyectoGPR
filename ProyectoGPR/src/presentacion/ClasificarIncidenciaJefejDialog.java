@@ -3,6 +3,8 @@ package presentacion;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
+
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -10,9 +12,13 @@ import javax.swing.JComboBox;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerListModel;
 import javax.swing.SwingUtilities;
+
+import logica.Controlador;
+import logica.Incidencia;
 
 
 /**
@@ -107,6 +113,11 @@ public class ClasificarIncidenciaJefejDialog extends javax.swing.JDialog {
 					getContentPane().add(jButtonEnviar);
 					jButtonEnviar.setText("Enviar");
 					jButtonEnviar.setBounds(179, 156, 102, 23);
+					jButtonEnviar.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent evt) {
+							jButtonEnviarActionPerformed(evt);
+						}
+					});
 				}
 			}
 			this.setSize(324, 244);
@@ -121,6 +132,27 @@ public class ClasificarIncidenciaJefejDialog extends javax.swing.JDialog {
 		//System.out.println("jButtonCancelar.actionPerformed, event="+evt);
 		//TODO add your code for jButtonCancelar.actionPerformed
 		this.dispose();
+	}
+	
+	private void jButtonEnviarActionPerformed(ActionEvent evt) {
+		//System.out.println("jButtonEnviar.actionPerformed, event="+evt);
+		//TODO add your code for jButtonEnviar.actionPerformed
+		
+		Date fechaActual = new Date();
+		OrdenTrabajo orden = new OrdenTrabajo("",
+				this.jTextFieldNombreIncidencia.getText(),
+				this.jTextPaneDescripcion.getText(),
+				fechaActual);
+		try{ 
+				   
+			control = Controlador.dameControlador(); 
+			control.enviarIncidencia(incidencia);
+			JOptionPane.showMessageDialog(this,"Inciencia enviada al Jefe de Servicio");
+			   
+		}catch (Exception e){ 
+			JOptionPane.showMessageDialog( 
+			this,e.getMessage(),"ERROR",JOptionPane.ERROR_MESSAGE); 
+		}
 	}
 
 }
