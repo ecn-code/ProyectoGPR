@@ -50,7 +50,7 @@ public ArrayList<OrdenTrabajo> encontrarOrdenesTrabajoPorOperario(Operario opera
 public ArrayList<OrdenTrabajo> encontrarOrdenesTrabajoPorFecha(Date fecha_ini,Date fecha_fin)throws DAOExcepcion{
 	return orDAO.getOrdenTrabajo(fecha_ini,fecha_fin);
 }
-public void asignarOrdenTrabajo(OrdenTrabajo orden)throws DAOExcepcion{
+public void modificarOrdenTrabajo(OrdenTrabajo orden)throws DAOExcepcion{
 	orDAO.modificar(orden);
 }
 public void enviarOrdenTrabajo(OrdenTrabajo orden)throws DAOExcepcion{
@@ -80,5 +80,4 @@ public Area encontrarAreaPorNombre(String nombre) throws DAOExcepcion{
 	return arDAO.getArea(nombre);
 }
 //metodos de Material
-
 }
