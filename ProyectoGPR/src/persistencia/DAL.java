@@ -31,7 +31,7 @@ public static DAL dameDAL() throws DAOExcepcion {
 	return dal;
 	}
 //metodos de incidencia
-public void crearIncidencia(Incidencia incidencia) throws DAOExcepcion {
+public void enviarIncidencia(Incidencia incidencia) throws DAOExcepcion {
 	inDAO.crearIncidencia(incidencia);
 }
 public ArrayList<Incidencia> getIncidencias() throws DAOExcepcion {
@@ -53,14 +53,31 @@ public ArrayList<OrdenTrabajo> encontrarOrdenesTrabajoPorFecha(Date fecha_ini,Da
 public void modificarOrdenTrabajo(OrdenTrabajo orden)throws DAOExcepcion{
 	orDAO.modificar(orden);
 }
+public void enviarOrdenTrabajo(OrdenTrabajo orden)throws DAOExcepcion{
+	orDAO.crearOrdenTrabajo(orden);
+}
+
+
 //metodos de persona
 
-public Operario comprobarOperario(String dni)throws DAOExcepcion{
+public Operario encontrarOperarioPorDNI(String dni)throws DAOExcepcion{
 	return peDAO.getOperario(dni);
+}
+public ArrayList<Operario> encontrarOperariosPorArea(Area area)throws DAOExcepcion{
+		return peDAO.getOperarios(area);
+}
+public ArrayList<Operario> encontrarOperarios()throws DAOExcepcion{
+	return peDAO.getOperarios();
+}
+public int loguearOperario(String nombre,String pass)throws DAOExcepcion{
+	return peDAO.loguear(nombre,pass);
 }
 //metodos de Area
 public ArrayList<Area> encontrarAreas() throws DAOExcepcion{
 	return arDAO.getArea();
 }
-
+public Area encontrarAreaPorNombre(String nombre) throws DAOExcepcion{
+	return arDAO.getArea(nombre);
+}
+//metodos de Material
 }
