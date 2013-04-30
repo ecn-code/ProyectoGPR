@@ -21,15 +21,31 @@ public class Controlador {
 	private Controlador() throws DominioExcepcion{
 		try {
 		// Objeto para comunicarse con la capa de acceso a datos
-		dal = DAL.dameDAL();
+		this.dal = DAL.dameDAL();
 		
 		}catch (DAOExcepcion e){
 			throw new DominioExcepcion(e.getMessage());
 		}
 	}
 	
+	public void enviarIncidencia (Incidencia incidencia) throws DominioExcepcion{
+		try{ 
+			this.dal.enviarIncidencia(incidencia);
+		}catch (DAOExcepcion e){ 
+			   throw new DominioExcepcion(e.getMessage()); 
+		} 
+	}
 	
+	public void clasificarIncidencia (Incidencia incidencia, Area area, String prioridad)
+	throws DominioExcepcion{
+		try{ 
+			this.dal.clasificarIncidencia(incidencia, area, prioridad);
+		}catch (DAOExcepcion e){ 
+			   throw new DominioExcepcion(e.getMessage()); 
+		} 
+	}
 	
+	public void asignarOrdenTrabajo ()
 	
 /*
 	//****************************************************************************
