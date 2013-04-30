@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import logica.Area;
 import logica.Incidencia;
+import logica.Material;
 import logica.Operario;
 import logica.OrdenTrabajo;
 
@@ -17,6 +18,7 @@ public class DAL {
 	IAreaDAO arDAO;
 	IOrdenTrabajoDAO orDAO;
 	IOperarioDAO peDAO;
+	IMaterialDAO maDAO;
 	
 private DAL() throws DAOExcepcion{
 	// Objectos para comunicarse con la capa de acceso a datos
@@ -24,6 +26,7 @@ private DAL() throws DAOExcepcion{
 	arDAO=new AreaDAO();
 	orDAO=new OrdenTrabajoDAO();
 	peDAO=new OperarioDAO();
+	maDAO=new MaterialDAO();
 }
 public static DAL dameDAL() throws DAOExcepcion {
 	if(dal==null)
@@ -80,4 +83,10 @@ public Area encontrarAreaPorNombre(String nombre) throws DAOExcepcion{
 	return arDAO.getArea(nombre);
 }
 //metodos de Material
+public ArrayList<Material> encontrarMateriales() throws DAOExcepcion{
+	return maDAO.getMateriales();
+}
+public void modificarDisponiblesMaterial(Material material) throws DAOExcepcion{
+	maDAO.modificarDisponiblesMaterial(material);
+}
 }

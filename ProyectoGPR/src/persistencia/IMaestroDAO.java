@@ -1,9 +1,11 @@
 package persistencia;
 
+import java.util.ArrayList;
+
 import logica.Area;
 import logica.Maestro;
 
 public interface IMaestroDAO {
-public Maestro [] getMaestros();
-public Maestro [] getMaestros(Area area);
+public ArrayList<Maestro> getMaestros();
+public ArrayList<Maestro> getMaestros(Area area);
 }
