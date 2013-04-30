@@ -7,6 +7,7 @@ import java.util.Collection;
 
 import logica.Area;
 import logica.Incidencia;
+import logica.OrdenTrabajo;
 
 
 import excepciones.DAOExcepcion;
@@ -79,7 +80,7 @@ try {
 		IOrdenTrabajoDAO ordenDAO;
 		try {
 			ordenDAO = new OrdenTrabajoDAO();
-			ordenDAO.crearOrdenTrabajo(incidencia,area,prioridad);
+			ordenDAO.crearOrdenTrabajo(new OrdenTrabajo(incidencia,area,prioridad));
 		} catch (DAOExcepcion e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

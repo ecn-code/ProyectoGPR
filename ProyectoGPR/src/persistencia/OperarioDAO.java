@@ -1,10 +1,9 @@
 package persistencia;
 
-<<<<<<< HEAD
-=======
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
->>>>>>> origin/Roberto
+
 import java.util.ArrayList;
 
 import logica.Area;
@@ -104,17 +103,11 @@ public class OperarioDAO implements IOperarioDAO {
 				throw e;
 			}
 	}
-
 	@Override
-	public ArrayList<Operario> getOperarios() {
+	public int loguear(String nombre, String pass) throws DAOExcepcion {
 		// TODO Auto-generated method stub
-		return null;
+		return 0;
 	}
 
-	@Override
-	public ArrayList<Operario> getOperarios(Area area) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }
