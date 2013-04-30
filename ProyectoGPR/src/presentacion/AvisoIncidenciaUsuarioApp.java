@@ -254,22 +254,22 @@ public class AvisoIncidenciaUsuarioApp extends javax.swing.JFrame {
 	private void jButtonEnviarActionPerformed(ActionEvent evt) {
 		//System.out.println("jButtonEnviar.actionPerformed, event="+evt);
 		//TODO add your code for jButtonEnviar.actionPerformed
-		
 		Date fechaActual = new Date();
+
 		Incidencia incidencia = new Incidencia("",
 				this.jTextFieldNombreIncidencia.getText(),
 				this.jTextPaneDescripcion.getText(),
 				fechaActual);
-		try{ 
+			   try{ 
 				   
-			control = Controlador.dameControlador(); 
-			control.enviarIncidencia(incidencia);
-			JOptionPane.showMessageDialog(this,"Inciencia enviada al Jefe de Servicio");
+				   control = Controlador.dameControlador(); 
+				   control.enviarIncidencia(incidencia);
+				   JOptionPane.showMessageDialog(this,"Inciencia enviada al Jefe de Servicio");
 			   
-		}catch (Exception e){ 
-			JOptionPane.showMessageDialog( 
+			  }catch (Exception e){ 
+			   JOptionPane.showMessageDialog( 
 			this,e.getMessage(),"ERROR",JOptionPane.ERROR_MESSAGE); 
-		}
+			  }
 		
 	}
 

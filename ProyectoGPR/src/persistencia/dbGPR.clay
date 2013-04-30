@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<clay-model clay-version="2.0.1">
+<database-model author="" begin-script="" end-script="" id="1333dce:13e238b2e3a:-8000" name="dbGPR" sql-dialect-id="jp.azzurri.clay.dialect.HSQLDB_1_7_0_Dialect" version="1.0">
+<schema-list>
+<schema id="1333dce:13e238b2e3a:-7ffd" name="DEFAULT_SCHEMA">
+<table-list>
+<table id="1333dce:13e238b2e3a:-7fff" name="INCIDENCIA">
+<column-list>
+<column auto-increment="true" column-size="0" decimal-digits="0" default-value="" id="1333dce:13e238b2e3a:-7ffa" mandatory="true" name="ID">
+<data-type name="INTEGER" selected-variant-pattern="INTEGER"/>
+</column>
+<column auto-increment="false" column-size="15" decimal-digits="0" default-value="" id="1333dce:13e238b2e3a:-7fbe" mandatory="false" name="NOMBRE">
+<data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="100" decimal-digits="0" default-value="" id="1333dce:13e238b2e3a:-7fbd" mandatory="false" name="DESCRIPCION">
+<data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="1333dce:13e238b2e3a:-7fbc" mandatory="false" name="FECHADEENTRADA">
+<data-type name="DATE" selected-variant-pattern="DATE"/>
+</column>
+</column-list>
+<primary-key id="1333dce:13e238b2e3a:-7ffe" name="PK_INCIDENCIA">
+<primary-key-column name="ID"/>
+</primary-key>
+</table>
+<table id="1333dce:13e238b2e3a:-7ff9" name="ORDENTRABAJO">
+<column-list>
+<column auto-increment="true" column-size="0" decimal-digits="0" default-value="" id="1333dce:13e238b2e3a:-7ff5" mandatory="true" name="ID">
+<data-type name="INTEGER" selected-variant-pattern="INTEGER"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="1333dce:13e238b2e3a:-7fb9" mandatory="false" name="PRIORIDAD">
+<data-type name="INTEGER" selected-variant-pattern="INTEGER"/>
+</column>
+<column auto-increment="false" column-size="15" decimal-digits="0" default-value="" id="1333dce:13e238b2e3a:-7fb8" mandatory="false" name="ESTADO">
+<data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="19ea5f2:13e27754743:-7e64" mandatory="true" name="DNI">
+<data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="19ea5f2:13e27754743:-7e48" mandatory="true" name="NOMBRE_AREA">
+<data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
+</column>
+</column-list>
+<primary-key id="1333dce:13e238b2e3a:-7ff8" name="PK_ORDENTRABAJO">
+<primary-key-column name="ID"/>
+</primary-key>
+<foreign-key-list>
+<foreign-key id="1333dce:13e238b2e3a:-7fcf" name="FK_ORDENDETRABAJO_1" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_INCIDENCIA" referenced-table="INCIDENCIA" referenced-table-schema="DEFAULT_SCHEMA" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="ID" referenced-key-column-name="ID"/>
+</foreign-key>
+<foreign-key id="19ea5f2:13e27754743:-7e66" name="FK_ORDENDETRABAJO_2" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_OPERARIO" referenced-table="OPERARIO" referenced-table-schema="DEFAULT_SCHEMA" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="DNI" referenced-key-column-name="DNI"/>
+</foreign-key>
+<foreign-key id="19ea5f2:13e27754743:-7e4a" name="FK_ORDENDETRABAJO_3" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_AREA" referenced-table="AREA" referenced-table-schema="DEFAULT_SCHEMA" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="NOMBRE_AREA" referenced-key-column-name="NOMBRE_AREA"/>
+</foreign-key>
+</foreign-key-list>
+</table>
+<table id="19ea5f2:13e27754743:-7ffc" name="MATERIAL">
+<column-list>
+<column auto-increment="true" column-size="0" decimal-digits="0" default-value="" id="19ea5f2:13e27754743:-7e36" mandatory="true" name="ID_M">
+<data-type name="INTEGER" selected-variant-pattern="INTEGER"/>
+</column>
+<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="19ea5f2:13e27754743:-7dd5" mandatory="false" name="NOMBRE">
+<data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="100" decimal-digits="0" default-value="" id="19ea5f2:13e27754743:-7dd4" mandatory="false" name="DESCRIPCION">
+<data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="19ea5f2:13e27754743:-7e35" mandatory="false" name="DISPONIBLES">
+<data-type name="INTEGER" selected-variant-pattern="INTEGER"/>
+</column>
+</column-list>
+<primary-key id="19ea5f2:13e27754743:-7ffb" name="PK_MATERIAL">
+<primary-key-column name="ID_M"/>
+</primary-key>
+</table>
+<table id="19ea5f2:13e27754743:-7ffa" name="MATERIALUSADO">
+<column-list>
+<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="19ea5f2:13e27754743:-7e39" mandatory="false" name="UNIDADES">
+<data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="19ea5f2:13e27754743:-7e0e" mandatory="true" name="ID">
+<data-type name="INTEGER" selected-variant-pattern="INTEGER"/>
+</column>
+<column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="19ea5f2:13e27754743:-7df2" mandatory="true" name="ID_M">
+<data-type name="INTEGER" selected-variant-pattern="INTEGER"/>
+</column>
+</column-list>
+<primary-key id="19ea5f2:13e27754743:-7ff9" name="PK_MATERIALUSADO">
+<primary-key-column name="ID"/>
+<primary-key-column name="ID_M"/>
+</primary-key>
+<foreign-key-list>
+<foreign-key id="19ea5f2:13e27754743:-7e10" name="FK_MATERIALUSADO_1" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_ORDENTRABAJO" referenced-table="ORDENTRABAJO" referenced-table-schema="DEFAULT_SCHEMA" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="ID" referenced-key-column-name="ID"/>
+</foreign-key>
+<foreign-key id="19ea5f2:13e27754743:-7df4" name="FK_MATERIALUSADO_2" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_MATERIAL" referenced-table="MATERIAL" referenced-table-schema="DEFAULT_SCHEMA" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="ID_M" referenced-key-column-name="ID_M"/>
+</foreign-key>
+</foreign-key-list>
+</table>
+<table id="19ea5f2:13e27754743:-7ff6" name="PERSONA">
+<column-list>
+<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="19ea5f2:13e27754743:-7f9d" mandatory="true" name="DNI">
+<data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="19ea5f2:13e27754743:-7f9c" mandatory="false" name="NOMBRE">
+<data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="19ea5f2:13e27754743:-7f9b" mandatory="false" name="PASS">
+<data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
+</column>
+</column-list>
+<primary-key id="19ea5f2:13e27754743:-7ff5" name="PK_PERSONA">
+<primary-key-column name="DNI"/>
+</primary-key>
+</table>
+<table id="19ea5f2:13e27754743:-7ff4" name="OPERARIO">
+<column-list>
+<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="19ea5f2:13e27754743:-7ea2" mandatory="true" name="DNI">
+<data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="19ea5f2:13e27754743:-7f76" mandatory="true" name="NOMBRE_AREA">
+<data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
+</column>
+</column-list>
+<primary-key id="19ea5f2:13e27754743:-7ff3" name="PK_OPERARIO">
+<primary-key-column name="DNI"/>
+</primary-key>
+<foreign-key-list>
+<foreign-key id="19ea5f2:13e27754743:-7f78" name="FK_OPERARIO_1" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_AREA" referenced-table="AREA" referenced-table-schema="DEFAULT_SCHEMA" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="NOMBRE_AREA" referenced-key-column-name="NOMBRE_AREA"/>
+</foreign-key>
+<foreign-key id="19ea5f2:13e27754743:-7ea4" name="FK_OPERARIO_2" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_PERSONA" referenced-table="PERSONA" referenced-table-schema="DEFAULT_SCHEMA" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="DNI" referenced-key-column-name="DNI"/>
+</foreign-key>
+</foreign-key-list>
+</table>
+<table id="19ea5f2:13e27754743:-7ff2" name="JEFE">
+<column-list>
+<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="19ea5f2:13e27754743:-7eeb" mandatory="true" name="DNI">
+<data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
+</column>
+</column-list>
+<primary-key id="19ea5f2:13e27754743:-7ff1" name="PK_JEFE">
+<primary-key-column name="DNI"/>
+</primary-key>
+<foreign-key-list>
+<foreign-key id="19ea5f2:13e27754743:-7eed" name="FK_JEFE_1" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_PERSONA" referenced-table="PERSONA" referenced-table-schema="DEFAULT_SCHEMA" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="DNI" referenced-key-column-name="DNI"/>
+</foreign-key>
+</foreign-key-list>
+</table>
+<table id="19ea5f2:13e27754743:-7ff0" name="MAESTRO">
+<column-list>
+<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="19ea5f2:13e27754743:-7f01" mandatory="true" name="DNI">
+<data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
+</column>
+<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="19ea5f2:13e27754743:-7dc1" mandatory="true" name="NOMBRE_AREA">
+<data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
+</column>
+</column-list>
+<primary-key id="19ea5f2:13e27754743:-7fef" name="PK_MAESTRO">
+<primary-key-column name="DNI"/>
+</primary-key>
+<foreign-key-list>
+<foreign-key id="19ea5f2:13e27754743:-7f03" name="FK_MAESTRO_1" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_PERSONA" referenced-table="PERSONA" referenced-table-schema="DEFAULT_SCHEMA" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="DNI" referenced-key-column-name="DNI"/>
+</foreign-key>
+<foreign-key id="19ea5f2:13e27754743:-7dc3" name="FK_MAESTRO_2" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_AREA" referenced-table="AREA" referenced-table-schema="DEFAULT_SCHEMA" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key-column column-name="NOMBRE_AREA" referenced-key-column-name="NOMBRE_AREA"/>
+</foreign-key>
+</foreign-key-list>
+</table>
+<table id="19ea5f2:13e27754743:-7fee" name="AREA">
+<column-list>
+<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="19ea5f2:13e27754743:-7fe8" mandatory="true" name="NOMBRE_AREA">
+<data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
+</column>
+</column-list>
+<primary-key id="19ea5f2:13e27754743:-7fed" name="PK_AREA">
+<primary-key-column name="NOMBRE_AREA"/>
+</primary-key>
+</table>
+</table-list>
+</schema>
+</schema-list>
+</database-model>
+<diagram>
+<table-figure height="121" refid="1333dce:13e238b2e3a:-7fff" width="115" x="12" y="209"/>
+<table-figure refid="1333dce:13e238b2e3a:-7ff9" x="260" y="252"/>
+<table-figure refid="19ea5f2:13e27754743:-7ffc" x="706" y="333"/>
+<table-figure refid="19ea5f2:13e27754743:-7ffa" x="471" y="348"/>
+<table-figure refid="19ea5f2:13e27754743:-7ff6" x="359" y="13"/>
+<table-figure refid="19ea5f2:13e27754743:-7ff4" x="350" y="127"/>
+<table-figure refid="19ea5f2:13e27754743:-7ff2" x="215" y="148"/>
+<table-figure refid="19ea5f2:13e27754743:-7ff0" x="632" y="54"/>
+<table-figure refid="19ea5f2:13e27754743:-7fee" x="630" y="229"/>
+</diagram>
+</clay-model>

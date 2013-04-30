@@ -17,7 +17,7 @@ public class OrdenTrabajo extends Incidencia {
 	public OrdenTrabajo(Incidencia _incidencia,Area _area,String _prioridad){
 		super(_incidencia.getID(),_incidencia.getNombre(),_incidencia.getDescripcion(),_incidencia.getFechaEntrada());
 		prioridad=_prioridad;
-		estado="nada";
+		estado="PENDIENTE";
 		operario=null;
 		area=_area;
 	}
