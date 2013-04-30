@@ -1,6 +1,8 @@
 package logica;
 
-import java.sql.Date;
+import java.util.Date;
+
+
 
 public class Incidencia{
 	
@@ -8,7 +10,7 @@ public class Incidencia{
 	private String nombre;
 	private String descripcion;
 	private Date fechaEntrada;
-	
+
 	public Incidencia(String _iD,String _nombre
 			,String _descripcion, Date _fechaEntrada){
 		iD = _iD;

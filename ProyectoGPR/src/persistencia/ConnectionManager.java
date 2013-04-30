@@ -5,15 +5,16 @@ import excepciones.DAOExcepcion;
 public class ConnectionManager {
 	
 	private String sourceURL;
-	private Connection dbcon=null;
+	private Connection dbcon = null;
 	
 	
 public ConnectionManager(String dbname) throws ClassNotFoundException{
 	 Class.forName("org.hsqldb.jdbcDriver");
-	 sourceURL = "jdbc:hsqldb:hsql://localhost/"+dbname;	
+	 //sourceURL = "jdbc:hsqldb:hsql://localhost/practicaGPR";
+	 sourceURL = "jdbc:hsqldb:hsql://localhost/" + dbname;	
 }
 public void connect() throws DAOExcepcion{
-	if (dbcon==null)
+	if (dbcon == null)
 		try{
 			dbcon = DriverManager.getConnection(sourceURL);
 		} catch(SQLException e){

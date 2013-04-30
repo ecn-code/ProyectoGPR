@@ -18,7 +18,7 @@ public class IncidenciaDAO implements IIncidenciaDAO{
 	
 	public IncidenciaDAO() throws DAOExcepcion {
 		try{
-		connManager= new ConnectionManager("practicaGPR");
+		connManager = new ConnectionManager("practicaGPR");
 		}catch (ClassNotFoundException e){
 			throw new DAOExcepcion("DB_CONNECT_ERROR");
 		}

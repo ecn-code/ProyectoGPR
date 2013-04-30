@@ -45,8 +45,18 @@ public class Controlador {
 		} 
 	}
 	
-	public void asignarOrdenTrabajo ()
+	public void asignarOrdenTrabajo (OrdenTrabajo orden)throws DominioExcepcion{
+		try{ 
+			this.dal.asignarOrdenTrabajo(orden);
+		}catch (DAOExcepcion e){ 
+			   throw new DominioExcepcion(e.getMessage()); 
+		} 
+	}
 	
+	public static  Controlador dameControlador() throws DominioExcepcion {
+		// TODO Auto-generated method stub
+		return new Controlador();
+	}
 /*
 	//****************************************************************************
 	// Para el C.U. Crear Usuario Registrado

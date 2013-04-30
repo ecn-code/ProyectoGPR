@@ -56,7 +56,7 @@ public ArrayList<OrdenTrabajo> encontrarOrdenesTrabajoPorFecha(Date fecha_ini,Da
 public void modificarOrdenTrabajo(OrdenTrabajo orden)throws DAOExcepcion{
 	orDAO.modificar(orden);
 }
-public void enviarOrdenTrabajo(OrdenTrabajo orden)throws DAOExcepcion{
+public void asignarOrdenTrabajo(OrdenTrabajo orden)throws DAOExcepcion{
 	orDAO.crearOrdenTrabajo(orden);
 }
 

@@ -23,7 +23,7 @@
 <primary-key-column name="ID"/>
 </primary-key>
 </table>
-<table id="1333dce:13e238b2e3a:-7ff9" name="ORDENDETRABAJO">
+<table id="1333dce:13e238b2e3a:-7ff9" name="ORDENTRABAJO">
 <column-list>
 <column auto-increment="true" column-size="0" decimal-digits="0" default-value="" id="1333dce:13e238b2e3a:-7ff5" mandatory="true" name="ID">
 <data-type name="INTEGER" selected-variant-pattern="INTEGER"/>
@@ -41,7 +41,7 @@
 <data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
 </column>
 </column-list>
-<primary-key id="1333dce:13e238b2e3a:-7ff8" name="PK_ORDENDETRABAJO">
+<primary-key id="1333dce:13e238b2e3a:-7ff8" name="PK_ORDENTRABAJO">
 <primary-key-column name="ID"/>
 </primary-key>
 <foreign-key-list>
@@ -92,7 +92,7 @@
 <primary-key-column name="ID_M"/>
 </primary-key>
 <foreign-key-list>
-<foreign-key id="19ea5f2:13e27754743:-7e10" name="FK_MATERIALUSADO_1" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_ORDENDETRABAJO" referenced-table="ORDENDETRABAJO" referenced-table-schema="DEFAULT_SCHEMA" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
+<foreign-key id="19ea5f2:13e27754743:-7e10" name="FK_MATERIALUSADO_1" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_ORDENTRABAJO" referenced-table="ORDENTRABAJO" referenced-table-schema="DEFAULT_SCHEMA" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">
 <foreign-key-column column-name="ID" referenced-key-column-name="ID"/>
 </foreign-key>
 <foreign-key id="19ea5f2:13e27754743:-7df4" name="FK_MATERIALUSADO_2" on-delete="UNSPECIFIED" on-update="UNSPECIFIED" referenced-key="PK_MATERIAL" referenced-table="MATERIAL" referenced-table-schema="DEFAULT_SCHEMA" source-entity-role="" source-multiplicity="0..*" source-relationship-type="" target-entity-role="" target-multiplicity="1" target-relationship-type="">

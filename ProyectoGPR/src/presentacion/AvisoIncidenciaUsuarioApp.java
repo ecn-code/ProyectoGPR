@@ -1,6 +1,8 @@
 package presentacion;
 import com.cloudgarden.layout.AnchorConstraint;
 import com.cloudgarden.layout.AnchorLayout;
+
+
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.FlowLayout;
@@ -9,11 +11,16 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+
+import logica.Controlador;
+import logica.Incidencia;
+import logica.UsuarioRegistrado;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -28,7 +35,7 @@ import javax.swing.border.TitledBorder;
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
 public class AvisoIncidenciaUsuarioApp extends javax.swing.JFrame {
-
+	Controlador control;
 	private JMenuItem helpMenuItem;
 	private JMenu jMenu5;
 	private JLabel jLabelNombreUsuario;
@@ -37,7 +44,7 @@ public class AvisoIncidenciaUsuarioApp extends javax.swing.JFrame {
 	private JButton jButtonLimpiar;
 	private JButton jButtonEnviar;
 	private JButton jButtonCancelar;
-	private JTextPane jTextPanePrincipal;
+	private JTextPane jTextPaneDescripcion;
 	private JMenuItem deleteMenuItem;
 	private JSeparator jSeparator1;
 	private JMenuItem pasteMenuItem;
@@ -90,6 +97,11 @@ public class AvisoIncidenciaUsuarioApp extends javax.swing.JFrame {
 					getContentPane().add(jButtonCancelar, new AnchorConstraint(901, 474, 975, 291, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
 					getContentPane().add(jButtonEnviar, new AnchorConstraint(901, 720, 975, 537, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
 					jButtonEnviar.setBounds(249, 381, 96, 26);
+					jButtonEnviar.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent evt) {
+							jButtonEnviarActionPerformed(evt);
+						}
+					});
 					jButtonCancelar.setLayout(null);
 					jButtonCancelar.setText("Salir");
 					jButtonCancelar.setBounds(440, 381, 96, 26);
@@ -100,13 +112,13 @@ public class AvisoIncidenciaUsuarioApp extends javax.swing.JFrame {
 					});
 				}
 				{
-					jTextPanePrincipal = new JTextPane();
-					getContentPane().add(jTextPanePrincipal, new AnchorConstraint(202, 1000, 866, 0, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-					jTextPanePrincipal.setLayout(null);
-					jTextPanePrincipal.setText("Escribe la incidencia, máximo 300 caracteres...");
-					jTextPanePrincipal.setMargin(new java.awt.Insets(3, 3, 3, 3));
-					jTextPanePrincipal.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
-					jTextPanePrincipal.setBounds(12, 95, 585, 265);
+					jTextPaneDescripcion = new JTextPane();
+					getContentPane().add(jTextPaneDescripcion, new AnchorConstraint(202, 1000, 866, 0, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
+					jTextPaneDescripcion.setLayout(null);
+					jTextPaneDescripcion.setText("Escribe la incidencia, máximo 300 caracteres...");
+					jTextPaneDescripcion.setMargin(new java.awt.Insets(3, 3, 3, 3));
+					jTextPaneDescripcion.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+					jTextPaneDescripcion.setBounds(12, 95, 585, 265);
 				}
 				{
 					jButtonLimpiar = new JButton();
@@ -236,7 +248,29 @@ public class AvisoIncidenciaUsuarioApp extends javax.swing.JFrame {
 	private void jButtonLimpiarActionPerformed(ActionEvent evt) {
 		//System.out.println("jButtonLimpiar.actionPerformed, event="+evt);
 		//TODO add your code for jButtonLimpiar.actionPerformed
-		jTextPanePrincipal.setText("");
+		jTextPaneDescripcion.setText("");
+	}
+	
+	private void jButtonEnviarActionPerformed(ActionEvent evt) {
+		//System.out.println("jButtonEnviar.actionPerformed, event="+evt);
+		//TODO add your code for jButtonEnviar.actionPerformed
+		Date fechaActual = new Date();
+
+		Incidencia incidencia = new Incidencia("",
+				this.jTextFieldNombreIncidencia.getText(),
+				this.jTextPaneDescripcion.getText(),
+				fechaActual);
+			   try{ 
+				   
+				   control = Controlador.dameControlador(); 
+				   control.enviarIncidencia(incidencia);
+				   JOptionPane.showMessageDialog(this,"Inciencia enviada al Jefe de Servicio");
+			   
+			  }catch (Exception e){ 
+			   JOptionPane.showMessageDialog( 
+			this,e.getMessage(),"ERROR",JOptionPane.ERROR_MESSAGE); 
+			  }
+		
 	}
 
 }
