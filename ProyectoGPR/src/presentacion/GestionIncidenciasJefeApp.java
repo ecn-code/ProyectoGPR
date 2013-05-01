@@ -2,7 +2,9 @@ package presentacion;
 import com.cloudgarden.layout.AnchorLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
+import logica.Incidencia;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
@@ -26,6 +28,7 @@ import logica.Controlador;
 public class GestionIncidenciasJefeApp extends javax.swing.JFrame {
 
 	private Controlador control;
+	private JScrollPane jScrollPaneIncidencias;
 	private JMenuItem helpMenuItem;
 	private JLabel jLabeiListadoAvisos;
 	private JButton jButtonFiltrar;
@@ -62,36 +65,48 @@ public class GestionIncidenciasJefeApp extends javax.swing.JFrame {
 	}
 	
 	private void initGUI() {
+		ArrayList<Incidencia> incidencias = new ArrayList<Incidencia>();
 		try {
 			
 			try{ 	   
 				this.control = Controlador.dameControlador(); 
-				
-				JOptionPane.showMessageDialog(this, "Inciencia enviada al Jefe de Servicio");
+				incidencias = this.control.getIncidencias();
 				   
 			}catch (Exception e){ 
 				JOptionPane.showMessageDialog( 
 				this,e.getMessage(),"ERROR",JOptionPane.ERROR_MESSAGE); 
 			}
 			
+			String[][] filas = new String[incidencias.size()][4];
 			
-			String filas[];
+			for(int i=0;i<incidencias.size();i++){
+				Incidencia incidencia = incidencias.get(i);
+				filas[i][0]= incidencia.getID();
+					filas[i][1]= incidencia.getNombre();
+						filas[i][2]= incidencia.getDescripcion();
+							filas[i][3]= incidencia.getFechaEntrada();
+				
+			}
+			
 			getContentPane().setLayout(null);
 			this.setTitle("Gestión de incidencias - Jefe Servicio Mantenimiento");
 			this.setResizable(false);
 			{
-				TableModel jTableAvisosIncidenciaModel = 
-					new DefaultTableModel(
-							new String[][] {{}, {}, {}},
-							new String[] { "ID", "NOMBRE", "FECHAENTRADA", "DESCRIPCION" });
-				jTableAvisosIncidencia = new JTable();
-				getContentPane().add(jTableAvisosIncidencia);
-				jTableAvisosIncidencia.setModel(jTableAvisosIncidenciaModel);
-				jTableAvisosIncidencia.setBounds(28, 66, 540, 245);
-				jTableAvisosIncidencia.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
-				//TableColumn columna = new TableColumn();;
-				//jTableAvisosIncidencia.addColumn(columna);
-			}
+				jScrollPaneIncidencias = new JScrollPane();
+				getContentPane().add(jScrollPaneIncidencias);
+				jScrollPaneIncidencias.setBounds(12, 77, 557, 234);
+				{
+					TableModel jTableAvisosIncidenciaModel = 
+						new DefaultTableModel(filas,
+								new String[] { "ID", "NOMBRE", "DESCRIPCION" ,"FECHAENTRADA"});
+					jTableAvisosIncidencia = new JTable();
+					jScrollPaneIncidencias.setViewportView(jTableAvisosIncidencia);
+					jTableAvisosIncidencia.setModel(jTableAvisosIncidenciaModel);
+					jTableAvisosIncidencia.setBounds(116, 155, 540, 245);
+					jTableAvisosIncidencia.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+					//TableColumn columna = new TableColumn();;
+					//jTableAvisosIncidencia.addColumn(columna);
+				}
 			{
 				jTextFieldDesde = new JTextField();
 				getContentPane().add(jTextFieldDesde);
@@ -124,7 +139,7 @@ public class GestionIncidenciasJefeApp extends javax.swing.JFrame {
 				jLabeiListadoAvisos = new JLabel();
 				getContentPane().add(jLabeiListadoAvisos);
 				jLabeiListadoAvisos.setText("Listado de avisos de incidencias:");
-				jLabeiListadoAvisos.setBounds(28, 44, 205, 16);
+				jLabeiListadoAvisos.setBounds(15, 53, 205, 18);
 			}
 			{
 				jButtonSalir = new JButton();
@@ -153,6 +168,7 @@ public class GestionIncidenciasJefeApp extends javax.swing.JFrame {
 				getContentPane().add(jButtonEliminar);
 				jButtonEliminar.setText("Eliminar");
 				jButtonEliminar.setBounds(585, 46, 102, 23);
+			}
 			}
 			this.setSize(715, 389);
 			{

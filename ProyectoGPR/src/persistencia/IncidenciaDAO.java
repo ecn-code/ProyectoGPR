@@ -30,9 +30,10 @@ public class IncidenciaDAO implements IIncidenciaDAO{
 		// TODO Auto-generated method stub
 		try{
 			connManager.connect();
-			ResultSet rs = connManager.queryDB("select * from INCIDENCIA WHERE " +
-					"NOT EXIST(SELECT * FROM INCIDENCIA inci ,ORDENTRABAJO orden WHERE " +
-					"inci.ID = orden.ID)");
+			ResultSet rs = connManager.queryDB("select * from INCIDENCIA " +
+					"WHERE NOT ID = (SELECT ID FROM INCIDENCIA inci , ORDENTRABAJO " +
+					"orden WHERE inci.ID = orden.ID)");
+
 			connManager.close();
 
 			try {
@@ -49,6 +50,7 @@ public class IncidenciaDAO implements IIncidenciaDAO{
 				}
 			
 			}catch (DAOExcepcion e){
+				System.out.println("ERROR");
 				throw e;
 			}
 	}

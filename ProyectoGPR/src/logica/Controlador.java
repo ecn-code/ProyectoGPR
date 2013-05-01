@@ -1,4 +1,5 @@
 package logica;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import java.util.List;
@@ -48,6 +49,14 @@ public class Controlador {
 	public void asignarOrdenTrabajo (OrdenTrabajo orden)throws DominioExcepcion{
 		try{ 
 			this.dal.asignarOrdenTrabajo(orden);
+		}catch (DAOExcepcion e){ 
+			   throw new DominioExcepcion(e.getMessage()); 
+		} 
+	}
+	
+	public ArrayList<Incidencia> getIncidencias() throws DominioExcepcion {
+		try{ 
+			return this.dal.getIncidencias();
 		}catch (DAOExcepcion e){ 
 			   throw new DominioExcepcion(e.getMessage()); 
 		} 
