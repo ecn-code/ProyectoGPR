@@ -29,17 +29,22 @@ public class IncidenciaDAO implements IIncidenciaDAO{
 	public ArrayList<Incidencia> getIncidencias() throws DAOExcepcion {
 		// TODO Auto-generated method stub
 		try{
-			connManager.connect();
-			ResultSet rs = connManager.queryDB("select * from INCIDENCIA " +
-					"WHERE NOT ID = (SELECT ID FROM INCIDENCIA inci , ORDENTRABAJO " +
-					"orden WHERE inci.ID = orden.ID)");
-
-			connManager.close();
-
+			
+			this.connManager.connect();
+			
+			ResultSet rs = this.connManager.queryDB("select * from INCIDENCIA WHERE NOT EXISTS" +
+					"(select * FROM ORDENTRABAJO WHERE INCIDENCIA.ID = ORDENTRABAJO.ID)");
+			
+			//select * FROM INCIDENCIA inc WHERE NOT EXISTS 
+			//(select * from ORDENTRABAJO orden WHERE inc.ID = orden.ID)
+			
+			
+			this.connManager.close();
+			
 			try {
 				ArrayList<Incidencia> incidencias = new ArrayList<Incidencia>();
 				while(rs.next()){
-					Incidencia incidencia = new Incidencia(rs.getString("ID"),rs.getString("NOMBRE")
+					Incidencia incidencia = new Incidencia(rs.getInt("ID"),rs.getString("NOMBRE")
 							,rs.getString("DESCRIPCION"), rs.getString("FECHADEENTRADA"));
 					
 					incidencias.add(incidencia);
@@ -73,11 +78,11 @@ public class IncidenciaDAO implements IIncidenciaDAO{
 	}
 
 	public void clasificarIncidencia(Incidencia incidencia, Area area,
-			String prioridad) {
+			int prioridad) {
 		IOrdenTrabajoDAO ordenDAO;
 		try {
 			ordenDAO = new OrdenTrabajoDAO();
-			ordenDAO.crearOrdenTrabajo(new OrdenTrabajo(incidencia,area,prioridad));
+			ordenDAO.crearOrdenTrabajo(new OrdenTrabajo(incidencia, area, prioridad));
 		} catch (DAOExcepcion e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -9,7 +9,7 @@ import excepciones.*;
 
 public interface IIncidenciaDAO {
 	void crearIncidencia(Incidencia in) throws DAOExcepcion; 
-	void clasificarIncidencia(Incidencia in,Area area,String prioridad) throws DAOExcepcion; 
+	void clasificarIncidencia(Incidencia in,Area area,int prioridad) throws DAOExcepcion; 
 	ArrayList<Incidencia> getIncidencias() throws DAOExcepcion; 
 }
 

@@ -6,6 +6,6 @@ import logica.Area;
 import excepciones.DAOExcepcion;
 
 public interface IAreaDAO {
-public ArrayList<Area> getArea() throws DAOExcepcion;
+public ArrayList<Area> getAreas() throws DAOExcepcion;
 public Area getArea(String nombre)throws DAOExcepcion;
 }

@@ -3,6 +3,7 @@ package presentacion;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.ComboBoxModel;
@@ -19,6 +20,8 @@ import javax.swing.SwingUtilities;
 
 import logica.Controlador;
 import logica.Incidencia;
+import logica.Area;
+import logica.OrdenTrabajo;
 
 
 /**
@@ -34,17 +37,22 @@ import logica.Incidencia;
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
 public class ClasificarIncidenciaJefejDialog extends javax.swing.JDialog {
+	
+	private GestionIncidenciasJefeApp jFramePrincipal;
+	private Incidencia incidencia;
+	private Controlador control;
 	private JComboBox jComboBoxArea;
 	private JComboBox jComboBoxPrioridad;
 	private JButton jButtonEnviar;
 	private JButton jButtonCancelar;
 	private JLabel jLabelPrioridad;
 	private JLabel jLabelArea;
+	private int numeroFilaSeleccionada;
 
 	/**
 	* Auto-generated main method to display this JDialog
 	*/
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				JFrame frame = new JFrame();
@@ -52,24 +60,45 @@ public class ClasificarIncidenciaJefejDialog extends javax.swing.JDialog {
 				inst.setVisible(true);
 			}
 		});
-	}
+	}*/
 	
-	public ClasificarIncidenciaJefejDialog(JFrame frame) {
+	public ClasificarIncidenciaJefejDialog(GestionIncidenciasJefeApp frame, Incidencia _incidencia,
+			int numeroFilaSeleccionada) {
 		super(frame);
-		initGUI();
+		this.jFramePrincipal = frame;
+		this.incidencia = _incidencia;
+		this.numeroFilaSeleccionada=numeroFilaSeleccionada;
+		this.initGUI();
 	}
 	
 	private void initGUI() {
+		
 		try {
-			{
+			
+			ArrayList<Area> areas = new ArrayList<Area>();
+			
+			try{ 	   
+				this.control = Controlador.dameControlador(); 
+				areas = this.control.getAreas();
+				   
+			}catch (Exception e){ 
+				JOptionPane.showMessageDialog( 
+				this,e.getMessage(),"ERROR",JOptionPane.ERROR_MESSAGE); 
+			}
+			
+			String[] elementosComboBox = new String[areas.size()];
+			
+			for(int i = 0; i < areas.size(); i++){
+				Area area = areas.get(i);
+				elementosComboBox[i]= area.getNombre();	
+			}//fin bucle for
+				
+				{
 				getContentPane().setLayout(null);
 				this.setTitle("Clasificar incidencia");
 				{
 					ComboBoxModel jComboBox1Model = 
-						new DefaultComboBoxModel(
-								new String[] { "Mecánica", "Electricidad", "A.A/Calefacción",
-									"Electromedicina", "Carpintería", "Pintura", "Fontanería",
-									"Albañilería"});
+						new DefaultComboBoxModel(elementosComboBox);
 					jComboBoxArea = new JComboBox();
 					getContentPane().add(jComboBoxArea);
 					jComboBoxArea.setModel(jComboBox1Model);
@@ -90,7 +119,7 @@ public class ClasificarIncidenciaJefejDialog extends javax.swing.JDialog {
 				{
 					ComboBoxModel jComboBox2Model = 
 						new DefaultComboBoxModel(
-								new String[] { "Alta", "Media", "Baja" });
+								new String[] { "1", "2", "3" });
 					jComboBoxPrioridad = new JComboBox();
 					getContentPane().add(jComboBoxPrioridad);
 					jComboBoxPrioridad.setModel(jComboBox2Model);
@@ -138,17 +167,20 @@ public class ClasificarIncidenciaJefejDialog extends javax.swing.JDialog {
 		//System.out.println("jButtonEnviar.actionPerformed, event="+evt);
 		//TODO add your code for jButtonEnviar.actionPerformed
 		
-		Date fechaActual = new Date();
-		OrdenTrabajo orden = new OrdenTrabajo("",
-				this.jTextFieldNombreIncidencia.getText(),
-				this.jTextPaneDescripcion.getText(),
-				fechaActual);
-		try{ 
-				   
-			control = Controlador.dameControlador(); 
-			control.enviarIncidencia(incidencia);
-			JOptionPane.showMessageDialog(this,"Inciencia enviada al Jefe de Servicio");
-			   
+		String nombreArea = (String) jComboBoxArea.getSelectedItem();
+		Area area = new Area(nombreArea);
+		//System.out.println(nombreArea);
+		String prioridadCadena = (String) jComboBoxPrioridad.getSelectedItem();
+		//int entero = Integer.parseInt(enteroString);
+		int prioridad = Integer.parseInt(prioridadCadena);
+		//System.out.println(prioridad);
+		OrdenTrabajo orden = new OrdenTrabajo(this.incidencia, area, prioridad);
+		this.dispose();
+		this.jFramePrincipal.actualizarTablaAvisosIncidencia(numeroFilaSeleccionada);
+		try{ 	   
+			this.control = Controlador.dameControlador(); 
+			this.control.clasificarIncidencia(incidencia, area, prioridad);
+			JOptionPane.showMessageDialog(this, "Inciencia enviada al Maestro de Área"); 
 		}catch (Exception e){ 
 			JOptionPane.showMessageDialog( 
 			this,e.getMessage(),"ERROR",JOptionPane.ERROR_MESSAGE); 

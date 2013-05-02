@@ -37,7 +37,7 @@ public class Controlador {
 		} 
 	}
 	
-	public void clasificarIncidencia (Incidencia incidencia, Area area, String prioridad)
+	public void clasificarIncidencia (Incidencia incidencia, Area area, int prioridad)
 	throws DominioExcepcion{
 		try{ 
 			this.dal.clasificarIncidencia(incidencia, area, prioridad);
@@ -57,6 +57,14 @@ public class Controlador {
 	public ArrayList<Incidencia> getIncidencias() throws DominioExcepcion {
 		try{ 
 			return this.dal.getIncidencias();
+		}catch (DAOExcepcion e){ 
+			   throw new DominioExcepcion(e.getMessage()); 
+		} 
+	}
+	
+	public ArrayList<Area> getAreas() throws DominioExcepcion {
+		try{ 
+			return this.dal.getAreas();
 		}catch (DAOExcepcion e){ 
 			   throw new DominioExcepcion(e.getMessage()); 
 		} 

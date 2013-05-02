@@ -18,7 +18,7 @@ public class OrdenTrabajoDAO implements IOrdenTrabajoDAO {
 
 	public OrdenTrabajoDAO()throws DAOExcepcion{
 		try{
-			connManager= new ConnectionManager("practicaGPR");
+			this.connManager= new ConnectionManager("practicaGPR");
 			}catch (ClassNotFoundException e){
 				throw new DAOExcepcion("DB_CONNECT_ERROR");
 			}
@@ -30,20 +30,21 @@ public class OrdenTrabajoDAO implements IOrdenTrabajoDAO {
 		
 			try{
 				connManager.connect();
-				ResultSet rs=connManager.queryDB("select * from INCIDENCIA inc,ORDENDETRABAJO ord where ord.ID=inc.ID and NOMBRE_AREA='"+_area.getNombre()+"'");
+				ResultSet rs=connManager.queryDB("select * from INCIDENCIA inc,ORDENDETRABAJO " +
+						"ord where ord.ID=inc.ID and NOMBRE_AREA='"+_area.getNombre()+"'");
 				connManager.close();
 				
 				try {
 					ArrayList<OrdenTrabajo> ordenesTrabajo = new ArrayList<OrdenTrabajo>();
-					IOperarioDAO persona=new OperarioDAO();
-					IAreaDAO areaDao=new AreaDAO();
+					IOperarioDAO persona = new OperarioDAO();
+					IAreaDAO areaDao = new AreaDAO();
 					while(rs.next()){
 						
-						Operario operario=persona.getOperario(rs.getString("DNI"));
-						Area area=areaDao.getArea(rs.getString("NOMBRE_AREA"));
+						Operario operario = persona.getOperario(rs.getString("DNI"));
+						Area area = areaDao.getArea(rs.getString("NOMBRE_AREA"));
 						OrdenTrabajo orden = new OrdenTrabajo(rs.getString("ID"),rs.getString("NOMBRE")
-								,rs.getString("DESCRIPCION"),rs.getDate("FECHADEENTRADA"),rs.getString("PRIORIDAD")
-								,rs.getString("ESTADO"),operario,area);
+								,rs.getString("DESCRIPCION"),rs.getInt("PRIORIDAD"), rs.getString("ESTADO"),
+								operario,area);
 						
 						ordenesTrabajo.add(orden);
 					}
@@ -69,10 +70,11 @@ public class OrdenTrabajoDAO implements IOrdenTrabajoDAO {
 				ArrayList<OrdenTrabajo> ordenesTrabajo = new ArrayList<OrdenTrabajo>();
 				while(rs.next()){
 					
-					Area area=new Area(rs.getString("NOMBRE_AREA"));
+					Area area = new Area(rs.getString("NOMBRE_AREA"));
+					Area area = areaDao.getArea(rs.getString("NOMBRE_AREA"));
 					OrdenTrabajo orden = new OrdenTrabajo(rs.getString("ID"),rs.getString("NOMBRE")
-							,rs.getString("DESCRIPCION"),rs.getDate("FECHADEENTRADA"),rs.getString("PRIORIDAD")
-							,rs.getString("ESTADO"),_operario,area);
+							,rs.getString("DESCRIPCION"),rs.getInt("PRIORIDAD"), rs.getString("ESTADO"),
+							operario,area);
 					
 					ordenesTrabajo.add(orden);
 				}
@@ -136,24 +138,25 @@ public class OrdenTrabajoDAO implements IOrdenTrabajoDAO {
 	@Override
 	public void crearOrdenTrabajo(OrdenTrabajo orden) {
 		// TODO Auto-generated method stub
-try {
-			
-			connManager.connect();
-			connManager.updateDB("insert into ORDENDETRABAJO (ID,PRIORIDAD,ESTADO,DNI,NOMBRE_AREA) values ('"
-							+ orden.getID()
-							+ "', '"
-							+ orden.getPrioridad()
-							+ "', '"
-							+ orden.getEstado()
-							+ "', '"
-							+orden.getOperario().getDNI()
-							+ "', '"
-							+orden.getArea().getNombre()
-							+"')");
-			connManager.close();
+		try {
+			this.connManager.connect();
+			System.out.println(orden.getID()+"sdfadgadasfdf ");
+			this.connManager.updateDB("insert into ORDENTRABAJO (ID, PRIORIDAD, " +
+					"ESTADO, DNI, NOMBRE_AREA) values ("
+					+ orden.getID()
+					+ ", "
+					+ orden.getPrioridad()
+					+ ", '"
+					+ orden.getEstado()
+					+ "', "
+					+ null
+					+ ", '"
+					+ orden.getArea().getNombre()
+					+ "')");
+			this.connManager.close();
 
 		} catch (DAOExcepcion e) {
-
+			System.out.println("ERROR EN DAO");
 		}
 		
 	}

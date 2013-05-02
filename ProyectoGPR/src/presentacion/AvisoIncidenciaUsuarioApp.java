@@ -256,8 +256,7 @@ public class AvisoIncidenciaUsuarioApp extends javax.swing.JFrame {
 		//System.out.println("jButtonEnviar.actionPerformed, event="+evt);
 		//TODO add your code for jButtonEnviar.actionPerformed
 		
-		Incidencia incidencia = new Incidencia("",
-				this.jTextFieldNombreIncidencia.getText(),
+		Incidencia incidencia = new Incidencia(this.jTextFieldNombreIncidencia.getText(),
 				this.jTextPaneDescripcion.getText());
 		try{ 	   
 			control = Controlador.dameControlador(); 

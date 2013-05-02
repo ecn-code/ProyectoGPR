@@ -65,6 +65,7 @@ public class GestionIncidenciasJefeApp extends javax.swing.JFrame {
 	}
 	
 	private void initGUI() {
+		
 		ArrayList<Incidencia> incidencias = new ArrayList<Incidencia>();
 		try {
 			
@@ -74,19 +75,18 @@ public class GestionIncidenciasJefeApp extends javax.swing.JFrame {
 				   
 			}catch (Exception e){ 
 				JOptionPane.showMessageDialog( 
-				this,e.getMessage(),"ERROR",JOptionPane.ERROR_MESSAGE); 
+				this,e.getMessage(),"ERROR", JOptionPane.ERROR_MESSAGE); 
 			}
 			
 			String[][] filas = new String[incidencias.size()][4];
 			
 			for(int i=0;i<incidencias.size();i++){
 				Incidencia incidencia = incidencias.get(i);
-				filas[i][0]= incidencia.getID();
+				filas[i][0]= Integer.toString(incidencia.getID());
 					filas[i][1]= incidencia.getNombre();
 						filas[i][2]= incidencia.getDescripcion();
-							filas[i][3]= incidencia.getFechaEntrada();
-				
-			}
+							filas[i][3]= incidencia.getFechaEntrada();	
+			}//fin bucle for
 			
 			getContentPane().setLayout(null);
 			this.setTitle("Gestión de incidencias - Jefe Servicio Mantenimiento");
@@ -103,7 +103,7 @@ public class GestionIncidenciasJefeApp extends javax.swing.JFrame {
 					jScrollPaneIncidencias.setViewportView(jTableAvisosIncidencia);
 					jTableAvisosIncidencia.setModel(jTableAvisosIncidenciaModel);
 					jTableAvisosIncidencia.setBounds(116, 155, 540, 245);
-					jTableAvisosIncidencia.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+					jTableAvisosIncidencia.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1, false));
 					//TableColumn columna = new TableColumn();;
 					//jTableAvisosIncidencia.addColumn(columna);
 				}
@@ -208,11 +208,68 @@ public class GestionIncidenciasJefeApp extends javax.swing.JFrame {
 	private void jButtonClasificarActionPerformed(ActionEvent evt) {
 		//System.out.println("jButtonClasificar.actionPerformed, event="+evt);
 		//TODO add your code for jButtonClasificar.actionPerformed
-		ClasificarIncidenciaJefejDialog dialogoClasificar = new ClasificarIncidenciaJefejDialog
-			(this);
-		dialogoClasificar.setModal(true);
-		dialogoClasificar.setVisible(true);
 
+		int numeroFilaSeleccionada = jTableAvisosIncidencia.getSelectedRow();
+		if (numeroFilaSeleccionada > -1){
+			int id = Integer.parseInt((String)jTableAvisosIncidencia.getValueAt(numeroFilaSeleccionada, 0));
+			String nombre = (String) jTableAvisosIncidencia.getValueAt(numeroFilaSeleccionada, 1);
+			String descripcion = (String) jTableAvisosIncidencia.getValueAt(numeroFilaSeleccionada, 2);
+			String fechaEntrada = (String) jTableAvisosIncidencia.getValueAt(numeroFilaSeleccionada, 3);
+			Incidencia incidencia = new Incidencia(id, nombre, descripcion, fechaEntrada);
+			ClasificarIncidenciaJefejDialog dialogoClasificar = new ClasificarIncidenciaJefejDialog
+			(this, incidencia, numeroFilaSeleccionada);
+			dialogoClasificar.setModal(true);
+			dialogoClasificar.setVisible(true);
+		} else {
+			JOptionPane.showMessageDialog(this, "Debe seleccionar un aviso de incidencia.");
+		}
+
+	}
+	
+	public void actualizarTablaAvisosIncidencia(int numeroFila){
+		
+		//this.jTableAvisosIncidencia.removeRowSelectionInterval(numeroFila, numeroFila);
+		//this.jTableAvisosIncidencia.updateUI();
+		
+		/*
+		ArrayList<Incidencia> incidencias = new ArrayList<Incidencia>();
+		
+		try {
+			try{ 	   
+				this.control = Controlador.dameControlador(); 
+				incidencias = this.control.getIncidencias();
+				   
+			}catch (Exception e){ 
+				JOptionPane.showMessageDialog( 
+				this,e.getMessage(),"ERROR", JOptionPane.ERROR_MESSAGE); 
+			}
+			
+			String[][] filas = new String[incidencias.size()][4];
+			
+			for(int i=0;i<incidencias.size();i++){
+				Incidencia incidencia = incidencias.get(i);
+				filas[i][0]= Integer.toString(incidencia.getID());
+					filas[i][1]= incidencia.getNombre();
+						filas[i][2]= incidencia.getDescripcion();
+							filas[i][3]= incidencia.getFechaEntrada();	
+			}//fin bucle for
+			
+			for(int i=0;i<incidencias.size();i++){
+				int id = Integer.parseInt(filas[i][0]);
+				String nombre = filas[i][1];
+				String descripcion = filas[i][2];
+				String fechaEntrada = filas[i][3];
+				this.jTableAvisosIncidencia.setValueAt(id, i, 0);
+				this.jTableAvisosIncidencia.setValueAt(nombre, i, 1);
+				this.jTableAvisosIncidencia.setValueAt(descripcion, i, 2);
+				this.jTableAvisosIncidencia.setValueAt(fechaEntrada, i, 3);
+			}
+			this.jTableAvisosIncidencia.updateUI();
+			this.repaint();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		*/
 	}
 	
 	private void jButtonSalirActionPerformed(ActionEvent evt) {

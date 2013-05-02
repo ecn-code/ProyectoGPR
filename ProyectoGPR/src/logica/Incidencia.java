@@ -5,19 +5,18 @@ import java.util.Date;
 
 public class Incidencia{
 	
-	private String iD;
+	private int iD;
 	private String nombre;
 	private String descripcion;
 	private String fechaEntrada;
 
-	public Incidencia(String _iD, String _nombre, String _descripcion){
-		this.iD = _iD;
+	public Incidencia(String _nombre, String _descripcion){
 		this.nombre = _nombre;
 		this.descripcion = _descripcion;
 		this.fechaEntrada = this.getFechaActual();
 	}
 	
-	public Incidencia(String _iD, String _nombre, String _descripcion, 
+	public Incidencia(int _iD, String _nombre, String _descripcion, 
 			String _fechaEntrada){
 		this.iD = _iD;
 		this.nombre = _nombre;
@@ -48,7 +47,7 @@ public class Incidencia{
 		return this.nombre;
 	}
 
-	public String getID() {
+	public int getID() {
 		return this.iD;
 	}
 

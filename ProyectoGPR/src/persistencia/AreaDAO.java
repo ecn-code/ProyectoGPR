@@ -16,34 +16,29 @@ public class AreaDAO implements IAreaDAO{
 	
 	public AreaDAO() throws DAOExcepcion {
 		try{
-		connManager= new ConnectionManager("practicaGPR");
+		this.connManager= new ConnectionManager("practicaGPR");
 		}catch (ClassNotFoundException e){
 			throw new DAOExcepcion("DB_CONNECT_ERROR");
 		}
 	}
 
 	@Override
-	public ArrayList<Area> getArea() throws DAOExcepcion {
+	public ArrayList<Area> getAreas() throws DAOExcepcion {
 		try{
-			connManager.connect();
-			ResultSet rs=connManager.queryDB("select * from INCIDENCIA");
-			connManager.close();
-			
-			
-		
+			this.connManager.connect();
+			ResultSet rs = this.connManager.queryDB("select * from AREA");
+			this.connManager.close();
 			
 			try {
 				ArrayList<Area> areas = new ArrayList<Area>();
 				while(rs.next()){
-					Area area = new Area(rs.getString("NOMBRE"));
-					
+					Area area = new Area(rs.getString("NOMBRE_AREA"));
 					areas.add(area);
 				}
 				return areas;
 				}catch (SQLException e){
 					throw new DAOExcepcion("DB_READ_ERROR");
 				}
-			
 			}catch (DAOExcepcion e){
 				throw e;
 			}

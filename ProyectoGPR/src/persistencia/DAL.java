@@ -22,14 +22,14 @@ public class DAL {
 	
 private DAL() throws DAOExcepcion{
 	// Objectos para comunicarse con la capa de acceso a datos
-	inDAO=new IncidenciaDAO();
-	arDAO=new AreaDAO();
-	orDAO=new OrdenTrabajoDAO();
-	peDAO=new OperarioDAO();
-	maDAO=new MaterialDAO();
+	inDAO = new IncidenciaDAO();
+	arDAO = new AreaDAO();
+	orDAO = new OrdenTrabajoDAO();
+	peDAO = new OperarioDAO();
+	maDAO = new MaterialDAO();
 }
 public static DAL dameDAL() throws DAOExcepcion {
-	if(dal==null)
+	if(dal == null)
 		dal = new DAL();
 	return dal;
 	}
@@ -38,10 +38,10 @@ public void enviarIncidencia(Incidencia incidencia) throws DAOExcepcion {
 	inDAO.crearIncidencia(incidencia);
 }
 public ArrayList<Incidencia> getIncidencias() throws DAOExcepcion {
-	return inDAO.getIncidencias();
+	return this.inDAO.getIncidencias();
 }
-public void clasificarIncidencia(Incidencia incidencia, Area area, String prioridad)throws DAOExcepcion {
-	inDAO.clasificarIncidencia(incidencia, area, prioridad);
+public void clasificarIncidencia(Incidencia incidencia, Area area, int prioridad)throws DAOExcepcion {
+	this.inDAO.clasificarIncidencia(incidencia, area, prioridad);
 }
 //metodos de orden de trabajo
 public ArrayList<OrdenTrabajo> encontrarOrdenesTrabajoPorArea(Area area)throws DAOExcepcion{
@@ -57,9 +57,8 @@ public void modificarOrdenTrabajo(OrdenTrabajo orden)throws DAOExcepcion{
 	orDAO.modificar(orden);
 }
 public void asignarOrdenTrabajo(OrdenTrabajo orden)throws DAOExcepcion{
-	orDAO.crearOrdenTrabajo(orden);
+	this.orDAO.crearOrdenTrabajo(orden);
 }
-
 
 //metodos de persona
 
@@ -76,10 +75,10 @@ public int loguearOperario(String nombre,String pass)throws DAOExcepcion{
 	return peDAO.loguear(nombre,pass);
 }
 //metodos de Area
-public ArrayList<Area> encontrarAreas() throws DAOExcepcion{
-	return arDAO.getArea();
+public ArrayList<Area> getAreas() throws DAOExcepcion{
+	return arDAO.getAreas();
 }
-public Area encontrarAreaPorNombre(String nombre) throws DAOExcepcion{
+public Area getAreaPorNombre(String nombre) throws DAOExcepcion{
 	return arDAO.getArea(nombre);
 }
 //metodos de Material
