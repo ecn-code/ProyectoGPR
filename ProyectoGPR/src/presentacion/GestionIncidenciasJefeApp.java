@@ -268,6 +268,7 @@ public class GestionIncidenciasJefeApp extends javax.swing.JFrame {
 		
 		public void limpiarTabla(){
 			incidencias.clear();
+			this.fireTableDataChanged();
 		}
 		
 		/*

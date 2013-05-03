@@ -20,7 +20,7 @@ import javax.swing.border.TitledBorder;
 
 import logica.Controlador;
 import logica.Incidencia;
-import logica.UsuarioRegistrado;
+import logica.Persona;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo

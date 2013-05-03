@@ -45,9 +45,10 @@ public class AreaDAO implements IAreaDAO{
 	}
 
 	@Override
-	public Area getArea(String nombre) throws DAOExcepcion {
+	public Area getAreaPorNombre(String nombre) throws DAOExcepcion {
 		connManager.connect();
-		ResultSet rs=connManager.queryDB("select * from AREA WHERE NOMBRE_AREA ='"+nombre+"'");
+		ResultSet rs = connManager.queryDB("select * from AREA WHERE " +
+				"NOMBRE_AREA = '" + nombre + "'");
 		connManager.close();
 		try {
 			if(rs.next())

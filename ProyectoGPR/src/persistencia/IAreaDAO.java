@@ -7,5 +7,5 @@ import excepciones.DAOExcepcion;
 
 public interface IAreaDAO {
 public ArrayList<Area> getAreas() throws DAOExcepcion;
-public Area getArea(String nombre)throws DAOExcepcion;
+public Area getAreaPorNombre(String nombre)throws DAOExcepcion;
 }

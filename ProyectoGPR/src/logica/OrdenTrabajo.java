@@ -9,6 +9,8 @@ public class OrdenTrabajo extends Incidencia {
 	private Operario operario;
 	private Area area;
 	
+	
+	
 	public OrdenTrabajo(int _iD, String _nombre, String _descripcion, 
 			int _prioridad, String _estado, Operario _operario, Area _area ){
 		super(_iD, _nombre, _descripcion);
@@ -26,6 +28,14 @@ public class OrdenTrabajo extends Incidencia {
 		this.operario = null;
 		this.area = _area;
 	}
+	public OrdenTrabajo(int id, int _prioridad, String _estado,
+			String _nombreArea) {
+		super(id, null, null);
+		this.prioridad =_prioridad;
+		this.estado = _estado;
+		area = new Area(_nombreArea);
+	}
+
 	public int getPrioridad() {
 		return this.prioridad;
 	}

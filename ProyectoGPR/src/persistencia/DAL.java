@@ -28,6 +28,7 @@ private DAL() throws DAOExcepcion{
 	this.peDAO = new OperarioDAO();
 	this.maDAO = new MaterialDAO();
 }
+
 public static DAL dameDAL() throws DAOExcepcion {
 	if(dal == null)
 		dal = new DAL();
@@ -56,18 +57,26 @@ public ArrayList<OrdenTrabajo> getOrdenTrabajoPorFecha(Date fecha_ini,Date fecha
 public void modificarOrdenTrabajo(OrdenTrabajo orden)throws DAOExcepcion{
 	orDAO.modificar(orden);
 }
-public void asignarOrdenTrabajo(OrdenTrabajo orden)throws DAOExcepcion{
+public void crearOrdenTrabajo(OrdenTrabajo orden)throws DAOExcepcion{
 	this.orDAO.crearOrdenTrabajo(orden);
 }
 
+public void asignarOrdenTrabajo(OrdenTrabajo orden, String dni)throws DAOExcepcion{
+	this.orDAO.asignarOrdenTrabajo(orden, dni);
+}
 
-//metodos de persona
+
+//metodos de operario
+
+public Operario getOperarioPorNombre(String nombre) throws DAOExcepcion{
+	return peDAO.getOperarioPorNombre(nombre);
+}
 
 public Operario encontrarOperarioPorDNI(String dni)throws DAOExcepcion{
 	return peDAO.getOperario(dni);
 }
-public ArrayList<Operario> encontrarOperariosPorArea(Area area)throws DAOExcepcion{
-		return peDAO.getOperarios(area);
+public ArrayList<Operario> getOperariosPorArea(Area area)throws DAOExcepcion{
+		return peDAO.getOperariosPorArea(area);
 }
 public ArrayList<Operario> encontrarOperarios()throws DAOExcepcion{
 	return peDAO.getOperarios();
@@ -80,7 +89,7 @@ public ArrayList<Area> getAreas() throws DAOExcepcion{
 	return arDAO.getAreas();
 }
 public Area getAreaPorNombre(String nombre) throws DAOExcepcion{
-	return arDAO.getArea(nombre);
+	return arDAO.getAreaPorNombre(nombre);
 }
 //metodos de Material
 public ArrayList<Material> encontrarMateriales() throws DAOExcepcion{
@@ -89,4 +98,6 @@ public ArrayList<Material> encontrarMateriales() throws DAOExcepcion{
 public void modificarDisponiblesMaterial(Material material) throws DAOExcepcion{
 	maDAO.modificarDisponiblesMaterial(material);
 }
+
+
 }

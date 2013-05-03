@@ -44,7 +44,7 @@ public class OrdenTrabajoDAO implements IOrdenTrabajoDAO {
 					
 					while(rs.next()){
 						Operario operario = persona.getOperario(rs.getString("DNI"));
-						Area area = areaDao.getArea(rs.getString("NOMBRE_AREA"));
+						Area area = areaDao.getAreaPorNombre(rs.getString("NOMBRE_AREA"));
 						OrdenTrabajo orden = new OrdenTrabajo(rs.getInt("ID"),rs.getString("NOMBRE")
 								,rs.getString("DESCRIPCION"),rs.getInt("PRIORIDAD"), rs.getString("ESTADO"),
 								operario, area);
@@ -179,10 +179,40 @@ public class OrdenTrabajoDAO implements IOrdenTrabajoDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public void asignarOrdenTrabajo(OrdenTrabajo orden,String dni){
+		// TODO Auto-generated method stub
+		try{
+			connManager.connect();
+			System.out.println(orden.getID()+ " " + orden.getEstado() +
+					" " + dni);
+			connManager.updateDB("UPDATE ORDENTRABAJO SET DNI = '"
+					+ dni + "', ESTADO = '" + orden.getEstado() 
+					+ "'WHERE ID = " + orden.getID() + "");
+			connManager.close();
+
+		}catch (DAOExcepcion e){
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	
 	@Override
 	public void modificar(OrdenTrabajo orden) throws DAOExcepcion {
 		// TODO Auto-generated method stub
-		
+		try{
+			connManager.connect();
+			connManager.updateDB("UPDATE ORDENTRABAJO SET PRIORIDAD = '"
+					+ orden.getPrioridad() + "', ESTADO = '" + orden.getEstado() 
+					+ "'where ID = '" + orden.getID() + "'");
+			connManager.close();
+
+		}catch (DAOExcepcion e){
+			throw e;
+		}
 	}
+
 
 }

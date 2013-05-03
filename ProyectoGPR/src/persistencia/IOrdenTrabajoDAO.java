@@ -15,5 +15,6 @@ public interface IOrdenTrabajoDAO {
 	public ArrayList<OrdenTrabajo> getOrdenTrabajoPorFecha(Date fecha1,Date fecha2) throws DAOExcepcion;
 	public void modificar(OrdenTrabajo orden) throws DAOExcepcion;
 	public void crearOrdenTrabajo(OrdenTrabajo orden);
+	public void asignarOrdenTrabajo(OrdenTrabajo orden, String dni);
 	
 }
