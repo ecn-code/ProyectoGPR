@@ -2,8 +2,13 @@ package presentacion;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.*;
+
+import logica.Area;
+import logica.Controlador;
+import logica.Incidencia;
 
 
 /**
@@ -20,6 +25,7 @@ import javax.swing.*;
 */
 public class GestionIncidenciasOperarioApp extends javax.swing.JFrame {
 
+	private Controlador control;
 	private JMenuItem helpMenuItem;
 	private JMenu jMenu5;
 	private JButton jButtonConsultarMaterial;
@@ -50,6 +56,25 @@ public class GestionIncidenciasOperarioApp extends javax.swing.JFrame {
 	}
 	
 	private void initGUI() {
+try {
+			
+			ArrayList<Incidencia> incidencia = new ArrayList<Incidencia>();
+			
+			try{ 	   
+				this.control = Controlador.dameControlador(); 
+				incidencia = this.control.
+				   
+			}catch (Exception e){ 
+				JOptionPane.showMessageDialog( 
+				this,e.getMessage(),"ERROR",JOptionPane.ERROR_MESSAGE); 
+			}
+			
+			String[] elementosComboBox = new String[areas.size()];
+			
+			for(int i = 0; i < areas.size(); i++){
+				Area area = areas.get(i);
+				elementosComboBox[i]= area.getNombre();	
+			}//fin bucle for
 		try {
 			{
 				this.setTitle("Gestión de incidencias - Operario");
