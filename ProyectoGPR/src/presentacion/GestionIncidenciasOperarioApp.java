@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import logica.Area;
 import logica.Controlador;
@@ -30,10 +32,10 @@ public class GestionIncidenciasOperarioApp extends javax.swing.JFrame {
 	private JMenu jMenu5;
 	private JButton jButtonConsultarMaterial;
 	private JLabel jLabelSeleccionaIncidencia;
-	private JButton jButton1;
+	private JTable jTableOrdenesTrabajo;
+	private JScrollPane jScrollPaneOrdenesTrabajo;
 	private JButton jButtonConsutarIncidencia;
 	private JButton jButtonSalir;
-	private JComboBox jComboBoxIncidencias;
 	private JMenu jMenu3;
 	private JMenuBar jMenuBar1;
 
@@ -56,13 +58,13 @@ public class GestionIncidenciasOperarioApp extends javax.swing.JFrame {
 	}
 	
 	private void initGUI() {
-try {
+		/*try {
 			
 			ArrayList<Incidencia> incidencia = new ArrayList<Incidencia>();
 			
 			try{ 	   
 				this.control = Controlador.dameControlador(); 
-				incidencia = this.control.
+				
 				   
 			}catch (Exception e){ 
 				JOptionPane.showMessageDialog( 
@@ -74,44 +76,29 @@ try {
 			for(int i = 0; i < areas.size(); i++){
 				Area area = areas.get(i);
 				elementosComboBox[i]= area.getNombre();	
-			}//fin bucle for
+			}//fin bucle for*/
 		try {
 			{
 				this.setTitle("Gestión de incidencias - Operario");
 				getContentPane().setLayout(null);
 				this.setResizable(false);
 				{
-					ComboBoxModel jComboBoxIncidenciasModel = 
-						new DefaultComboBoxModel(
-								new String[] { "Incidencia 01", "Incidencia 02", "Incidencia 03" });
-					jComboBoxIncidencias = new JComboBox();
-					getContentPane().add(jComboBoxIncidencias);
-					jComboBoxIncidencias.setModel(jComboBoxIncidenciasModel);
-					jComboBoxIncidencias.setBounds(14, 36, 187, 23);
-				}
-				{
 					jLabelSeleccionaIncidencia = new JLabel();
 					getContentPane().add(jLabelSeleccionaIncidencia);
 					jLabelSeleccionaIncidencia.setText("Selecciona incidencia:");
-					jLabelSeleccionaIncidencia.setBounds(16, 15, 158, 16);
+					jLabelSeleccionaIncidencia.setBounds(18, 8, 158, 16);
 				}
 				{
 					jButtonConsultarMaterial = new JButton();
 					getContentPane().add(jButtonConsultarMaterial);
 					jButtonConsultarMaterial.setText("Consultar Material");
-					jButtonConsultarMaterial.setBounds(226, 70, 170, 23);
-				}
-				{
-					jButton1 = new JButton();
-					getContentPane().add(jButton1);
-					jButton1.setText("Terminar Incidencia");
-					jButton1.setBounds(226, 104, 170, 23);
+					jButtonConsultarMaterial.setBounds(233, 70, 170, 23);
 				}
 				{
 					jButtonSalir = new JButton();
 					getContentPane().add(jButtonSalir);
 					jButtonSalir.setText("Salir");
-					jButtonSalir.setBounds(299, 173, 97, 23);
+					jButtonSalir.setBounds(306, 182, 97, 23);
 					jButtonSalir.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent evt) {
 							jButtonSalirActionPerformed(evt);
@@ -122,15 +109,30 @@ try {
 					jButtonConsutarIncidencia = new JButton();
 					getContentPane().add(jButtonConsutarIncidencia);
 					jButtonConsutarIncidencia.setText("Consultar Incidencia");
-					jButtonConsutarIncidencia.setBounds(226, 36, 170, 23);
+					jButtonConsutarIncidencia.setBounds(233, 36, 170, 23);
 					jButtonConsutarIncidencia.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent evt) {
 							jButtonConsutarIncidenciaActionPerformed(evt);
 						}
 					});
 				}
+				{
+					jScrollPaneOrdenesTrabajo = new JScrollPane();
+					getContentPane().add(jScrollPaneOrdenesTrabajo);
+					jScrollPaneOrdenesTrabajo.setBounds(14, 36, 202, 169);
+					{
+						TableModel jTableOrdenesTrabajoModel = 
+							new DefaultTableModel(
+									new String[][] { { "One", "Two" }, { "Three", "Four" } },
+									new String[] { "Column 1", "Column 2" });
+						jTableOrdenesTrabajo = new JTable();
+						jScrollPaneOrdenesTrabajo.setViewportView(jTableOrdenesTrabajo);
+						jTableOrdenesTrabajo.setModel(jTableOrdenesTrabajoModel);
+						jTableOrdenesTrabajo.setPreferredSize(new java.awt.Dimension(199, 132));
+					}
+				}
 			}
-			this.setSize(415, 260);
+			this.setSize(424, 280);
 			{
 				jMenuBar1 = new JMenuBar();
 				setJMenuBar(jMenuBar1);

@@ -35,8 +35,9 @@ import logica.Controlador;
 public class ConsultarIncidenciaOperarioJDialog extends javax.swing.JDialog {
 	
 	private JLabel jLabelNombreIncidencia;
-	private JButton jButtonEmpezar;
+	private JButton jButtonTerminar;
 	private JLabel jLabelMaterialSeleccionado;
+	private JButton jButtonGuardar;
 	private JTable jTableMaterialAnyadido;
 	private JButton jButtonSolicitarMaterial;
 	private JButton jButtonCancelar;
@@ -94,10 +95,10 @@ public class ConsultarIncidenciaOperarioJDialog extends javax.swing.JDialog {
 					});
 				}
 				{
-					jButtonEmpezar = new JButton();
-					getContentPane().add(jButtonEmpezar);
-					jButtonEmpezar.setText("Empezar");
-					jButtonEmpezar.setBounds(514, 323, 92, 23);
+					jButtonTerminar = new JButton();
+					getContentPane().add(jButtonTerminar);
+					jButtonTerminar.setText("Terminar");
+					jButtonTerminar.setBounds(296, 323, 92, 23);
 				}
 				{
 					jButtonCancelar = new JButton();
@@ -132,6 +133,12 @@ public class ConsultarIncidenciaOperarioJDialog extends javax.swing.JDialog {
 					jTableMaterialAnyadido.setModel(jTableMaterialAnyadidoModel);
 					jTableMaterialAnyadido.setBounds(157, 217, 448, 94);
 					jTableMaterialAnyadido.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+				}
+				{
+					jButtonGuardar = new JButton();
+					getContentPane().add(jButtonGuardar);
+					jButtonGuardar.setText("Guardar");
+					jButtonGuardar.setBounds(514, 323, 92, 23);
 				}
 			}
 			this.setSize(633, 396);
