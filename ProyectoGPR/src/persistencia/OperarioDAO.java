@@ -26,14 +26,15 @@ public class OperarioDAO implements IOperarioDAO {
 		// TODO Auto-generated method stub
 		try{
 			connManager.connect();
-			ResultSet rs=connManager.queryDB("select * from OPERARIO o,PERSONA p where o.DNI=p.DNI and o.DNI='"+dni+"'");
+			ResultSet rs=connManager.queryDB("SELECT * FROM OPERARIO o, PERSONA p WHERE " +
+					"o.DNI = p.DNI and o.DNI = '" + dni + "'");
 			connManager.close();
 			
 			try {
 				IAreaDAO areaDao=new AreaDAO();
 				Operario operario=null;
 				if(rs.next()){	
-					Area area=areaDao.getArea(rs.getString("NOMBRE_AREA"));
+					Area area = areaDao.getAreaPorNombre(rs.getString("NOMBRE_AREA"));
 					operario = new Operario(rs.getString("DNI"),rs.getString("NOMBRE")
 							,rs.getString("PASS"),area);
 					
@@ -62,7 +63,7 @@ public class OperarioDAO implements IOperarioDAO {
 				ArrayList<Operario> operarios = new ArrayList<Operario>();
 				IAreaDAO areaDao=new AreaDAO();
 				while(rs.next()){
-					Area area=areaDao.getArea(rs.getString("NOMBRE_AREA"));
+					Area area=areaDao.getAreaPorNombre(rs.getString("NOMBRE_AREA"));
 					Operario operario = new Operario(rs.getString("DNI"),rs.getString("NOMBRE")
 							,rs.getString("PASS"),area);
 					operarios.add(operario);
@@ -78,18 +79,19 @@ public class OperarioDAO implements IOperarioDAO {
 	}
 
 	@Override
-	public ArrayList<Operario> getOperarios(Area _area) throws DAOExcepcion{
+	public ArrayList<Operario> getOperariosPorArea(Area _area) throws DAOExcepcion{
 		// TODO Auto-generated method stub
 		try{
-			connManager.connect();
-			ResultSet rs=connManager.queryDB("select * from OPERARIO o,PERSONA p where o.DNI=p.DNI and o.NOMBRE_AREA='"+_area.getNombre()+"'");
+			this.connManager.connect();
+			ResultSet rs = this.connManager.queryDB("SELECT * FROM OPERARIO o, PERSONA p" +
+					" WHERE o.DNI = p.DNI and o.NOMBRE_AREA = '" + _area.getNombre() + "'");
 			connManager.close();
 			
 			try {
 				ArrayList<Operario> operarios = new ArrayList<Operario>();
-				IAreaDAO areaDao=new AreaDAO();
+				IAreaDAO areaDao = new AreaDAO();
 				while(rs.next()){
-					Area area=areaDao.getArea(rs.getString("NOMBRE_AREA"));
+					Area area=areaDao.getAreaPorNombre(rs.getString("NOMBRE_AREA"));
 					Operario operario = new Operario(rs.getString("DNI"),rs.getString("NOMBRE")
 							,rs.getString("PASS"),area);
 					operarios.add(operario);
@@ -107,6 +109,33 @@ public class OperarioDAO implements IOperarioDAO {
 	public int loguear(String nombre, String pass) throws DAOExcepcion {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	@Override
+	public Operario getOperarioPorNombre(String nombre) {
+		try{
+			connManager.connect();
+			ResultSet rs = connManager.queryDB("SELECT * FROM OPERARIO o, PERSONA p WHERE " +
+					"o.DNI = p.DNI and p.NOMBRE = '" + nombre + "'");
+			connManager.close();
+			
+			try {
+				IAreaDAO areaDao=new AreaDAO();
+				Operario operario=null;
+				if(rs.next()){	
+					Area area = areaDao.getAreaPorNombre(rs.getString("NOMBRE_AREA"));
+					operario = new Operario(rs.getString("DNI"),rs.getString("NOMBRE")
+							,rs.getString("PASS"),area);
+					
+				}
+				return operario;
+				}catch (SQLException e){
+					throw new DAOExcepcion("DB_READ_ERROR");
+				}
+			
+			}catch (DAOExcepcion e){
+				e.printStackTrace();
+			}
+			return null;
 	}
 
 

@@ -1,6 +1,8 @@
 package presentacion;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
@@ -15,6 +17,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
@@ -23,9 +26,13 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
+import excepciones.DAOExcepcion;
+import excepciones.DominioExcepcion;
+
 import logica.Area;
 import logica.Controlador;
 import logica.Incidencia;
+import logica.Operario;
 import logica.OrdenTrabajo;
 import presentacion.GestionIncidenciasJefeApp.ModeloTablaAvisosIncidencia;
 
@@ -59,6 +66,7 @@ public class GestionIncidenciasMaestroApp extends javax.swing.JFrame {
 	private JMenu jMenu5;
 	private JButton jButtonAsignarOperario;
 	private JLabel jLabelAsignarOperario;
+	private JScrollPane jScrollPaneOrdenesTrabajo;
 	private JComboBox jComboBoxOperarios;
 	private JPanel jPanelAsignarOperario;
 	private JButton jButtonEliminar;
@@ -96,13 +104,16 @@ public class GestionIncidenciasMaestroApp extends javax.swing.JFrame {
 		
 			ArrayList<OrdenTrabajo> ordenesTrabajo = new ArrayList<OrdenTrabajo>();
 			ArrayList<Area> areas = new ArrayList<Area>();
+			ArrayList<Operario> operarios = new ArrayList<Operario>();
+			Area areaComboBoxOperarios;
 			
 			try{ 	   
 				this.control = Controlador.dameControlador(); 
 				areas = this.control.getAreas();
+				areaComboBoxOperarios = control.getAreaPorNombre(areas.get(0).getNombre());
+				operarios = control.getOperariosPorArea(areas.get(0));
 				//System.out.println(areas.get(0).getNombre());
 				ordenesTrabajo = this.control.getOrdenesTrabajoPorArea(areas.get(0));
-				   
 			}catch (Exception e){ 
 				JOptionPane.showMessageDialog( 
 				this,e.getMessage(),"ERROR", JOptionPane.ERROR_MESSAGE); 
@@ -112,15 +123,7 @@ public class GestionIncidenciasMaestroApp extends javax.swing.JFrame {
 			for(OrdenTrabajo orden: ordenesTrabajo){
 				modelo.anyadirFila(orden);
 			}
-			
-			{
-				
-				jTableOrdenesTrabajo = new JTable();
-				getContentPane().add(jTableOrdenesTrabajo);
-				jTableOrdenesTrabajo.setModel(modelo);
-				jTableOrdenesTrabajo.setBounds(23, 89, 540, 306);
-				jTableOrdenesTrabajo.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
-			}
+
 			{
 				jTextFieldDesde = new JTextField();
 				getContentPane().add(jTextFieldDesde);
@@ -188,10 +191,18 @@ public class GestionIncidenciasMaestroApp extends javax.swing.JFrame {
 					jPanelAsignarOperario.add(jLabelAsignarOperario);
 					jLabelAsignarOperario.setText("Asigna un operario:");
 				}
+				
+				//Configuracion el contenido de jComboBoxOperarios
+				String[] elementosComboBoxOperarios = new String[operarios.size()];
+				Operario operario;
+				for(int i = 0; i < operarios.size(); i++){
+					operario = operarios.get(i);
+					elementosComboBoxOperarios[i]= operario.getNombre();	
+				}//fin bucle for
+				
 				{
 					ComboBoxModel jComboBoxAsignarOperarioModel = 
-						new DefaultComboBoxModel(
-								new String[] { "Operario 01", "Operario 02", "Operario 03" });
+						new DefaultComboBoxModel(elementosComboBoxOperarios);
 					jComboBoxOperarios = new JComboBox();
 					jPanelAsignarOperario.add(jComboBoxOperarios);
 					jComboBoxOperarios.setModel(jComboBoxAsignarOperarioModel);
@@ -202,6 +213,11 @@ public class GestionIncidenciasMaestroApp extends javax.swing.JFrame {
 					jPanelAsignarOperario.add(jButtonAsignarOperario);
 					jButtonAsignarOperario.setText("Asignar");
 					jButtonAsignarOperario.setPreferredSize(new java.awt.Dimension(96, 23));
+					jButtonAsignarOperario.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent evt) {
+							jButtonAsignarOperarioActionPerformed(evt);
+						}
+					});
 				}
 			}
 			{
@@ -215,13 +231,13 @@ public class GestionIncidenciasMaestroApp extends javax.swing.JFrame {
 					jLabelSeleccionaArea.setText("Selecciona un área:");
 				}
 				
-				//Configuramos el contenido de jComboBoxAreas
-				Area area;
+				//Configuracion el contenido de jComboBoxAreas
+				Area areaComboBoxAreas;
 				String[] elementosComboBoxAreas = new String[areas.size()];
 				
 				for(int i = 0; i < areas.size(); i++){
-					area = areas.get(i);
-					elementosComboBoxAreas[i]= area.getNombre();	
+					areaComboBoxAreas = areas.get(i);
+					elementosComboBoxAreas[i]= areaComboBoxAreas.getNombre();	
 				}//fin bucle for
 				
 				{
@@ -231,9 +247,28 @@ public class GestionIncidenciasMaestroApp extends javax.swing.JFrame {
 					jPanel1.add(jComboBoxAreas);
 					jComboBoxAreas.setModel(jComboBox1Model);
 					jComboBoxAreas.setPreferredSize(new java.awt.Dimension(180,23));
+					jComboBoxAreas.addItemListener(new ItemListener() {
+						public void itemStateChanged(ItemEvent evt) {
+							jComboBoxAreasItemStateChanged(evt);
+						}
+					});
 				}
 			}
-			this.setSize(820, 470);
+			{
+				jScrollPaneOrdenesTrabajo = new JScrollPane();
+				getContentPane().add(jScrollPaneOrdenesTrabajo);
+				jScrollPaneOrdenesTrabajo.setBounds(12, 89, 565, 309);
+				{
+					
+					jTableOrdenesTrabajo = new JTable();
+					jScrollPaneOrdenesTrabajo.setViewportView(jTableOrdenesTrabajo);
+					jTableOrdenesTrabajo.setModel(modelo);
+					jTableOrdenesTrabajo.setBounds(168, 282, 333, 147);
+					jTableOrdenesTrabajo.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+					jTableOrdenesTrabajo.setPreferredSize(new java.awt.Dimension(562, 286));
+				}
+			}
+			this.setSize(825, 470);
 			{
 				jMenuBar1 = new JMenuBar();
 				setJMenuBar(jMenuBar1);
@@ -273,7 +308,96 @@ public class GestionIncidenciasMaestroApp extends javax.swing.JFrame {
 		//TODO add your code for jButtonSalir.actionPerformed
 		System.exit(0);
 	}
+	
+	private void jButtonAsignarOperarioActionPerformed(ActionEvent evt) {
+		//System.out.println("jButtonAsignarOperario.actionPerformed, event="+evt);
+		//TODO add your code for jButtonAsignarOperario.actionPerformed
+		
+		int numeroFilaSeleccionada = jTableOrdenesTrabajo.getSelectedRow();
+		if (numeroFilaSeleccionada > -1){
+			int id = (Integer)jTableOrdenesTrabajo.getValueAt(numeroFilaSeleccionada, 0);
+			
+			String prioridadCadena = Integer.toString((Integer)jTableOrdenesTrabajo.getValueAt(numeroFilaSeleccionada, 1));
+			int prioridad = Integer.parseInt(prioridadCadena);
+			String estado = "EN_CURSO";
+			String nombreArea = (String) jTableOrdenesTrabajo.getValueAt(numeroFilaSeleccionada, 3);
+			String nombre = (String)jComboBoxOperarios.getSelectedItem();
+			OrdenTrabajo orden = new OrdenTrabajo(id, prioridad, estado, nombreArea);
+			try {
+				Operario operario = control.getOperarioPorNombre(nombre);
+				control.asignarOrdenTrabajo(orden, operario.getDNI());
+				JOptionPane.showMessageDialog(this, "Orden de trabajo asignada a " +
+					nombre + ".");
+				this.modelo.limpiarTabla();
+				Area area = new Area((String)this.jComboBoxAreas.getSelectedItem());
+				ArrayList<OrdenTrabajo> ordenesTrabajo = control.getOrdenesTrabajoPorArea(area);
+				for(OrdenTrabajo ordenTrabajo: ordenesTrabajo)
+					modelo.anyadirFila(ordenTrabajo);
 
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog( 
+				this,e.getMessage(),"ERROR", JOptionPane.ERROR_MESSAGE); 
+			}	
+		} else {
+			JOptionPane.showMessageDialog(this, "Debe seleccionar una orden de trabajo.");
+		}
+	}
+	
+	private void jComboBoxAreasItemStateChanged(ItemEvent evt) {
+		//System.out.println("jComboBoxAreas.itemStateChanged, event="+evt);
+		//TODO add your code for jComboBoxAreas.itemStateChanged
+		this.actualizarTabla();
+		this.actualizarComboBox();
+		
+		
+	}
+
+	private void actualizarComboBox(){
+
+		
+		ArrayList<Operario> operarios = new ArrayList<Operario>();
+		Area area = new Area((String)this.jComboBoxAreas.getSelectedItem());
+		
+		try{ 	   
+			operarios = control.getOperariosPorArea(area);
+		}catch (Exception e){ 
+			JOptionPane.showMessageDialog( 
+			this,e.getMessage(),"ERROR", JOptionPane.ERROR_MESSAGE); 
+		}
+
+		//Configuracion el contenido de jComboBoxOperarios
+		String[] elementosComboBoxOperarios = new String[operarios.size()];
+		Operario operario;
+		for(int i = 0; i < operarios.size(); i++){
+			operario = operarios.get(i);
+			elementosComboBoxOperarios[i]= operario.getNombre();	
+		}//fin bucle for
+		
+		ComboBoxModel jComboBoxAsignarOperarioModel = 
+				new DefaultComboBoxModel(elementosComboBoxOperarios);
+		
+		jComboBoxOperarios.setModel(jComboBoxAsignarOperarioModel);
+	}
+	
+	private void actualizarTabla (){
+		
+		try {
+			this.modelo.limpiarTabla();
+			Area area = new Area((String)this.jComboBoxAreas.getSelectedItem());
+			ArrayList<OrdenTrabajo> ordenesTrabajo = control.getOrdenesTrabajoPorArea(area);
+			for(OrdenTrabajo ordenTrabajo: ordenesTrabajo)
+				modelo.anyadirFila(ordenTrabajo);
+
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog( 
+			this,e.getMessage(),"ERROR", JOptionPane.ERROR_MESSAGE); 
+		}	
+		
+		
+		
+	}
+	
+	
 	/**
 	 * Modelo de tabla para mostrar las órdenes de trabajo para el Maestro.
 	 */
@@ -282,7 +406,7 @@ public class GestionIncidenciasMaestroApp extends javax.swing.JFrame {
 		private static final long serialVersionUID = 1L;
 			
 		// Columnas de la tabla
-		private String[] columnNames = {"ID", "PRIORIDAD", "ESTADO", "NOMBRE_AREA" };
+		private String[] columnNames = {"ID", "PRIORIDAD", "ESTADO", "NOMBRE_AREA", "DNI" };
 			
 		// Datos que muestra la tabla
 		private ArrayList<OrdenTrabajo> ordenesTrabajo = new ArrayList<OrdenTrabajo>();
@@ -308,12 +432,17 @@ public class GestionIncidenciasMaestroApp extends javax.swing.JFrame {
 				case 1: return orden.getPrioridad();
 				case 2: return orden.getEstado();
 				case 3: return orden.getArea().getNombre();
+				case 4:
+						if(orden.getOperario() != null){
+							return orden.getOperario().getDNI();
+						}else return "No Asignada";
 				default: return null;
 			}
 		}
 		
 		public void limpiarTabla(){
 			ordenesTrabajo.clear();
+			this.fireTableDataChanged();
 		}
 		
 		/*

@@ -14,7 +14,7 @@ public class Controlador {
 	
 	private DAL dal;
 	//public boolean logeado;
-	public UsuarioRegistrado usu;
+	public Persona usu;
 	//**********************************************************************
 	// Creación del controlador
 	// Un único controlador para todos los C.U.
@@ -46,9 +46,9 @@ public class Controlador {
 		} 
 	}
 	
-	public void asignarOrdenTrabajo (OrdenTrabajo orden)throws DominioExcepcion{
+	public void asignarOrdenTrabajo (OrdenTrabajo orden, String dni)throws DominioExcepcion{
 		try{ 
-			this.dal.asignarOrdenTrabajo(orden);
+			this.dal.asignarOrdenTrabajo(orden, dni);
 		}catch (DAOExcepcion e){ 
 			   throw new DominioExcepcion(e.getMessage()); 
 		} 
@@ -79,12 +79,41 @@ public class Controlador {
 		} 
 	}
 	
+	public Area getAreaPorNombre(String nombreArea) throws DominioExcepcion {
+		try{ 
+			return this.dal.getAreaPorNombre(nombreArea);
+		}catch (DAOExcepcion e){ 
+			   throw new DominioExcepcion(e.getMessage()); 
+		} 
+	}
+	
+	public ArrayList<Operario> getOperariosPorArea(Area area) throws DominioExcepcion {
+		try{ 
+			return this.dal.getOperariosPorArea(area);
+		}catch (DAOExcepcion e){ 
+			   throw new DominioExcepcion(e.getMessage()); 
+		} 
+	}
+	
+	public Operario getOperarioPorNombre(String nombre) throws DominioExcepcion {
+		try{ 
+			return this.dal.getOperarioPorNombre(nombre);
+		}catch (DAOExcepcion e){ 
+			   throw new DominioExcepcion(e.getMessage()); 
+		} 
+	}
 	
 	
 	public static  Controlador dameControlador() throws DominioExcepcion {
 		// TODO Auto-generated method stub
 		return new Controlador();
 	}
+
+
+	
+	
+	
+	
 /*
 	//****************************************************************************
 	// Para el C.U. Crear Usuario Registrado
