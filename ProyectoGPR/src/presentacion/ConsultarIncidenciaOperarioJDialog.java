@@ -18,6 +18,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
+import logica.Controlador;
+
 /**
 * This code was edited or generated using CloudGarden's Jigloo
 * SWT/Swing GUI Builder, which is free for non-commercial
@@ -31,6 +33,7 @@ import javax.swing.table.TableModel;
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
 public class ConsultarIncidenciaOperarioJDialog extends javax.swing.JDialog {
+	
 	private JLabel jLabelNombreIncidencia;
 	private JButton jButtonEmpezar;
 	private JLabel jLabelMaterialSeleccionado;
