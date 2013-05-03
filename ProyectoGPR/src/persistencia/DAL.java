@@ -22,11 +22,11 @@ public class DAL {
 	
 private DAL() throws DAOExcepcion{
 	// Objectos para comunicarse con la capa de acceso a datos
-	inDAO = new IncidenciaDAO();
-	arDAO = new AreaDAO();
-	orDAO = new OrdenTrabajoDAO();
-	peDAO = new OperarioDAO();
-	maDAO = new MaterialDAO();
+	this.inDAO = new IncidenciaDAO();
+	this.arDAO = new AreaDAO();
+	this.orDAO = new OrdenTrabajoDAO();
+	this.peDAO = new OperarioDAO();
+	this.maDAO = new MaterialDAO();
 }
 public static DAL dameDAL() throws DAOExcepcion {
 	if(dal == null)
@@ -44,14 +44,14 @@ public void clasificarIncidencia(Incidencia incidencia, Area area, int prioridad
 	this.inDAO.clasificarIncidencia(incidencia, area, prioridad);
 }
 //metodos de orden de trabajo
-public ArrayList<OrdenTrabajo> encontrarOrdenesTrabajoPorArea(Area area)throws DAOExcepcion{
-	return orDAO.getOrdenTrabajo(area);
+public ArrayList<OrdenTrabajo> getOrdenesTrabajoPorArea(Area area)throws DAOExcepcion{
+	return orDAO.getOrdenesTrabajoPorArea(area);
 }
-public ArrayList<OrdenTrabajo> encontrarOrdenesTrabajoPorOperario(Operario operario)throws DAOExcepcion{
-	return orDAO.getOrdenTrabajo(operario);
+public ArrayList<OrdenTrabajo> getOrdenTrabajoPorOperario(Operario operario)throws DAOExcepcion{
+	return orDAO.getOrdenTrabajoPorOperario(operario);
 }
-public ArrayList<OrdenTrabajo> encontrarOrdenesTrabajoPorFecha(Date fecha_ini,Date fecha_fin)throws DAOExcepcion{
-	return orDAO.getOrdenTrabajo(fecha_ini,fecha_fin);
+public ArrayList<OrdenTrabajo> getOrdenTrabajoPorFecha(Date fecha_ini,Date fecha_fin)throws DAOExcepcion{
+	return orDAO.getOrdenTrabajoPorFecha(fecha_ini,fecha_fin);
 }
 public void modificarOrdenTrabajo(OrdenTrabajo orden)throws DAOExcepcion{
 	orDAO.modificar(orden);
@@ -59,6 +59,7 @@ public void modificarOrdenTrabajo(OrdenTrabajo orden)throws DAOExcepcion{
 public void asignarOrdenTrabajo(OrdenTrabajo orden)throws DAOExcepcion{
 	this.orDAO.crearOrdenTrabajo(orden);
 }
+
 
 //metodos de persona
 

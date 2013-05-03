@@ -9,9 +9,11 @@ import logica.OrdenTrabajo;
 
 import excepciones.*;
 public interface IOrdenTrabajoDAO {
-	ArrayList<OrdenTrabajo> getOrdenTrabajo(Area area) throws DAOExcepcion; 
-	ArrayList<OrdenTrabajo> getOrdenTrabajo(Operario operario) throws DAOExcepcion; 
-	ArrayList<OrdenTrabajo> getOrdenTrabajo(Date fecha1,Date fecha2) throws DAOExcepcion;
-	void modificar(OrdenTrabajo orden) throws DAOExcepcion;
+	
+	public ArrayList<OrdenTrabajo> getOrdenesTrabajoPorArea(Area area) throws DAOExcepcion; 
+	public ArrayList<OrdenTrabajo> getOrdenTrabajoPorOperario(Operario operario) throws DAOExcepcion; 
+	public ArrayList<OrdenTrabajo> getOrdenTrabajoPorFecha(Date fecha1,Date fecha2) throws DAOExcepcion;
+	public void modificar(OrdenTrabajo orden) throws DAOExcepcion;
 	public void crearOrdenTrabajo(OrdenTrabajo orden);
+	
 }

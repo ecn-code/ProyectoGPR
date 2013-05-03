@@ -14,41 +14,46 @@ import logica.OrdenTrabajo;
 import excepciones.DAOExcepcion;
 
 public class OrdenTrabajoDAO implements IOrdenTrabajoDAO {
+	
 	private ConnectionManager connManager;
 
 	public OrdenTrabajoDAO()throws DAOExcepcion{
+		
 		try{
-			this.connManager= new ConnectionManager("practicaGPR");
-			}catch (ClassNotFoundException e){
-				throw new DAOExcepcion("DB_CONNECT_ERROR");
-			}
+			this.connManager = new ConnectionManager("practicaGPR");
+		}catch (ClassNotFoundException e){
+			throw new DAOExcepcion("DB_CONNECT_ERROR");
+		}
 	}
+	
 	@Override
-	public ArrayList<OrdenTrabajo> getOrdenTrabajo(Area _area)
+	public ArrayList<OrdenTrabajo> getOrdenesTrabajoPorArea(Area _area)
 			throws DAOExcepcion {
 			// TODO Auto-generated method stub
 		
 			try{
-				connManager.connect();
-				ResultSet rs=connManager.queryDB("select * from INCIDENCIA inc,ORDENDETRABAJO " +
-						"ord where ord.ID=inc.ID and NOMBRE_AREA='"+_area.getNombre()+"'");
-				connManager.close();
+				this.connManager.connect();
+				ResultSet rs = this.connManager.queryDB("SELECT * FROM INCIDENCIA inc, ORDENTRABAJO " +
+						"ord where ord.ID = inc.ID AND NOMBRE_AREA = '" + _area.getNombre() + "'");
+				this.connManager.close();
 				
 				try {
 					ArrayList<OrdenTrabajo> ordenesTrabajo = new ArrayList<OrdenTrabajo>();
 					IOperarioDAO persona = new OperarioDAO();
 					IAreaDAO areaDao = new AreaDAO();
+					
 					while(rs.next()){
-						
 						Operario operario = persona.getOperario(rs.getString("DNI"));
 						Area area = areaDao.getArea(rs.getString("NOMBRE_AREA"));
-						OrdenTrabajo orden = new OrdenTrabajo(rs.getString("ID"),rs.getString("NOMBRE")
+						OrdenTrabajo orden = new OrdenTrabajo(rs.getInt("ID"),rs.getString("NOMBRE")
 								,rs.getString("DESCRIPCION"),rs.getInt("PRIORIDAD"), rs.getString("ESTADO"),
-								operario,area);
+								operario, area);
 						
 						ordenesTrabajo.add(orden);
 					}
+					
 					return ordenesTrabajo;
+					
 					}catch (SQLException e){
 						throw new DAOExcepcion("DB_READ_ERROR");
 					}
@@ -58,8 +63,9 @@ public class OrdenTrabajoDAO implements IOrdenTrabajoDAO {
 				}
 	}
 
+	/*
 	@Override
-	public ArrayList<OrdenTrabajo> getOrdenTrabajo(Operario _operario)
+	public ArrayList<OrdenTrabajo> getOrdenTrabajoPorOperario(Operario _operario)
 			throws DAOExcepcion {
 		// TODO Auto-generated method stub
 		try{
@@ -89,7 +95,7 @@ public class OrdenTrabajoDAO implements IOrdenTrabajoDAO {
 	}
 
 	@Override
-	public ArrayList<OrdenTrabajo> getOrdenTrabajo(Date fecha1, Date fecha2)
+	public ArrayList<OrdenTrabajo> getOrdenTrabajoPorFecha(Date fecha1, Date fecha2)
 			throws DAOExcepcion {
 		// TODO Auto-generated method stub
 		try{
@@ -135,12 +141,13 @@ public class OrdenTrabajoDAO implements IOrdenTrabajoDAO {
 	
 			
 	}
+	*/
+	
 	@Override
 	public void crearOrdenTrabajo(OrdenTrabajo orden) {
 		// TODO Auto-generated method stub
 		try {
 			this.connManager.connect();
-			System.out.println(orden.getID()+"sdfadgadasfdf ");
 			this.connManager.updateDB("insert into ORDENTRABAJO (ID, PRIORIDAD, " +
 					"ESTADO, DNI, NOMBRE_AREA) values ("
 					+ orden.getID()
@@ -158,6 +165,23 @@ public class OrdenTrabajoDAO implements IOrdenTrabajoDAO {
 		} catch (DAOExcepcion e) {
 			System.out.println("ERROR EN DAO");
 		}
+		
+	}
+	@Override
+	public ArrayList<OrdenTrabajo> getOrdenTrabajoPorFecha(Date fecha1,
+			Date fecha2) throws DAOExcepcion {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public ArrayList<OrdenTrabajo> getOrdenTrabajoPorOperario(Operario operario)
+			throws DAOExcepcion {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void modificar(OrdenTrabajo orden) throws DAOExcepcion {
+		// TODO Auto-generated method stub
 		
 	}
 

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import logica.Incidencia;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
@@ -28,6 +29,7 @@ import logica.Controlador;
 public class GestionIncidenciasJefeApp extends javax.swing.JFrame {
 
 	private Controlador control;
+	private ModeloTablaAvisosIncidencia modelo;
 	private JScrollPane jScrollPaneIncidencias;
 	private JMenuItem helpMenuItem;
 	private JLabel jLabeiListadoAvisos;
@@ -67,6 +69,7 @@ public class GestionIncidenciasJefeApp extends javax.swing.JFrame {
 	private void initGUI() {
 		
 		ArrayList<Incidencia> incidencias = new ArrayList<Incidencia>();
+		
 		try {
 			
 			try{ 	   
@@ -78,16 +81,11 @@ public class GestionIncidenciasJefeApp extends javax.swing.JFrame {
 				this,e.getMessage(),"ERROR", JOptionPane.ERROR_MESSAGE); 
 			}
 			
-			String[][] filas = new String[incidencias.size()][4];
-			
-			for(int i=0;i<incidencias.size();i++){
-				Incidencia incidencia = incidencias.get(i);
-				filas[i][0]= Integer.toString(incidencia.getID());
-					filas[i][1]= incidencia.getNombre();
-						filas[i][2]= incidencia.getDescripcion();
-							filas[i][3]= incidencia.getFechaEntrada();	
-			}//fin bucle for
-			
+			this.modelo = new ModeloTablaAvisosIncidencia();
+			for(Incidencia incidencia: incidencias){
+				modelo.anyadirFila(incidencia);
+			}
+
 			getContentPane().setLayout(null);
 			this.setTitle("Gestión de incidencias - Jefe Servicio Mantenimiento");
 			this.setResizable(false);
@@ -96,16 +94,11 @@ public class GestionIncidenciasJefeApp extends javax.swing.JFrame {
 				getContentPane().add(jScrollPaneIncidencias);
 				jScrollPaneIncidencias.setBounds(12, 77, 557, 234);
 				{
-					TableModel jTableAvisosIncidenciaModel = 
-						new DefaultTableModel(filas,
-								new String[] { "ID", "NOMBRE", "DESCRIPCION" ,"FECHAENTRADA"});
 					jTableAvisosIncidencia = new JTable();
 					jScrollPaneIncidencias.setViewportView(jTableAvisosIncidencia);
-					jTableAvisosIncidencia.setModel(jTableAvisosIncidenciaModel);
+					jTableAvisosIncidencia.setModel(modelo);
 					jTableAvisosIncidencia.setBounds(116, 155, 540, 245);
 					jTableAvisosIncidencia.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1, false));
-					//TableColumn columna = new TableColumn();;
-					//jTableAvisosIncidencia.addColumn(columna);
 				}
 			{
 				jTextFieldDesde = new JTextField();
@@ -211,7 +204,7 @@ public class GestionIncidenciasJefeApp extends javax.swing.JFrame {
 
 		int numeroFilaSeleccionada = jTableAvisosIncidencia.getSelectedRow();
 		if (numeroFilaSeleccionada > -1){
-			int id = Integer.parseInt((String)jTableAvisosIncidencia.getValueAt(numeroFilaSeleccionada, 0));
+			int id = (Integer)jTableAvisosIncidencia.getValueAt(numeroFilaSeleccionada, 0);
 			String nombre = (String) jTableAvisosIncidencia.getValueAt(numeroFilaSeleccionada, 1);
 			String descripcion = (String) jTableAvisosIncidencia.getValueAt(numeroFilaSeleccionada, 2);
 			String fechaEntrada = (String) jTableAvisosIncidencia.getValueAt(numeroFilaSeleccionada, 3);
@@ -227,55 +220,75 @@ public class GestionIncidenciasJefeApp extends javax.swing.JFrame {
 	}
 	
 	public void actualizarTablaAvisosIncidencia(int numeroFila){
-		
-		//this.jTableAvisosIncidencia.removeRowSelectionInterval(numeroFila, numeroFila);
-		//this.jTableAvisosIncidencia.updateUI();
-		
-		/*
-		ArrayList<Incidencia> incidencias = new ArrayList<Incidencia>();
-		
-		try {
-			try{ 	   
-				this.control = Controlador.dameControlador(); 
-				incidencias = this.control.getIncidencias();
-				   
-			}catch (Exception e){ 
-				JOptionPane.showMessageDialog( 
-				this,e.getMessage(),"ERROR", JOptionPane.ERROR_MESSAGE); 
-			}
-			
-			String[][] filas = new String[incidencias.size()][4];
-			
-			for(int i=0;i<incidencias.size();i++){
-				Incidencia incidencia = incidencias.get(i);
-				filas[i][0]= Integer.toString(incidencia.getID());
-					filas[i][1]= incidencia.getNombre();
-						filas[i][2]= incidencia.getDescripcion();
-							filas[i][3]= incidencia.getFechaEntrada();	
-			}//fin bucle for
-			
-			for(int i=0;i<incidencias.size();i++){
-				int id = Integer.parseInt(filas[i][0]);
-				String nombre = filas[i][1];
-				String descripcion = filas[i][2];
-				String fechaEntrada = filas[i][3];
-				this.jTableAvisosIncidencia.setValueAt(id, i, 0);
-				this.jTableAvisosIncidencia.setValueAt(nombre, i, 1);
-				this.jTableAvisosIncidencia.setValueAt(descripcion, i, 2);
-				this.jTableAvisosIncidencia.setValueAt(fechaEntrada, i, 3);
-			}
-			this.jTableAvisosIncidencia.updateUI();
-			this.repaint();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		*/
+		this.modelo.borrarFila(numeroFila);
 	}
 	
 	private void jButtonSalirActionPerformed(ActionEvent evt) {
 		//System.out.println("jButtonSalir.actionPerformed, event="+evt);
 		//TODO add your code for jButtonSalir.actionPerformed
 		System.exit(0);
+	}
+	
+	/**
+	 * Modelo de tabla para mostrar los avisos de incidencia.
+	 */
+	class ModeloTablaAvisosIncidencia extends AbstractTableModel {
+			
+		private static final long serialVersionUID = 1L;
+			
+		// Columnas de la tabla
+		private String[] columnNames = { "ID", "NOMBRE", "DESCRIPCION" ,"FECHAENTRADA"};
+			
+		// Datos que muestra la tabla
+		private ArrayList<Incidencia> incidencias = new ArrayList<Incidencia>();
+		
+		public int getColumnCount() {
+			return columnNames.length;
+		}
+			
+		public int getRowCount() {
+			return incidencias.size();
+		}
+			
+		public String getColumnName(int col) {
+			return columnNames[col];
+		}
+			
+		// Este método se dispara cada vez que la tabla necesita el valor de un campo
+		public Object getValueAt(int row, int col) {
+			Incidencia incidencia = incidencias.get(row);
+			switch(col){
+				case 0: return incidencia.getID();
+				case 1: return incidencia.getNombre();
+				case 2: return incidencia.getDescripcion();
+				case 3: return incidencia.getFechaEntrada();
+				default: return null;
+			}
+		}
+		
+		public void limpiarTabla(){
+			incidencias.clear();
+		}
+		
+		/*
+		* JTable uses this method to determine the default renderer/
+		* editor for each cell. If we didn't implement this method,
+		* then the last column would contain text ("true"/"false"),
+		* rather than a check box.
+		*/
+		public Class<? extends Object> getColumnClass(int c) {
+			return getValueAt(0, c).getClass();
+		}
+			
+		public void anyadirFila(Incidencia row) {
+			incidencias.add(row);
+			this.fireTableDataChanged();
+		}
+			
+		public void borrarFila(int row) {
+			incidencias.remove(row);
+			this.fireTableDataChanged();
+		}
 	}
 
 }

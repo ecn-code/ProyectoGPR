@@ -10,18 +10,30 @@ public class Incidencia{
 	private String descripcion;
 	private String fechaEntrada;
 
+	//Constructor que se utiliza cuando se crea el aviso de incidencia
 	public Incidencia(String _nombre, String _descripcion){
 		this.nombre = _nombre;
 		this.descripcion = _descripcion;
 		this.fechaEntrada = this.getFechaActual();
 	}
 	
+	//Constructor que se utiliza cuando se crea una incidencia existente
+	//en la base de datos para ser mostrada en la tabla Avisos de Incidencia
 	public Incidencia(int _iD, String _nombre, String _descripcion, 
 			String _fechaEntrada){
 		this.iD = _iD;
 		this.nombre = _nombre;
 		this.descripcion = _descripcion;
 		this.fechaEntrada = _fechaEntrada;
+	}
+	
+	//Constructor que se utiliza cuando se crea una incidencia existente
+	//en la base de datos para ser mostrada en la tabla Órdenes de trabajo
+	//del Maestro de área
+	public Incidencia(int _iD, String _nombre, String _descripcion){
+		this.iD = _iD;
+		this.nombre = _nombre;
+		this.descripcion = _descripcion;
 	}
 	
 	public String getFechaActual() {

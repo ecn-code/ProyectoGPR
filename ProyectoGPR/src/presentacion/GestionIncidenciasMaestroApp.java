@@ -1,13 +1,34 @@
 package presentacion;
-import com.cloudgarden.layout.AnchorLayout;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.*;
+import java.util.ArrayList;
+import javax.swing.BorderFactory;
+
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+
+import logica.Area;
+import logica.Controlador;
+import logica.Incidencia;
+import logica.OrdenTrabajo;
+import presentacion.GestionIncidenciasJefeApp.ModeloTablaAvisosIncidencia;
+
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -22,7 +43,12 @@ import javax.swing.table.TableModel;
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
 public class GestionIncidenciasMaestroApp extends javax.swing.JFrame {
-
+	
+	private Controlador control;
+	private JComboBox jComboBoxAreas;
+	private JLabel jLabelSeleccionaArea;
+	private JPanel jPanel1;
+	private ModeloTablaOrdenTrabajo modelo;
 	private JMenuItem helpMenuItem;
 	private JLabel jLabeiListadoAvisos;
 	private JButton jButtonFiltrar;
@@ -33,12 +59,12 @@ public class GestionIncidenciasMaestroApp extends javax.swing.JFrame {
 	private JMenu jMenu5;
 	private JButton jButtonAsignarOperario;
 	private JLabel jLabelAsignarOperario;
-	private JComboBox jComboBoxAsignarOperario;
+	private JComboBox jComboBoxOperarios;
 	private JPanel jPanelAsignarOperario;
 	private JButton jButtonEliminar;
 	private JButton jButtonRegistrar;
 	private JButton jButtonSalir;
-	private JTable jTableIncidencias;
+	private JTable jTableOrdenesTrabajo;
 	private JMenuItem copyMenuItem;
 	private JMenuItem cutMenuItem;
 	private JMenu jMenu4;
@@ -67,16 +93,33 @@ public class GestionIncidenciasMaestroApp extends javax.swing.JFrame {
 			getContentPane().setLayout(null);
 			this.setTitle("Gestión de incidencias - Maestro de Área");
 			this.setResizable(false);
+		
+			ArrayList<OrdenTrabajo> ordenesTrabajo = new ArrayList<OrdenTrabajo>();
+			ArrayList<Area> areas = new ArrayList<Area>();
+			
+			try{ 	   
+				this.control = Controlador.dameControlador(); 
+				areas = this.control.getAreas();
+				//System.out.println(areas.get(0).getNombre());
+				ordenesTrabajo = this.control.getOrdenesTrabajoPorArea(areas.get(0));
+				   
+			}catch (Exception e){ 
+				JOptionPane.showMessageDialog( 
+				this,e.getMessage(),"ERROR", JOptionPane.ERROR_MESSAGE); 
+			}
+			
+			this.modelo = new ModeloTablaOrdenTrabajo();
+			for(OrdenTrabajo orden: ordenesTrabajo){
+				modelo.anyadirFila(orden);
+			}
+			
 			{
-				TableModel jTableAvisosIncidenciaModel = 
-					new DefaultTableModel(
-							new String[][] { {}, {}, {}, {}},
-							new String[] { "ID", "Nombre", "Descripcion", "FechaEntrada" });
-				jTableIncidencias = new JTable();
-				getContentPane().add(jTableIncidencias);
-				jTableIncidencias.setModel(jTableAvisosIncidenciaModel);
-				jTableIncidencias.setBounds(23, 89, 540, 306);
-				jTableIncidencias.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+				
+				jTableOrdenesTrabajo = new JTable();
+				getContentPane().add(jTableOrdenesTrabajo);
+				jTableOrdenesTrabajo.setModel(modelo);
+				jTableOrdenesTrabajo.setBounds(23, 89, 540, 306);
+				jTableOrdenesTrabajo.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 			}
 			{
 				jTextFieldDesde = new JTextField();
@@ -138,7 +181,7 @@ public class GestionIncidenciasMaestroApp extends javax.swing.JFrame {
 			{
 				jPanelAsignarOperario = new JPanel();
 				getContentPane().add(jPanelAsignarOperario);
-				jPanelAsignarOperario.setBounds(587, 139, 208, 89);
+				jPanelAsignarOperario.setBounds(594, 202, 208, 89);
 				jPanelAsignarOperario.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 				{
 					jLabelAsignarOperario = new JLabel();
@@ -149,16 +192,45 @@ public class GestionIncidenciasMaestroApp extends javax.swing.JFrame {
 					ComboBoxModel jComboBoxAsignarOperarioModel = 
 						new DefaultComboBoxModel(
 								new String[] { "Operario 01", "Operario 02", "Operario 03" });
-					jComboBoxAsignarOperario = new JComboBox();
-					jPanelAsignarOperario.add(jComboBoxAsignarOperario);
-					jComboBoxAsignarOperario.setModel(jComboBoxAsignarOperarioModel);
-					jComboBoxAsignarOperario.setPreferredSize(new java.awt.Dimension(180, 23));
+					jComboBoxOperarios = new JComboBox();
+					jPanelAsignarOperario.add(jComboBoxOperarios);
+					jComboBoxOperarios.setModel(jComboBoxAsignarOperarioModel);
+					jComboBoxOperarios.setPreferredSize(new java.awt.Dimension(180, 23));
 				}
 				{
 					jButtonAsignarOperario = new JButton();
 					jPanelAsignarOperario.add(jButtonAsignarOperario);
 					jButtonAsignarOperario.setText("Asignar");
 					jButtonAsignarOperario.setPreferredSize(new java.awt.Dimension(96, 23));
+				}
+			}
+			{
+				jPanel1 = new JPanel();
+				getContentPane().add(jPanel1);
+				jPanel1.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+				jPanel1.setBounds(594, 110, 208, 72);
+				{
+					jLabelSeleccionaArea = new JLabel();
+					jPanel1.add(jLabelSeleccionaArea);
+					jLabelSeleccionaArea.setText("Selecciona un área:");
+				}
+				
+				//Configuramos el contenido de jComboBoxAreas
+				Area area;
+				String[] elementosComboBoxAreas = new String[areas.size()];
+				
+				for(int i = 0; i < areas.size(); i++){
+					area = areas.get(i);
+					elementosComboBoxAreas[i]= area.getNombre();	
+				}//fin bucle for
+				
+				{
+					ComboBoxModel jComboBox1Model = 
+						new DefaultComboBoxModel(elementosComboBoxAreas);
+					jComboBoxAreas = new JComboBox();
+					jPanel1.add(jComboBoxAreas);
+					jComboBoxAreas.setModel(jComboBox1Model);
+					jComboBoxAreas.setPreferredSize(new java.awt.Dimension(180,23));
 				}
 			}
 			this.setSize(820, 470);
@@ -202,4 +274,68 @@ public class GestionIncidenciasMaestroApp extends javax.swing.JFrame {
 		System.exit(0);
 	}
 
+	/**
+	 * Modelo de tabla para mostrar las órdenes de trabajo para el Maestro.
+	 */
+	class ModeloTablaOrdenTrabajo extends AbstractTableModel {
+			
+		private static final long serialVersionUID = 1L;
+			
+		// Columnas de la tabla
+		private String[] columnNames = {"ID", "PRIORIDAD", "ESTADO", "NOMBRE_AREA" };
+			
+		// Datos que muestra la tabla
+		private ArrayList<OrdenTrabajo> ordenesTrabajo = new ArrayList<OrdenTrabajo>();
+		
+		public int getColumnCount() {
+			return columnNames.length;
+		}
+			
+		public int getRowCount() {
+			return ordenesTrabajo.size();
+		}
+			
+		public String getColumnName(int col) {
+			return columnNames[col];
+		}
+			
+		// Este método se dispara cada vez que la tabla necesita el valor de un campo
+		public Object getValueAt(int row, int col) {
+			
+			OrdenTrabajo orden = ordenesTrabajo.get(row);
+			switch(col){
+				case 0: return orden.getID();
+				case 1: return orden.getPrioridad();
+				case 2: return orden.getEstado();
+				case 3: return orden.getArea().getNombre();
+				default: return null;
+			}
+		}
+		
+		public void limpiarTabla(){
+			ordenesTrabajo.clear();
+		}
+		
+		/*
+		* JTable uses this method to determine the default renderer/
+		* editor for each cell. If we didn't implement this method,
+		* then the last column would contain text ("true"/"false"),
+		* rather than a check box.
+		*/
+		public Class<? extends Object> getColumnClass(int c) {
+			return getValueAt(0, c).getClass();
+		}
+			
+		public void anyadirFila(OrdenTrabajo row) {
+			ordenesTrabajo.add(row);
+			this.fireTableDataChanged();
+		}
+			
+		public void borrarFila(int row) {
+			ordenesTrabajo.remove(row);
+			this.fireTableDataChanged();
+		}
+	}
+	
+	
 }

@@ -175,8 +175,8 @@ public class ClasificarIncidenciaJefejDialog extends javax.swing.JDialog {
 		int prioridad = Integer.parseInt(prioridadCadena);
 		//System.out.println(prioridad);
 		OrdenTrabajo orden = new OrdenTrabajo(this.incidencia, area, prioridad);
-		this.dispose();
 		this.jFramePrincipal.actualizarTablaAvisosIncidencia(numeroFilaSeleccionada);
+		this.dispose();
 		try{ 	   
 			this.control = Controlador.dameControlador(); 
 			this.control.clasificarIncidencia(incidencia, area, prioridad);

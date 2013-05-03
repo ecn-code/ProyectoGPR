@@ -9,7 +9,7 @@ public class OrdenTrabajo extends Incidencia {
 	private Operario operario;
 	private Area area;
 	
-	public OrdenTrabajo(int _iD,String _nombre, String _descripcion, 
+	public OrdenTrabajo(int _iD, String _nombre, String _descripcion, 
 			int _prioridad, String _estado, Operario _operario, Area _area ){
 		super(_iD, _nombre, _descripcion);
 		this.prioridad = _prioridad;
@@ -17,6 +17,7 @@ public class OrdenTrabajo extends Incidencia {
 		this.operario = _operario;
 		this.area = _area;
 	}
+	
 	public OrdenTrabajo(Incidencia _incidencia, Area _area, int _prioridad){
 		super(_incidencia.getID(), _incidencia.getNombre(), _incidencia.getDescripcion(),
 				_incidencia.getFechaEntrada());
