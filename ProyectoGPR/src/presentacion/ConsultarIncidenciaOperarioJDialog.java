@@ -18,7 +18,10 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
+import excepciones.DominioExcepcion;
+
 import logica.Controlador;
+import logica.OrdenTrabajo;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -43,11 +46,13 @@ public class ConsultarIncidenciaOperarioJDialog extends javax.swing.JDialog {
 	private JButton jButtonCancelar;
 	private JButton jButtonAnyadirMaterial;
 	private JLabel jLabelDescripcionIncidencia;
+	private OrdenTrabajo orden;
+	private Controlador control;
 
 	/**
 	* Auto-generated main method to display this JDialog
 	*/
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				JFrame frame = new JFrame();
@@ -55,16 +60,18 @@ public class ConsultarIncidenciaOperarioJDialog extends javax.swing.JDialog {
 				inst.setVisible(true);
 			}
 		});
-	}
+	}*/
 	
-	public ConsultarIncidenciaOperarioJDialog(JFrame frame) {
+	public ConsultarIncidenciaOperarioJDialog(JFrame frame,OrdenTrabajo _orden) {
 		super(frame);
+		orden = _orden;
 		initGUI();
 	}
 	
 	private void initGUI() {
 		try {
 			{
+				control = Controlador.dameControlador();
 				this.setTitle("Consultar Incidencia - Operario");
 				getContentPane().setLayout(null);
 				{
@@ -99,6 +106,20 @@ public class ConsultarIncidenciaOperarioJDialog extends javax.swing.JDialog {
 					getContentPane().add(jButtonTerminar);
 					jButtonTerminar.setText("Terminar");
 					jButtonTerminar.setBounds(296, 323, 92, 23);
+					jButtonTerminar.addActionListener(new ActionListener() {
+						
+						public void actionPerformed(ActionEvent evt) {
+							try {
+								orden.setEstado("TERMINADA");
+								control.modificarOrdenTrabajo(orden);
+								((GestionIncidenciasOperarioApp) getParent()).actualizarTabla();
+							dispose();
+							} catch (DominioExcepcion e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+					});
 				}
 				{
 					jButtonCancelar = new JButton();
@@ -143,6 +164,12 @@ public class ConsultarIncidenciaOperarioJDialog extends javax.swing.JDialog {
 			}
 			this.setSize(633, 396);
 			this.setLocationRelativeTo(null);
+			
+			
+			
+			jLabelDescripcionIncidencia.setText(orden.getNombre());
+			jLabelNombreIncidencia.setText(orden.getDescripcion());
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

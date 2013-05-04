@@ -48,14 +48,14 @@ public void clasificarIncidencia(Incidencia incidencia, Area area, int prioridad
 public ArrayList<OrdenTrabajo> getOrdenesTrabajoPorArea(Area area)throws DAOExcepcion{
 	return orDAO.getOrdenesTrabajoPorArea(area);
 }
-public ArrayList<OrdenTrabajo> getOrdenTrabajoPorOperario(Operario operario)throws DAOExcepcion{
+public ArrayList<OrdenTrabajo> getOrdenesTrabajoPorOperario(Operario operario)throws DAOExcepcion{
 	return orDAO.getOrdenTrabajoPorOperario(operario);
 }
 public ArrayList<OrdenTrabajo> getOrdenTrabajoPorFecha(Date fecha_ini,Date fecha_fin)throws DAOExcepcion{
 	return orDAO.getOrdenTrabajoPorFecha(fecha_ini,fecha_fin);
 }
 public void modificarOrdenTrabajo(OrdenTrabajo orden)throws DAOExcepcion{
-	orDAO.modificar(orden);
+	orDAO.modificarEstado(orden);
 }
 public void crearOrdenTrabajo(OrdenTrabajo orden)throws DAOExcepcion{
 	this.orDAO.crearOrdenTrabajo(orden);
@@ -98,6 +98,5 @@ public ArrayList<Material> encontrarMateriales() throws DAOExcepcion{
 public void modificarDisponiblesMaterial(Material material) throws DAOExcepcion{
 	maDAO.modificarDisponiblesMaterial(material);
 }
-
 
 }

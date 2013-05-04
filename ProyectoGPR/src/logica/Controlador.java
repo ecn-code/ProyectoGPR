@@ -69,6 +69,13 @@ public class Controlador {
 			   throw new DominioExcepcion(e.getMessage()); 
 		} 
 	}
+	public ArrayList<OrdenTrabajo> getOrdenesTrabajoPorOperario(Operario operario)throws DominioExcepcion{
+		try{ 
+			return this.dal.getOrdenesTrabajoPorOperario(operario);
+		}catch (DAOExcepcion e){ 
+			   throw new DominioExcepcion(e.getMessage()); 
+		}
+	}
 	
 	
 	public ArrayList<Area> getAreas() throws DominioExcepcion {
@@ -107,6 +114,15 @@ public class Controlador {
 	public static  Controlador dameControlador() throws DominioExcepcion {
 		// TODO Auto-generated method stub
 		return new Controlador();
+	}
+
+	public void modificarOrdenTrabajo(OrdenTrabajo orden) throws DominioExcepcion {
+		try{ 
+			this.dal.modificarOrdenTrabajo(orden);
+		}catch (DAOExcepcion e){ 
+			   throw new DominioExcepcion(e.getMessage()); 
+		} 
+		
 	}
 
 

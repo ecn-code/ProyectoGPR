@@ -3,14 +3,20 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+
+import presentacion.GestionIncidenciasMaestroApp.ModeloTablaOrdenTrabajo;
 
 import logica.Area;
 import logica.Controlador;
 import logica.Incidencia;
+import logica.Operario;
+import logica.OrdenTrabajo;
 
 
 /**
@@ -38,6 +44,8 @@ public class GestionIncidenciasOperarioApp extends javax.swing.JFrame {
 	private JButton jButtonSalir;
 	private JMenu jMenu3;
 	private JMenuBar jMenuBar1;
+	private ArrayList<OrdenTrabajo> ordenesTrabajo;
+	private ModeloTablaOrdenTrabajo modelo;
 
 	/**
 	* Auto-generated main method to display this JFrame
@@ -58,30 +66,36 @@ public class GestionIncidenciasOperarioApp extends javax.swing.JFrame {
 	}
 	
 	private void initGUI() {
-		/*try {
-			
-			ArrayList<Incidencia> incidencia = new ArrayList<Incidencia>();
-			
-			try{ 	   
-				this.control = Controlador.dameControlador(); 
-				
-				   
-			}catch (Exception e){ 
-				JOptionPane.showMessageDialog( 
-				this,e.getMessage(),"ERROR",JOptionPane.ERROR_MESSAGE); 
-			}
-			
-			String[] elementosComboBox = new String[areas.size()];
-			
-			for(int i = 0; i < areas.size(); i++){
-				Area area = areas.get(i);
-				elementosComboBox[i]= area.getNombre();	
-			}//fin bucle for*/
+		
 		try {
 			{
 				this.setTitle("Gestión de incidencias - Operario");
 				getContentPane().setLayout(null);
 				this.setResizable(false);
+				ordenesTrabajo = new ArrayList<OrdenTrabajo>();
+
+				
+				try{ 	   
+					this.control = Controlador.dameControlador(); 
+					ordenesTrabajo = this.control.getOrdenesTrabajoPorOperario(
+							new Operario("006",null,null,null));
+					
+				}catch (Exception e){ 
+					JOptionPane.showMessageDialog( 
+					this,e.getMessage(),"ERROR", JOptionPane.ERROR_MESSAGE); 
+				}
+				 modelo = new ModeloTablaOrdenTrabajo();
+				
+				  for ( Iterator<OrdenTrabajo> ordenIter = ordenesTrabajo.iterator(); ordenIter.hasNext(); ){
+					OrdenTrabajo orden = ordenIter.next();
+					  if(!(orden.getEstado().equals("EN_CURSO"))) ordenIter.remove();
+					else
+					modelo.anyadirFila(orden);
+				  }
+				
+				
+				
+				
 				{
 					jLabelSeleccionaIncidencia = new JLabel();
 					getContentPane().add(jLabelSeleccionaIncidencia);
@@ -121,13 +135,10 @@ public class GestionIncidenciasOperarioApp extends javax.swing.JFrame {
 					getContentPane().add(jScrollPaneOrdenesTrabajo);
 					jScrollPaneOrdenesTrabajo.setBounds(14, 36, 202, 169);
 					{
-						TableModel jTableOrdenesTrabajoModel = 
-							new DefaultTableModel(
-									new String[][] { { "One", "Two" }, { "Three", "Four" } },
-									new String[] { "Column 1", "Column 2" });
+
 						jTableOrdenesTrabajo = new JTable();
 						jScrollPaneOrdenesTrabajo.setViewportView(jTableOrdenesTrabajo);
-						jTableOrdenesTrabajo.setModel(jTableOrdenesTrabajoModel);
+						jTableOrdenesTrabajo.setModel(modelo);
 						jTableOrdenesTrabajo.setPreferredSize(new java.awt.Dimension(199, 132));
 					}
 				}
@@ -166,11 +177,109 @@ public class GestionIncidenciasOperarioApp extends javax.swing.JFrame {
 	private void jButtonConsutarIncidenciaActionPerformed(ActionEvent evt) {
 		//System.out.println("jButtonConsutarIncidencia.actionPerformed, event="+evt);
 		//TODO add your code for jButtonConsutarIncidencia.actionPerformed
-		ConsultarIncidenciaOperarioJDialog dialogoConsultarIncidencia = new ConsultarIncidenciaOperarioJDialog(this);
+		int numeroFilaSeleccionada = jTableOrdenesTrabajo.getSelectedRow();
+		if (numeroFilaSeleccionada > -1){
+			
+			OrdenTrabajo orden = ordenesTrabajo.get(numeroFilaSeleccionada);
+		ConsultarIncidenciaOperarioJDialog dialogoConsultarIncidencia = 
+			new ConsultarIncidenciaOperarioJDialog(this,orden);
 		dialogoConsultarIncidencia.setModal(true);
 		dialogoConsultarIncidencia.setVisible(true);
-
+		}
 		
 	}
+public void actualizarTabla (){
+	
+		
+	try{ 	   
+		this.control = Controlador.dameControlador(); 
+		ordenesTrabajo = this.control.getOrdenesTrabajoPorOperario(
+				new Operario("006",null,null,null));
+		
+	}catch (Exception e){ 
+		JOptionPane.showMessageDialog( 
+		this,e.getMessage(),"ERROR", JOptionPane.ERROR_MESSAGE); 
+	}
+	 modelo.limpiarTabla();
+	
+	  for ( Iterator<OrdenTrabajo> ordenIter = ordenesTrabajo.iterator(); ordenIter.hasNext(); ){
+		OrdenTrabajo orden = ordenIter.next();
+		  if(!orden.getEstado().equals("EN_CURSO")) ordenIter.remove();
+		else
+		modelo.anyadirFila(orden);
+	  }	
+		
+		
+		
+	}
+	
+	/**
+	 * Modelo de tabla para mostrar las órdenes de trabajo para el Maestro.
+	 */
+	class ModeloTablaOrdenTrabajo extends AbstractTableModel {
+			
+		private static final long serialVersionUID = 1L;
+			
+		// Columnas de la tabla
+		private String[] columnNames = {"ID", "PRIORIDAD", "ESTADO", "NOMBRE_AREA", "DNI" };
+			
+		// Datos que muestra la tabla
+		private ArrayList<OrdenTrabajo> ordenesTrabajo = new ArrayList<OrdenTrabajo>();
+		
+		public int getColumnCount() {
+			return columnNames.length;
+		}
+			
+		public int getRowCount() {
+			return ordenesTrabajo.size();
+		}
+			
+		public String getColumnName(int col) {
+			return columnNames[col];
+		}
+			
+		// Este método se dispara cada vez que la tabla necesita el valor de un campo
+		public Object getValueAt(int row, int col) {
+			
+			OrdenTrabajo orden = ordenesTrabajo.get(row);
+			switch(col){
+				case 0: return orden.getID();
+				case 1: return orden.getPrioridad();
+				case 2: return orden.getEstado();
+				case 3: return orden.getArea().getNombre();
+				case 4:
+						if(orden.getOperario() != null){
+							return orden.getOperario().getDNI();
+						}else return "No Asignada";
+				default: return null;
+			}
+		}
+		
+		public void limpiarTabla(){
+			ordenesTrabajo.clear();
+			this.fireTableDataChanged();
+		}
+		
+		/*
+		* JTable uses this method to determine the default renderer/
+		* editor for each cell. If we didn't implement this method,
+		* then the last column would contain text ("true"/"false"),
+		* rather than a check box.
+		*/
+		public Class<? extends Object> getColumnClass(int c) {
+			return getValueAt(0, c).getClass();
+		}
+			
+		public void anyadirFila(OrdenTrabajo row) {
+			ordenesTrabajo.add(row);
+			this.fireTableDataChanged();
+		}
+			
+		public void borrarFila(int row) {
+			ordenesTrabajo.remove(row);
+			this.fireTableDataChanged();
+		}
+	}
+	
 
 }

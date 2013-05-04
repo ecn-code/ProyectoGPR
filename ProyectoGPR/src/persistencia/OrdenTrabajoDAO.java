@@ -174,10 +174,38 @@ public class OrdenTrabajoDAO implements IOrdenTrabajoDAO {
 		return null;
 	}
 	@Override
-	public ArrayList<OrdenTrabajo> getOrdenTrabajoPorOperario(Operario operario)
+	public ArrayList<OrdenTrabajo> getOrdenTrabajoPorOperario(Operario _operario)
 			throws DAOExcepcion {
-		// TODO Auto-generated method stub
-		return null;
+		try{
+			this.connManager.connect();
+			ResultSet rs = this.connManager.queryDB("SELECT * FROM INCIDENCIA inc, ORDENTRABAJO " +
+					"ord where ord.ID = inc.ID AND DNI = '" + _operario.getDNI() + "'");
+			this.connManager.close();
+			
+			try {
+				ArrayList<OrdenTrabajo> ordenesTrabajo = new ArrayList<OrdenTrabajo>();
+				IOperarioDAO persona = new OperarioDAO();
+				IAreaDAO areaDao = new AreaDAO();
+				
+				while(rs.next()){
+					Operario operario = persona.getOperario(rs.getString("DNI"));
+					Area area = areaDao.getAreaPorNombre(rs.getString("NOMBRE_AREA"));
+					OrdenTrabajo orden = new OrdenTrabajo(rs.getInt("ID"),rs.getString("NOMBRE")
+							,rs.getString("DESCRIPCION"),rs.getInt("PRIORIDAD"), rs.getString("ESTADO"),
+							operario, area);
+					
+					ordenesTrabajo.add(orden);
+				}
+				
+				return ordenesTrabajo;
+				
+				}catch (SQLException e){
+					throw new DAOExcepcion("DB_READ_ERROR");
+				}
+			
+			}catch (DAOExcepcion e){
+				throw e;
+			}
 	}
 	
 	public void asignarOrdenTrabajo(OrdenTrabajo orden,String dni){
@@ -200,7 +228,7 @@ public class OrdenTrabajoDAO implements IOrdenTrabajoDAO {
 	
 	
 	@Override
-	public void modificar(OrdenTrabajo orden) throws DAOExcepcion {
+	public void modificarEstado(OrdenTrabajo orden) throws DAOExcepcion {
 		// TODO Auto-generated method stub
 		try{
 			connManager.connect();
