@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import logica.Area;
 import logica.Incidencia;
+import logica.Jefe;
+import logica.Maestro;
 import logica.Material;
 import logica.Operario;
 import logica.OrdenTrabajo;
@@ -19,6 +21,8 @@ public class DAL {
 	IOrdenTrabajoDAO orDAO;
 	IOperarioDAO peDAO;
 	IMaterialDAO maDAO;
+	IMaestroDAO maestroDAO;
+	IJefeDAO jefeDAO;
 	
 private DAL() throws DAOExcepcion{
 	// Objectos para comunicarse con la capa de acceso a datos
@@ -27,6 +31,8 @@ private DAL() throws DAOExcepcion{
 	this.orDAO = new OrdenTrabajoDAO();
 	this.peDAO = new OperarioDAO();
 	this.maDAO = new MaterialDAO();
+	this.maestroDAO = new MaestroDAO();
+	this.jefeDAO = new JefeDAO();
 }
 
 public static DAL dameDAL() throws DAOExcepcion {
@@ -81,7 +87,7 @@ public ArrayList<Operario> getOperariosPorArea(Area area)throws DAOExcepcion{
 public ArrayList<Operario> encontrarOperarios()throws DAOExcepcion{
 	return peDAO.getOperarios();
 }
-public int loguearOperario(String nombre,String pass)throws DAOExcepcion{
+public Operario loguearOperario(String nombre,String pass)throws DAOExcepcion{
 	return peDAO.loguear(nombre,pass);
 }
 //metodos de Area
@@ -99,4 +105,13 @@ public void modificarDisponiblesMaterial(Material material) throws DAOExcepcion{
 	maDAO.modificarDisponiblesMaterial(material);
 }
 
+public Maestro loguearMaestro(String nombre, String pass) throws DAOExcepcion {
+	// TODO Auto-generated method stub
+	return maestroDAO.loguearMaestro(nombre,pass);
+}
+
+public Jefe loguearJefe(String nombre, String pass) throws DAOExcepcion {
+	// TODO Auto-generated method stub
+	return jefeDAO.loguearJefe(nombre,pass);
+}
 }

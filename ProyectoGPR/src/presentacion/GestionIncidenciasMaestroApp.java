@@ -33,6 +33,7 @@ import excepciones.DominioExcepcion;
 import logica.Area;
 import logica.Controlador;
 import logica.Incidencia;
+import logica.Maestro;
 import logica.Operario;
 import logica.OrdenTrabajo;
 import presentacion.GestionIncidenciasJefeApp.ModeloTablaAvisosIncidencia;
@@ -78,11 +79,13 @@ public class GestionIncidenciasMaestroApp extends javax.swing.JFrame {
 	private JMenuItem cutMenuItem;
 	private JMenu jMenu4;
 	private JMenuBar jMenuBar1;
+	private static Maestro maestro;
 
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
-	public static void main(String[] args) {
+	public static void main(Maestro _maestro) {
+		maestro = _maestro;
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				GestionIncidenciasMaestroApp inst = new GestionIncidenciasMaestroApp();
@@ -111,10 +114,10 @@ public class GestionIncidenciasMaestroApp extends javax.swing.JFrame {
 			try{ 	   
 				this.control = Controlador.dameControlador(); 
 				areas = this.control.getAreas();
-				areaComboBoxOperarios = control.getAreaPorNombre(areas.get(0).getNombre());
-				operarios = control.getOperariosPorArea(areas.get(0));
+				areaComboBoxOperarios = control.getAreaPorNombre(maestro.getArea().getNombre());
+				operarios = control.getOperariosPorArea(maestro.getArea());
 				//System.out.println(areas.get(0).getNombre());
-				ordenesTrabajo = this.control.getOrdenesTrabajoPorArea(areas.get(0));
+				ordenesTrabajo = this.control.getOrdenesTrabajoPorArea(maestro.getArea());
 			}catch (Exception e){ 
 				JOptionPane.showMessageDialog( 
 				this,e.getMessage(),"ERROR", JOptionPane.ERROR_MESSAGE); 
@@ -250,7 +253,7 @@ public class GestionIncidenciasMaestroApp extends javax.swing.JFrame {
 					jComboBoxAreas.setPreferredSize(new java.awt.Dimension(180,23));
 					jComboBoxAreas.addItemListener(new ItemListener() {
 						public void itemStateChanged(ItemEvent evt) {
-							jComboBoxAreasItemStateChanged(evt);
+							//jComboBoxAreasItemStateChanged(evt);
 						}
 					});
 				}
@@ -384,8 +387,7 @@ public class GestionIncidenciasMaestroApp extends javax.swing.JFrame {
 		
 		try {
 			this.modelo.limpiarTabla();
-			Area area = new Area((String)this.jComboBoxAreas.getSelectedItem());
-			ArrayList<OrdenTrabajo> ordenesTrabajo = control.getOrdenesTrabajoPorArea(area);
+			ArrayList<OrdenTrabajo> ordenesTrabajo = control.getOrdenesTrabajoPorArea(maestro.getArea());
 			for(OrdenTrabajo ordenTrabajo: ordenesTrabajo)
 				modelo.anyadirFila(ordenTrabajo);
 

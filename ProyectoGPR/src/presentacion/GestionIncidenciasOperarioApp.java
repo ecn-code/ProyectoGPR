@@ -47,11 +47,13 @@ public class GestionIncidenciasOperarioApp extends javax.swing.JFrame {
 	private JMenuBar jMenuBar1;
 	private ArrayList<OrdenTrabajo> ordenesTrabajo;
 	private ModeloTablaOrdenTrabajo modelo;
+	private static Operario operario;
 
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
-	public static void main(String[] args) {
+	public static void main(final Operario _operario) {
+		operario = _operario;
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				GestionIncidenciasOperarioApp inst = new GestionIncidenciasOperarioApp();
@@ -79,7 +81,7 @@ public class GestionIncidenciasOperarioApp extends javax.swing.JFrame {
 				try{ 	   
 					this.control = Controlador.dameControlador(); 
 					ordenesTrabajo = this.control.getOrdenesTrabajoPorOperario(
-							new Operario("006",null,null,null));
+							operario);
 					
 				}catch (Exception e){ 
 					JOptionPane.showMessageDialog( 
@@ -164,6 +166,7 @@ public class GestionIncidenciasOperarioApp extends javax.swing.JFrame {
 						helpMenuItem.setText("Contenidos");
 					}
 				}
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -212,7 +215,7 @@ public void actualizarTabla (){
 	try{ 	   
 		this.control = Controlador.dameControlador(); 
 		ordenesTrabajo = this.control.getOrdenesTrabajoPorOperario(
-				new Operario("006",null,null,null));
+				operario);
 		
 	}catch (Exception e){ 
 		JOptionPane.showMessageDialog( 

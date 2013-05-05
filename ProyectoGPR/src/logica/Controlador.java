@@ -125,7 +125,17 @@ public class Controlador {
 		
 	}
 
+	public Operario loguearOperario(String nombre,String pass)throws DAOExcepcion{
+		return dal.loguearOperario(nombre,pass);
+	}
 
+	public Maestro loguearMaestro(String nombre, String pass) throws DAOExcepcion{
+		return dal.loguearMaestro(nombre,pass);
+	}
+
+	public Jefe loguearJefe(String nombre, String pass) throws DAOExcepcion{
+		return dal.loguearJefe(nombre,pass);
+	}
 	
 	
 	

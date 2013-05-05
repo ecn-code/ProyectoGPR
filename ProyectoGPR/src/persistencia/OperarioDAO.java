@@ -106,9 +106,15 @@ public class OperarioDAO implements IOperarioDAO {
 			}
 	}
 	@Override
-	public int loguear(String nombre, String pass) throws DAOExcepcion {
+	public Operario loguear(String nombre, String pass) throws DAOExcepcion {
 		// TODO Auto-generated method stub
-		return 0;
+		ArrayList<Operario> operarios = getOperarios();
+		System.out.print(operarios.size());
+		for(Operario operario : operarios) {
+			if(operario.getNombre().equals(nombre) && operario.getPass().equals(pass))
+				return operario;
+		}
+		return null;
 	}
 	@Override
 	public Operario getOperarioPorNombre(String nombre) {
