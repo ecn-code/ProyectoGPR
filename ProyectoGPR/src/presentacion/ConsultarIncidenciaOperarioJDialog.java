@@ -5,9 +5,12 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.ListModel;
@@ -37,7 +40,7 @@ import logica.OrdenTrabajo;
 */
 public class ConsultarIncidenciaOperarioJDialog extends javax.swing.JDialog {
 	
-	private JLabel jLabelNombreIncidencia;
+	private JLabel jLabelIdIncidencia;
 	private JButton jButtonTerminar;
 	private JLabel jLabelMaterialSeleccionado;
 	private JButton jButtonGuardar;
@@ -47,6 +50,7 @@ public class ConsultarIncidenciaOperarioJDialog extends javax.swing.JDialog {
 	private JButton jButtonAnyadirMaterial;
 	private JLabel jLabelDescripcionIncidencia;
 	private OrdenTrabajo orden;
+	private JScrollPane jScrollPaneMaterialSeleccionado;
 	private Controlador control;
 
 	/**
@@ -75,10 +79,10 @@ public class ConsultarIncidenciaOperarioJDialog extends javax.swing.JDialog {
 				this.setTitle("Consultar Incidencia - Operario");
 				getContentPane().setLayout(null);
 				{
-					jLabelNombreIncidencia = new JLabel();
-					getContentPane().add(jLabelNombreIncidencia);
-					jLabelNombreIncidencia.setText("Nombre de la incidencia");
-					jLabelNombreIncidencia.setBounds(238, 12, 192, 16);
+					jLabelIdIncidencia = new JLabel();
+					getContentPane().add(jLabelIdIncidencia);
+					jLabelIdIncidencia.setText("Nombre de la incidencia");
+					jLabelIdIncidencia.setBounds(21, 20, 192, 16);
 				}
 				{
 					jLabelDescripcionIncidencia = new JLabel();
@@ -109,15 +113,7 @@ public class ConsultarIncidenciaOperarioJDialog extends javax.swing.JDialog {
 					jButtonTerminar.addActionListener(new ActionListener() {
 						
 						public void actionPerformed(ActionEvent evt) {
-							try {
-								orden.setEstado("TERMINADA");
-								control.modificarOrdenTrabajo(orden);
-								((GestionIncidenciasOperarioApp) getParent()).actualizarTabla();
-							dispose();
-							} catch (DominioExcepcion e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
+							jButtonTerminarActionPerformed(evt);
 						}
 					});
 				}
@@ -145,21 +141,26 @@ public class ConsultarIncidenciaOperarioJDialog extends javax.swing.JDialog {
 					jButtonSolicitarMaterial.setBounds(12, 288, 134, 23);
 				}
 				{
-					TableModel jTableMaterialAnyadidoModel = 
-						new DefaultTableModel(
-								new String[][] {{}, {}, {}},
-								new String[] { "nombre", "cantidad", "disponible" });
-					jTableMaterialAnyadido = new JTable();
-					getContentPane().add(jTableMaterialAnyadido);
-					jTableMaterialAnyadido.setModel(jTableMaterialAnyadidoModel);
-					jTableMaterialAnyadido.setBounds(157, 217, 448, 94);
-					jTableMaterialAnyadido.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
-				}
-				{
 					jButtonGuardar = new JButton();
 					getContentPane().add(jButtonGuardar);
 					jButtonGuardar.setText("Guardar");
 					jButtonGuardar.setBounds(514, 323, 92, 23);
+				}
+				{
+					jScrollPaneMaterialSeleccionado = new JScrollPane();
+					getContentPane().add(jScrollPaneMaterialSeleccionado);
+					jScrollPaneMaterialSeleccionado.setBounds(157, 217, 448, 94);
+					{
+						TableModel jTableMaterialAnyadidoModel = 
+							new DefaultTableModel(
+									new String[][] {{}, {}, {}},
+									new String[] { "NOMBRE", "CANTIDAD", "DISPONIBLE" });
+						jTableMaterialAnyadido = new JTable();
+						jScrollPaneMaterialSeleccionado.setViewportView(jTableMaterialAnyadido);
+						jTableMaterialAnyadido.setModel(jTableMaterialAnyadidoModel);
+						jTableMaterialAnyadido.setBounds(514, 260, 134, 51);
+						jTableMaterialAnyadido.setPreferredSize(new java.awt.Dimension(445, 71));
+					}
 				}
 			}
 			this.setSize(633, 396);
@@ -167,8 +168,9 @@ public class ConsultarIncidenciaOperarioJDialog extends javax.swing.JDialog {
 			
 			
 			
-			jLabelDescripcionIncidencia.setText(orden.getNombre());
-			jLabelNombreIncidencia.setText(orden.getDescripcion());
+			jLabelDescripcionIncidencia.setText(orden.getNombre() + " - " +
+					orden.getDescripcion());
+			jLabelIdIncidencia.setText("ID incidencia: " + orden.getID());
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -187,6 +189,22 @@ public class ConsultarIncidenciaOperarioJDialog extends javax.swing.JDialog {
 		AnyadirMaterialOperarioJDialog dialogoAnyadir = new AnyadirMaterialOperarioJDialog(this);
 		dialogoAnyadir.setModal(true);
 		dialogoAnyadir.setVisible(true);
+	}
+	
+	private void jButtonTerminarActionPerformed(ActionEvent evt) {
+		//System.out.println("jButtonTerminar.actionPerformed, event="+evt);
+		//TODO add your code for jButtonTerminar.actionPerformed
+		try {
+			orden.setEstado("TERMINADA");
+			control.modificarOrdenTrabajo(orden);
+			((GestionIncidenciasOperarioApp) getParent()).actualizarTabla();
+			this.dispose();
+			JOptionPane.showMessageDialog(this, "Orden de trabajo terminada y enviada" +
+					" al maestro de área.");
+		} catch (DominioExcepcion e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

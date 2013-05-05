@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -257,15 +258,15 @@ public class GestionIncidenciasMaestroApp extends javax.swing.JFrame {
 			{
 				jScrollPaneOrdenesTrabajo = new JScrollPane();
 				getContentPane().add(jScrollPaneOrdenesTrabajo);
-				jScrollPaneOrdenesTrabajo.setBounds(12, 89, 565, 309);
+				jScrollPaneOrdenesTrabajo.setBounds(14, 88, 562, 309);
 				{
 					
 					jTableOrdenesTrabajo = new JTable();
 					jScrollPaneOrdenesTrabajo.setViewportView(jTableOrdenesTrabajo);
 					jTableOrdenesTrabajo.setModel(modelo);
-					jTableOrdenesTrabajo.setBounds(168, 282, 333, 147);
-					jTableOrdenesTrabajo.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
-					jTableOrdenesTrabajo.setPreferredSize(new java.awt.Dimension(562, 286));
+					jTableOrdenesTrabajo.setBounds(529, 275, 307, 144);
+					jTableOrdenesTrabajo.getAutoResizeMode();
+					this.configurarAspectoTabla();
 				}
 			}
 			this.setSize(825, 470);
@@ -392,10 +393,23 @@ public class GestionIncidenciasMaestroApp extends javax.swing.JFrame {
 			JOptionPane.showMessageDialog( 
 			this,e.getMessage(),"ERROR", JOptionPane.ERROR_MESSAGE); 
 		}	
-		
-		
-		
 	}
+	
+	private void configurarAspectoTabla(){
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment((int) CENTER_ALIGNMENT);
+		this.jTableOrdenesTrabajo.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+		this.jTableOrdenesTrabajo.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+		this.jTableOrdenesTrabajo.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+		this.jTableOrdenesTrabajo.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+		this.jTableOrdenesTrabajo.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);	
+		this.jTableOrdenesTrabajo.getColumnModel().getColumn(0).setPreferredWidth(75);
+		this.jTableOrdenesTrabajo.getColumnModel().getColumn(1).setPreferredWidth(100);
+		this.jTableOrdenesTrabajo.getColumnModel().getColumn(2).setPreferredWidth(150);
+		this.jTableOrdenesTrabajo.getColumnModel().getColumn(3).setPreferredWidth(200);
+		this.jTableOrdenesTrabajo.getColumnModel().getColumn(4).setPreferredWidth(100);
+	}
+	
 	
 	
 	/**

@@ -7,6 +7,7 @@ import java.util.Iterator;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -32,7 +33,7 @@ import logica.OrdenTrabajo;
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
 public class GestionIncidenciasOperarioApp extends javax.swing.JFrame {
-
+	
 	private Controlador control;
 	private JMenuItem helpMenuItem;
 	private JMenu jMenu5;
@@ -99,20 +100,20 @@ public class GestionIncidenciasOperarioApp extends javax.swing.JFrame {
 				{
 					jLabelSeleccionaIncidencia = new JLabel();
 					getContentPane().add(jLabelSeleccionaIncidencia);
-					jLabelSeleccionaIncidencia.setText("Selecciona incidencia:");
-					jLabelSeleccionaIncidencia.setBounds(18, 8, 158, 16);
+					jLabelSeleccionaIncidencia.setText("Incidencias de operario:");
+					jLabelSeleccionaIncidencia.setBounds(18, 15, 158, 16);
 				}
 				{
 					jButtonConsultarMaterial = new JButton();
 					getContentPane().add(jButtonConsultarMaterial);
 					jButtonConsultarMaterial.setText("Consultar Material");
-					jButtonConsultarMaterial.setBounds(233, 70, 170, 23);
+					jButtonConsultarMaterial.setBounds(513, 70, 170, 23);
 				}
 				{
 					jButtonSalir = new JButton();
 					getContentPane().add(jButtonSalir);
 					jButtonSalir.setText("Salir");
-					jButtonSalir.setBounds(306, 182, 97, 23);
+					jButtonSalir.setBounds(586, 205, 97, 23);
 					jButtonSalir.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent evt) {
 							jButtonSalirActionPerformed(evt);
@@ -123,7 +124,7 @@ public class GestionIncidenciasOperarioApp extends javax.swing.JFrame {
 					jButtonConsutarIncidencia = new JButton();
 					getContentPane().add(jButtonConsutarIncidencia);
 					jButtonConsutarIncidencia.setText("Consultar Incidencia");
-					jButtonConsutarIncidencia.setBounds(233, 36, 170, 23);
+					jButtonConsutarIncidencia.setBounds(513, 36, 170, 23);
 					jButtonConsutarIncidencia.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent evt) {
 							jButtonConsutarIncidenciaActionPerformed(evt);
@@ -133,17 +134,18 @@ public class GestionIncidenciasOperarioApp extends javax.swing.JFrame {
 				{
 					jScrollPaneOrdenesTrabajo = new JScrollPane();
 					getContentPane().add(jScrollPaneOrdenesTrabajo);
-					jScrollPaneOrdenesTrabajo.setBounds(14, 36, 202, 169);
+					jScrollPaneOrdenesTrabajo.setBounds(14, 37, 481, 191);
 					{
 
 						jTableOrdenesTrabajo = new JTable();
 						jScrollPaneOrdenesTrabajo.setViewportView(jTableOrdenesTrabajo);
 						jTableOrdenesTrabajo.setModel(modelo);
 						jTableOrdenesTrabajo.setPreferredSize(new java.awt.Dimension(199, 132));
+						this.configurarAspectoTabla();
 					}
 				}
 			}
-			this.setSize(424, 280);
+			this.setSize(705, 300);
 			{
 				jMenuBar1 = new JMenuBar();
 				setJMenuBar(jMenuBar1);
@@ -168,6 +170,21 @@ public class GestionIncidenciasOperarioApp extends javax.swing.JFrame {
 		}
 	}
 	
+	private void configurarAspectoTabla (){
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment((int) CENTER_ALIGNMENT);
+		this.jTableOrdenesTrabajo.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+		this.jTableOrdenesTrabajo.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+		this.jTableOrdenesTrabajo.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+		this.jTableOrdenesTrabajo.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+		this.jTableOrdenesTrabajo.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);	
+		this.jTableOrdenesTrabajo.getColumnModel().getColumn(0).setPreferredWidth(75);
+		this.jTableOrdenesTrabajo.getColumnModel().getColumn(1).setPreferredWidth(100);
+		this.jTableOrdenesTrabajo.getColumnModel().getColumn(2).setPreferredWidth(150);
+		this.jTableOrdenesTrabajo.getColumnModel().getColumn(3).setPreferredWidth(200);
+		this.jTableOrdenesTrabajo.getColumnModel().getColumn(4).setPreferredWidth(100);
+	}
+	
 	private void jButtonSalirActionPerformed(ActionEvent evt) {
 		//System.out.println("jButtonSalir.actionPerformed, event="+evt);
 		//TODO add your code for jButtonSalir.actionPerformed
@@ -182,15 +199,16 @@ public class GestionIncidenciasOperarioApp extends javax.swing.JFrame {
 			
 			OrdenTrabajo orden = ordenesTrabajo.get(numeroFilaSeleccionada);
 		ConsultarIncidenciaOperarioJDialog dialogoConsultarIncidencia = 
-			new ConsultarIncidenciaOperarioJDialog(this,orden);
+			new ConsultarIncidenciaOperarioJDialog(this, orden);
 		dialogoConsultarIncidencia.setModal(true);
 		dialogoConsultarIncidencia.setVisible(true);
+		} else {
+			JOptionPane.showMessageDialog(this, "Debe seleccionar una orden de trabajo.");
 		}
 		
 	}
 public void actualizarTabla (){
 	
-		
 	try{ 	   
 		this.control = Controlador.dameControlador(); 
 		ordenesTrabajo = this.control.getOrdenesTrabajoPorOperario(

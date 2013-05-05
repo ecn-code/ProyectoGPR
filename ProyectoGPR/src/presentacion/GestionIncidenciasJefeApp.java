@@ -8,6 +8,7 @@ import logica.Incidencia;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
@@ -98,7 +99,7 @@ public class GestionIncidenciasJefeApp extends javax.swing.JFrame {
 					jScrollPaneIncidencias.setViewportView(jTableAvisosIncidencia);
 					jTableAvisosIncidencia.setModel(modelo);
 					jTableAvisosIncidencia.setBounds(116, 155, 540, 245);
-					jTableAvisosIncidencia.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1, false));
+					this.configurarAspectoTabla();
 				}
 			{
 				jTextFieldDesde = new JTextField();
@@ -196,6 +197,19 @@ public class GestionIncidenciasJefeApp extends javax.swing.JFrame {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void configurarAspectoTabla(){
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment((int) CENTER_ALIGNMENT);
+		this.jTableAvisosIncidencia.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+		this.jTableAvisosIncidencia.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+		this.jTableAvisosIncidencia.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+		this.jTableAvisosIncidencia.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);	
+		this.jTableAvisosIncidencia.getColumnModel().getColumn(0).setPreferredWidth(50);
+		this.jTableAvisosIncidencia.getColumnModel().getColumn(1).setPreferredWidth(150);
+		this.jTableAvisosIncidencia.getColumnModel().getColumn(2).setPreferredWidth(200);
+		this.jTableAvisosIncidencia.getColumnModel().getColumn(3).setPreferredWidth(100);
 	}
 	
 	private void jButtonClasificarActionPerformed(ActionEvent evt) {

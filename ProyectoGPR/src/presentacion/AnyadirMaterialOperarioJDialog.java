@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
@@ -28,6 +29,8 @@ import javax.swing.table.TableModel;
 public class AnyadirMaterialOperarioJDialog extends javax.swing.JDialog {
 	private JTable jTableTodoElMaterial;
 	private JLabel jLabelMaterialSeleccionado;
+	private JScrollPane jScrollPaneMaterialSeleccionado;
+	private JScrollPane jScrollPaneTodoMaterial;
 	private JButton jButtonCancelar;
 	private JButton jButtonAceptar;
 	private JTable jTableMaterialSeleccionado;
@@ -57,17 +60,6 @@ public class AnyadirMaterialOperarioJDialog extends javax.swing.JDialog {
 				getContentPane().setLayout(null);
 				this.setTitle("Seleccionar material - Operario");
 				{
-					TableModel jTableTodoElMaterialModel = 
-						new DefaultTableModel(
-								new String[][] { {}, {}, {} },
-								new String[] { "nombre", "disponible", "cantidad" });
-					jTableTodoElMaterial = new JTable();
-					getContentPane().add(jTableTodoElMaterial);
-					jTableTodoElMaterial.setModel(jTableTodoElMaterialModel);
-					jTableTodoElMaterial.setBounds(12, 40, 437, 148);
-					jTableTodoElMaterial.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
-				}
-				{
 					jLabelTodoElMaterial = new JLabel();
 					getContentPane().add(jLabelTodoElMaterial);
 					jLabelTodoElMaterial.setText("Todo el material:");
@@ -78,17 +70,6 @@ public class AnyadirMaterialOperarioJDialog extends javax.swing.JDialog {
 					getContentPane().add(jLabelMaterialSeleccionado);
 					jLabelMaterialSeleccionado.setText("Material seleccionado:");
 					jLabelMaterialSeleccionado.setBounds(20, 205, 163, 16);
-				}
-				{
-					TableModel jTableMaterialSeleccionadoModel = 
-						new DefaultTableModel(
-								new String[][] { {}, {}, {} },
-								new String[] { "nombre", "disponible", "cantidad" });
-					jTableMaterialSeleccionado = new JTable();
-					getContentPane().add(jTableMaterialSeleccionado);
-					jTableMaterialSeleccionado.setModel(jTableMaterialSeleccionadoModel);
-					jTableMaterialSeleccionado.setBounds(12, 227, 437, 134);
-					jTableMaterialSeleccionado.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 				}
 				{
 					jButtonAceptar = new JButton();
@@ -106,6 +87,38 @@ public class AnyadirMaterialOperarioJDialog extends javax.swing.JDialog {
 							jButtonCancelarActionPerformed(evt);
 						}
 					});
+				}
+				{
+					jScrollPaneTodoMaterial = new JScrollPane();
+					getContentPane().add(jScrollPaneTodoMaterial);
+					jScrollPaneTodoMaterial.setBounds(12, 40, 437, 153);
+					{
+						TableModel jTableTodoElMaterialModel = 
+							new DefaultTableModel(
+									new String[][] { {}, {}, {} },
+									new String[] {"NOMBRE", "DISPONIBLE", "CANTIDAD"});
+						jTableTodoElMaterial = new JTable();
+						jScrollPaneTodoMaterial.setViewportView(jTableTodoElMaterial);
+						jTableTodoElMaterial.setModel(jTableTodoElMaterialModel);
+						jTableTodoElMaterial.setBounds(155, 93, 249, 78);
+						jTableTodoElMaterial.setPreferredSize(new java.awt.Dimension(434, 120));
+					}
+				}
+				{
+					jScrollPaneMaterialSeleccionado = new JScrollPane();
+					getContentPane().add(jScrollPaneMaterialSeleccionado);
+					jScrollPaneMaterialSeleccionado.setBounds(12, 227, 437, 147);
+					{
+						TableModel jTableMaterialSeleccionadoModel = 
+							new DefaultTableModel(
+									new String[][] { {}, {}, {} },
+									new String[] {"NOMBRE", "DISPONIBLE", "CANTIDAD"});
+						jTableMaterialSeleccionado = new JTable();
+						jScrollPaneMaterialSeleccionado.setViewportView(jTableMaterialSeleccionado);
+						jTableMaterialSeleccionado.setModel(jTableMaterialSeleccionadoModel);
+						jTableMaterialSeleccionado.setBounds(328, 266, 121, 95);
+						jTableMaterialSeleccionado.setPreferredSize(new java.awt.Dimension(434, 106));
+					}
 				}
 			}
 			this.setSize(477, 474);
