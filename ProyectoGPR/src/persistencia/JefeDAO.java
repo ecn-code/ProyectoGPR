@@ -28,11 +28,9 @@ public class JefeDAO implements IJefeDAO {
 			
 			try {
 				ArrayList<Jefe> jefes = new ArrayList<Jefe>();
-				IAreaDAO areaDao=new AreaDAO();
 				while(rs.next()){
-					Area area=areaDao.getAreaPorNombre(rs.getString("NOMBRE_AREA"));
 					Jefe jefe = new Jefe(rs.getString("DNI"),rs.getString("NOMBRE")
-							,rs.getString("PASS"),area);
+							,rs.getString("PASS"));
 					jefes.add(jefe);
 				}
 				return jefes;

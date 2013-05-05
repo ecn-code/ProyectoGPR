@@ -2,6 +2,8 @@ package presentacion;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JSeparator;
 import javax.swing.JTextField;
 
 import javax.swing.WindowConstants;
@@ -30,6 +32,10 @@ import logica.Operario;
 */
 public class LoginUsuariosApp extends javax.swing.JFrame {
 	private JTextField jTextUsuario;
+	private JLabel jLabel3;
+	private JLabel jLabel2;
+	private JLabel jLabel1;
+	private JButton jButtonInvitado;
 	private JButton jButtonLogin;
 	private JTextField jTextPass;
 	static LoginUsuariosApp inst;
@@ -59,20 +65,18 @@ public class LoginUsuariosApp extends javax.swing.JFrame {
 			{
 				jTextUsuario = new JTextField();
 				getContentPane().add(jTextUsuario);
-				jTextUsuario.setText("usuario");
-				jTextUsuario.setBounds(122, 100, 145, 23);
+				jTextUsuario.setBounds(114, 62, 145, 23);
 			}
 			{
 				jTextPass = new JTextField();
 				getContentPane().add(jTextPass);
-				jTextPass.setText("contraseña");
-				jTextPass.setBounds(122, 150, 145, 23);
+				jTextPass.setBounds(114, 102, 145, 23);
 			}
 			{
 				jButtonLogin = new JButton();
 				getContentPane().add(jButtonLogin);
 				jButtonLogin.setText("Entrar");
-				jButtonLogin.setBounds(165, 196, 45, 23);
+				jButtonLogin.setBounds(197, 144, 75, 26);
 				jButtonLogin.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent evt) {
 						System.out.println("jButtonLogin.actionPerformed, event="+evt);
@@ -97,7 +101,7 @@ public class LoginUsuariosApp extends javax.swing.JFrame {
 							
 							Jefe jefe = control.loguearJefe(usuario,pass);
 							if(jefe!=null) {
-								//GestionIncidenciasMaestroApp.main(maestro);
+								GestionIncidenciasJefeApp.main(jefe);
 								dispose();
 							}
 							
@@ -115,8 +119,38 @@ public class LoginUsuariosApp extends javax.swing.JFrame {
 					}
 				});
 			}
+			{
+				jButtonInvitado = new JButton();
+				getContentPane().add(jButtonInvitado);
+				jButtonInvitado.setText("Invitado");
+				jButtonInvitado.setBounds(114, 145, 78, 23);
+				jButtonInvitado.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent evt) {
+						AvisoIncidenciaUsuarioApp.main(null);
+						dispose();
+					}
+				});
+			}
+			{
+				jLabel1 = new JLabel();
+				getContentPane().add(jLabel1);
+				jLabel1.setText("APPHospital");
+				jLabel1.setBounds(30, 21, 72, 16);
+			}
+			{
+				jLabel2 = new JLabel();
+				getContentPane().add(jLabel2);
+				jLabel2.setText("Usuario");
+				jLabel2.setBounds(42, 65, 60, 16);
+			}
+			{
+				jLabel3 = new JLabel();
+				getContentPane().add(jLabel3);
+				jLabel3.setText("Contraseña");
+				jLabel3.setBounds(42, 105, 72, 16);
+			}
 			pack();
-			setSize(500, 400);
+			this.setSize(344, 230);
 		} catch (Exception e) {
 		    //add your error handling code here
 			e.printStackTrace();

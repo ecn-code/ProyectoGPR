@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import logica.Incidencia;
+import logica.Jefe;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.table.AbstractTableModel;
@@ -48,11 +50,13 @@ public class GestionIncidenciasJefeApp extends javax.swing.JFrame {
 	private JMenuItem cutMenuItem;
 	private JMenu jMenu4;
 	private JMenuBar jMenuBar1;
+	private static Jefe jefe;
 
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
-	public static void main(String[] args) {
+	public static void main(Jefe _jefe) {
+		jefe = _jefe;
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				GestionIncidenciasJefeApp inst = new GestionIncidenciasJefeApp();
