@@ -62,21 +62,22 @@ public class LoginUsuariosApp extends javax.swing.JFrame {
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
+			this.setTitle("Acceso usuarios");
 			{
 				jTextUsuario = new JTextField();
 				getContentPane().add(jTextUsuario);
-				jTextUsuario.setBounds(114, 62, 145, 23);
+				jTextUsuario.setBounds(114, 62, 206, 23);
 			}
 			{
 				jTextPass = new JTextField();
 				getContentPane().add(jTextPass);
-				jTextPass.setBounds(114, 102, 145, 23);
+				jTextPass.setBounds(114, 102, 206, 23);
 			}
 			{
 				jButtonLogin = new JButton();
 				getContentPane().add(jButtonLogin);
 				jButtonLogin.setText("Entrar");
-				jButtonLogin.setBounds(197, 144, 75, 26);
+				jButtonLogin.setBounds(242, 147, 78, 26);
 				jButtonLogin.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent evt) {
 						System.out.println("jButtonLogin.actionPerformed, event="+evt);
@@ -123,7 +124,7 @@ public class LoginUsuariosApp extends javax.swing.JFrame {
 				jButtonInvitado = new JButton();
 				getContentPane().add(jButtonInvitado);
 				jButtonInvitado.setText("Invitado");
-				jButtonInvitado.setBounds(114, 145, 78, 23);
+				jButtonInvitado.setBounds(136, 147, 78, 26);
 				jButtonInvitado.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent evt) {
 						AvisoIncidenciaUsuarioApp.main(null);
@@ -134,23 +135,23 @@ public class LoginUsuariosApp extends javax.swing.JFrame {
 			{
 				jLabel1 = new JLabel();
 				getContentPane().add(jLabel1);
-				jLabel1.setText("APPHospital");
-				jLabel1.setBounds(30, 21, 72, 16);
+				jLabel1.setText("Servicio Mantenimiento Hospital");
+				jLabel1.setBounds(79, 21, 214, 16);
 			}
 			{
 				jLabel2 = new JLabel();
 				getContentPane().add(jLabel2);
-				jLabel2.setText("Usuario");
-				jLabel2.setBounds(42, 65, 60, 16);
+				jLabel2.setText("Usuario:");
+				jLabel2.setBounds(29, 65, 60, 16);
 			}
 			{
 				jLabel3 = new JLabel();
 				getContentPane().add(jLabel3);
-				jLabel3.setText("Contraseña");
-				jLabel3.setBounds(42, 105, 72, 16);
+				jLabel3.setText("Contraseña:");
+				jLabel3.setBounds(29, 105, 72, 16);
 			}
 			pack();
-			this.setSize(344, 230);
+			this.setSize(364, 230);
 		} catch (Exception e) {
 		    //add your error handling code here
 			e.printStackTrace();
