@@ -35,12 +35,12 @@ import logica.OrdenTrabajo;
 public class GestionIncidenciasOperarioApp extends javax.swing.JFrame {
 	
 	private Controlador control;
+	private JScrollPane jScrollPaneOrdenesTrabajo;
 	private JMenuItem helpMenuItem;
 	private JMenu jMenu5;
 	private JButton jButtonConsultarMaterial;
 	private JLabel jLabelSeleccionaIncidencia;
 	private JTable jTableOrdenesTrabajo;
-	private JScrollPane jScrollPaneOrdenesTrabajo;
 	private JButton jButtonConsutarIncidencia;
 	private JButton jButtonSalir;
 	private JMenu jMenu3;
@@ -136,18 +136,18 @@ public class GestionIncidenciasOperarioApp extends javax.swing.JFrame {
 				{
 					jScrollPaneOrdenesTrabajo = new JScrollPane();
 					getContentPane().add(jScrollPaneOrdenesTrabajo);
-					jScrollPaneOrdenesTrabajo.setBounds(14, 37, 481, 191);
+					jScrollPaneOrdenesTrabajo.setBounds(18, 38, 474, 192);
 					{
-
+						
 						jTableOrdenesTrabajo = new JTable();
 						jScrollPaneOrdenesTrabajo.setViewportView(jTableOrdenesTrabajo);
 						jTableOrdenesTrabajo.setModel(modelo);
-						jTableOrdenesTrabajo.setPreferredSize(new java.awt.Dimension(199, 132));
+						jTableOrdenesTrabajo.setBounds(530, 154, 225, 76);
 						this.configurarAspectoTabla();
 					}
 				}
 			}
-			this.setSize(705, 300);
+			this.setSize(705, 305);
 			{
 				jMenuBar1 = new JMenuBar();
 				setJMenuBar(jMenuBar1);

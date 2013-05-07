@@ -54,9 +54,6 @@ import presentacion.GestionIncidenciasJefeApp.ModeloTablaAvisosIncidencia;
 public class GestionIncidenciasMaestroApp extends javax.swing.JFrame {
 	
 	private Controlador control;
-	private JComboBox jComboBoxAreas;
-	private JLabel jLabelSeleccionaArea;
-	private JPanel jPanel1;
 	private ModeloTablaOrdenTrabajo modelo;
 	private JMenuItem helpMenuItem;
 	private JLabel jLabeiListadoAvisos;
@@ -188,7 +185,7 @@ public class GestionIncidenciasMaestroApp extends javax.swing.JFrame {
 			{
 				jPanelAsignarOperario = new JPanel();
 				getContentPane().add(jPanelAsignarOperario);
-				jPanelAsignarOperario.setBounds(594, 202, 208, 89);
+				jPanelAsignarOperario.setBounds(588, 103, 208, 89);
 				jPanelAsignarOperario.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
 				{
 					jLabelAsignarOperario = new JLabel();
@@ -220,40 +217,6 @@ public class GestionIncidenciasMaestroApp extends javax.swing.JFrame {
 					jButtonAsignarOperario.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent evt) {
 							jButtonAsignarOperarioActionPerformed(evt);
-						}
-					});
-				}
-			}
-			{
-				jPanel1 = new JPanel();
-				getContentPane().add(jPanel1);
-				jPanel1.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
-				jPanel1.setBounds(594, 110, 208, 72);
-				{
-					jLabelSeleccionaArea = new JLabel();
-					jPanel1.add(jLabelSeleccionaArea);
-					jLabelSeleccionaArea.setText("Selecciona un área:");
-				}
-				
-				//Configuracion el contenido de jComboBoxAreas
-				Area areaComboBoxAreas;
-				String[] elementosComboBoxAreas = new String[areas.size()];
-				
-				for(int i = 0; i < areas.size(); i++){
-					areaComboBoxAreas = areas.get(i);
-					elementosComboBoxAreas[i]= areaComboBoxAreas.getNombre();	
-				}//fin bucle for
-				
-				{
-					ComboBoxModel jComboBox1Model = 
-						new DefaultComboBoxModel(elementosComboBoxAreas);
-					jComboBoxAreas = new JComboBox();
-					jPanel1.add(jComboBoxAreas);
-					jComboBoxAreas.setModel(jComboBox1Model);
-					jComboBoxAreas.setPreferredSize(new java.awt.Dimension(180,23));
-					jComboBoxAreas.addItemListener(new ItemListener() {
-						public void itemStateChanged(ItemEvent evt) {
-							//jComboBoxAreasItemStateChanged(evt);
 						}
 					});
 				}
@@ -333,10 +296,9 @@ public class GestionIncidenciasMaestroApp extends javax.swing.JFrame {
 				JOptionPane.showMessageDialog(this, "Orden de trabajo asignada a " +
 					nombre + ".");
 				this.modelo.limpiarTabla();
-				Area area = new Area((String)this.jComboBoxAreas.getSelectedItem());
-				ArrayList<OrdenTrabajo> ordenesTrabajo = control.getOrdenesTrabajoPorArea(area);
-				for(OrdenTrabajo ordenTrabajo: ordenesTrabajo)
-					modelo.anyadirFila(ordenTrabajo);
+	
+				
+
 
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog( 
@@ -360,10 +322,10 @@ public class GestionIncidenciasMaestroApp extends javax.swing.JFrame {
 
 		
 		ArrayList<Operario> operarios = new ArrayList<Operario>();
-		Area area = new Area((String)this.jComboBoxAreas.getSelectedItem());
+	
 		
 		try{ 	   
-			operarios = control.getOperariosPorArea(area);
+
 		}catch (Exception e){ 
 			JOptionPane.showMessageDialog( 
 			this,e.getMessage(),"ERROR", JOptionPane.ERROR_MESSAGE); 
